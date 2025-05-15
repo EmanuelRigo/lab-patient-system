@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Aside from "@/components/Aside";
 
-export default function LoginForm() {
+export default function page() {
   const router = useRouter();
   const [usuario, setUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
@@ -23,7 +23,7 @@ export default function LoginForm() {
 
   return (
     <div className="h-full flex ">
-      <div className="h-full w-2/6 flex items-center justify-center bg-neutral-100  ">
+      <div className="h-full w-full flex items-center justify-center">
         <div className=" p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-600">
             Login
@@ -65,7 +65,6 @@ export default function LoginForm() {
           </form>
         </div>
       </div>
-      <Aside></Aside>
     </div>
   );
 }

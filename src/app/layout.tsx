@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Aside from "@/components/Aside";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -25,14 +26,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-red-400 h-dvh w-full`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh w-full flex`}
         style={{
           backgroundImage: "url('/images/image4.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        {children}
+        <div className="h-full w-3/6 bg-neutral-100 p-4"> {children}</div>
+
+        <Aside />
       </body>
     </html>
   );
