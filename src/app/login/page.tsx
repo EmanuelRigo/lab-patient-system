@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Aside from "@/components/Aside";
 
 export default function LoginForm() {
   const router = useRouter();
@@ -21,16 +22,9 @@ export default function LoginForm() {
   };
 
   return (
-    <div
-      className="h-full "
-      style={{
-        backgroundImage: "url('/images/image4.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-      }}
-    >
-      <div className="h-full w-4/6 flex items-center justify-center bg-sky-200  ">
-        <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
+    <div className="h-full flex ">
+      <div className="h-full w-2/6 flex items-center justify-center bg-neutral-100  ">
+        <div className=" p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-600">
             Login
           </h2>
@@ -71,6 +65,7 @@ export default function LoginForm() {
           </form>
         </div>
       </div>
+      <Aside></Aside>
     </div>
   );
 }
