@@ -6,6 +6,7 @@ import pathHandler from "./middlewares/pathHandler.middleware";
 import errorHandler from "./middlewares/errorHandler.middleware";
 import indexRouter from "./routes/api/index.router";
 import MongoSingleton from "./utils/mongoDB.utils";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
+app.use(cookieParser());
 
 app.use("/api/", indexRouter);
 
