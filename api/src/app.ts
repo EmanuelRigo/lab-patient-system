@@ -16,21 +16,47 @@ const app = express();
 //   res.send("pong 🏓");
 // });
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(cookieParser());
 
-app.use("/api/", indexRouter);
+app.use(
+  cors({
+    origin: (origin, callback) => {
+      const allowedOrigins = [
+        "http://localhost:3000",
+        "https://movie-list-jade-kappa.vercel.app",
+      ];
+
+      // Permitir solicitudes sin origen (por ejemplo, herramientas como Postman)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("No permitido por CORS"));
+      }
+    },
+    credentials: true, // Permitir cookies
+    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+    allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
+  })
+);
 
 MongoSingleton.getInstance();
 
-app.use((_req, _res, next) => pathHandler(_req, _res, next));
-app.use(errorHandler);
+app.use("/api/", indexRouter);
+
+app.use((req, res, next) => {
+  console.log("Request Type:", req.method);
+  next();
+});
 
 const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Backend listening at http://localhost:${PORT}`);
 });
+
+app.use((_req, _res, next) => pathHandler(_req, _res, next));
+app.use(errorHandler);

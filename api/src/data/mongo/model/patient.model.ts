@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-const collection = "patients";
+const collection = "Patients";
 
 const schema = new Schema(
   {
