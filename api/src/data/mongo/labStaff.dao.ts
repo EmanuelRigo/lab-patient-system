@@ -31,5 +31,5 @@ class LabStaffDao {
   }
 }
 
-const patientDao = new LabStaffDao();
-export default patientDao;
+const labStaffDao = new LabStaffDao();
+export default labStaffDao;
