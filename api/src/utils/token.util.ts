@@ -22,10 +22,10 @@ function finishTokenUtil(data: JwtPayloadData): string {
   return token;
 }
 
-function verifyHashUtil(token: string): JwtPayloadData | null {
+function verifyTokenUtil(token: string): JwtPayloadData | null {
   const verify = jwt.verify(token, SECRET_KEY) as JwtPayloadData | null;
   return verify;
 }
 
-export { createTokenUtil, finishTokenUtil, verifyHashUtil };
+export { createTokenUtil, finishTokenUtil, verifyTokenUtil };
 export type { JwtPayloadData };

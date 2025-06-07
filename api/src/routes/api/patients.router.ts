@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from "express";
-import patientDao from "../../data/mongo/patient.dao";
+import patientDao from "../../dao/mongo/patient.dao";
 
 const patientsApiRouter = Router();
 

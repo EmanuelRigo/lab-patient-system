@@ -6,7 +6,7 @@ import {
   RequestHandler,
 } from "express";
 import jwt from "jsonwebtoken";
-import labStaffDao from "../data/mongo/labStaff.dao";
+import labStaffDao from "../dao/mongo/labStaff.dao";
 import envUtil from "./envs.utils";
 
 // Interface para el payload del JWT
