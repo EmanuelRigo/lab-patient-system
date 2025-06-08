@@ -1,11 +1,14 @@
-export type Role = "labStaff" | "admin" | "user";
+export type LabStaffRole = "Technician" | "Scientist" | "Assistant";
+export type ShiftType = "morning" | "afternoon" | "night";
 
 export interface LabStaff {
-  firstName: string;
-  lastName: string;
-  username: string;
+  name: string;
+  role: LabStaffRole;
   email: string;
-  password: string;
-  role?: Role;
-  isOnline?: boolean;
+  phone: string;
+  department: string;
+  shift: ShiftType;
+  createdAt?: Date;
+  updatedAt?: Date;
+  _id?: string;
 }

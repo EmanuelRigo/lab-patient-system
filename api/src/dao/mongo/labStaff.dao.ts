@@ -1,32 +1,30 @@
 import LabStaffModel from "./model/labStaff.model";
+import { LabStaff } from "../../../../types/labStaff.types";
 
 class LabStaffDao {
-  async getAll(): Promise<Record<string, any>[]> {
+  async getAll(): Promise<LabStaff[]> {
     return await LabStaffModel.find().lean();
   }
 
-  async getById(id: string): Promise<Record<string, any> | null> {
+  async getById(id: string): Promise<LabStaff | null> {
     return await LabStaffModel.findById(id).lean();
   }
 
-  async getByIdAPI(id: string): Promise<Record<string, any> | null> {
+  async getByIdAPI(id: string): Promise<LabStaff | null> {
     return await LabStaffModel.findOne({ id }).lean();
   }
 
-  async create(data: Record<string, any>): Promise<Record<string, any>> {
+  async create(data: Partial<LabStaff>): Promise<LabStaff> {
     return await LabStaffModel.create(data);
   }
 
-  async update(
-    id: string,
-    data: Record<string, any>
-  ): Promise<Record<string, any> | null> {
+  async update(id: string, data: Partial<LabStaff>): Promise<LabStaff | null> {
     return await LabStaffModel.findByIdAndUpdate(id, data, {
       new: true,
     }).lean();
   }
 
-  async deleteOne(id: string): Promise<Record<string, any> | null> {
+  async deleteOne(id: string): Promise<LabStaff | null> {
     return await LabStaffModel.findByIdAndDelete(id).lean();
   }
 }

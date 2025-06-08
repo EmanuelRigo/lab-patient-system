@@ -1,34 +1,33 @@
-import PatientModel from "./model/patient.model";
-import { ObjectId } from "mongoose";
+import LabStaffModel from "./model/labStaff.model";
+import { LabStaff } from "../../../../types/labStaff.types";
 
-class PatientDao {
-  async getAll(): Promise<Record<string, any>[]> {
-    return await PatientModel.find().lean();
+class LabStaffDao {
+  async getAll(): Promise<LabStaff[]> {
+    return await LabStaffModel.find().lean();
   }
 
-  async getById(id: string): Promise<Record<string, any> | null> {
-    return await PatientModel.findById(id).lean();
+  async getById(id: string): Promise<LabStaff | null> {
+    return await LabStaffModel.findById(id).lean();
   }
 
-  async getByIdAPI(id: string): Promise<Record<string, any> | null> {
-    return await PatientModel.findOne({ id }).lean();
+  async getByIdAPI(id: string): Promise<LabStaff | null> {
+    return await LabStaffModel.findOne({ id }).lean();
   }
 
-  async create(data: Record<string, any>): Promise<Record<string, any>> {
-    return await PatientModel.create(data);
+  async create(data: LabStaff): Promise<LabStaff> {
+    return await LabStaffModel.create(data);
   }
 
-  async update(
-    id: string,
-    data: Record<string, any>
-  ): Promise<Record<string, any> | null> {
-    return await PatientModel.findByIdAndUpdate(id, data, { new: true }).lean();
+  async update(id: string, data: Partial<LabStaff>): Promise<LabStaff | null> {
+    return await LabStaffModel.findByIdAndUpdate(id, data, {
+      new: true,
+    }).lean();
   }
 
-  async deleteOne(id: string): Promise<Record<string, any> | null> {
-    return await PatientModel.findByIdAndDelete(id).lean();
+  async deleteOne(id: string): Promise<LabStaff | null> {
+    return await LabStaffModel.findByIdAndDelete(id).lean();
   }
 }
 
-const patientDao = new PatientDao();
-export default patientDao;
+const labStaffDao = new LabStaffDao();
+export default labStaffDao;
