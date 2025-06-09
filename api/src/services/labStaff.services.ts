@@ -10,6 +10,11 @@ class LabStaffServices {
     return await labStaffDao.getById(id);
   }
 
+  async getByUserName(username: string): Promise<LabStaff | null> {
+    const user = await labStaffDao.getByEmail(email);
+    return user;
+  }
+
   async create(data: Partial<LabStaff>): Promise<LabStaff> {
     return await labStaffDao.create(data);
   }

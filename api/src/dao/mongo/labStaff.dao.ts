@@ -10,6 +10,10 @@ class LabStaffDao {
     return await LabStaffModel.findById(id).lean();
   }
 
+  async getByUserName(username: string): Promise<LabStaff | null> {
+    return await LabStaffModel.findOne({ username: username }).lean();
+  }
+
   async getByIdAPI(id: string): Promise<LabStaff | null> {
     return await LabStaffModel.findOne({ id }).lean();
   }
