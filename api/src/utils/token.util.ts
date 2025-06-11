@@ -4,12 +4,11 @@ import jwt from "jsonwebtoken";
 const { SECRET_KEY } = envsUtils;
 
 type JwtPayloadData = {
-  firstName: string;
+  name: string;
   username: string;
   user_id: string;
   role: string;
   isOnline: boolean;
-  mode: string;
 };
 
 function createTokenUtil(data: JwtPayloadData): string {
