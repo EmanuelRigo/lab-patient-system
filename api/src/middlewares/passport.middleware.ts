@@ -313,6 +313,7 @@ passport.use(
   )
 );
 
+//--
 passport.use(
   "online",
   new JwtStrategy(
@@ -365,4 +366,5 @@ passport.use(
     }
   )
 );
+
 import envsUtils from "../utils/envs.utils";
