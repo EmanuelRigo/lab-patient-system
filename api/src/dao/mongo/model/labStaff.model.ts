@@ -28,10 +28,10 @@ const schema = new Schema<LabStaff>(
       type: String,
       required: true,
     },
-    shift: {
+    username: {
       type: String,
-      enum: ["morning", "afternoon", "night"],
       required: true,
+      unique: true,
     },
   },
   { timestamps: true }

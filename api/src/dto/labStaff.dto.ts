@@ -1,32 +1,35 @@
-type Role = "labStaff" | "admin" | "user"; // Puedes extender esto si tienes más roles
+import { LabStaff, LabStaffRole } from "../../../types/labStaff.types";
 
 interface LabStaffData {
-  firstName: string;
-  lastName: string;
+  name: string;
   username: string;
   email: string;
   password: string;
-  role?: Role;
+  role?: LabStaffRole;
+  phone: string;
+  department: string;
   isOnline?: boolean;
 }
 
 class LabStaffDTO {
-  firstName: string;
-  lastName: string;
+  name: string;
   username: string;
   email: string;
   password: string;
-  role: Role;
+  role: LabStaffRole;
+  phone: string;
+  department: string;
   isOnline: boolean;
 
   constructor(data: LabStaffData) {
-    this.firstName = data.firstName;
-    this.lastName = data.lastName;
+    this.name = data.name;
     this.username = data.username;
     this.email = data.email;
     this.password = data.password;
-    this.role = data.role || "labStaff";
-    this.isOnline = data.isOnline ?? false; // Usa nullish coalescing para evitar que `false` sea sobreescrito
+    this.role = data.role ?? "Technician";
+    this.phone = data.phone;
+    this.department = data.department;
+    this.isOnline = data.isOnline ?? false;
   }
 }
 

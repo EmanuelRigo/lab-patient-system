@@ -11,7 +11,7 @@ class LabStaffServices {
   }
 
   async getByUserName(username: string): Promise<LabStaff | null> {
-    const user = await labStaffDao.getByEmail(email);
+    const user = await labStaffDao.getByUserName(username);
     return user;
   }
 
