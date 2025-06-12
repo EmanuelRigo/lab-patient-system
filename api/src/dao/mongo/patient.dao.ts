@@ -1,33 +1,37 @@
-import LabStaffModel from "./model/labStaff.model";
-import { LabStaff } from "../../../../types/labStaff.types";
+import PatientModel from "./model/patient.model";
+import { Patient } from "../../../../types/patient.types";
 
 class LabStaffDao {
-  async getAll(): Promise<LabStaff[]> {
-    return await LabStaffModel.find().lean();
+  async getAll(): Promise<Patient[]> {
+    return await PatientModel.find().lean();
   }
 
-  async getById(id: string): Promise<LabStaff | null> {
-    return await LabStaffModel.findById(id).lean();
+  async getByName(name: string): Promise<Patient | null> {
+    return await PatientModel.findOne({ name }).lean();
   }
 
-  async getByIdAPI(id: string): Promise<LabStaff | null> {
-    return await LabStaffModel.findOne({ id }).lean();
+  async getById(id: string): Promise<Patient | null> {
+    return await PatientModel.findById(id).lean();
   }
 
-  async create(data: LabStaff): Promise<LabStaff> {
-    return await LabStaffModel.create(data);
+  async getByIdAPI(id: string): Promise<Patient | null> {
+    return await PatientModel.findOne({ id }).lean();
   }
 
-  async update(id: string, data: Partial<LabStaff>): Promise<LabStaff | null> {
-    return await LabStaffModel.findByIdAndUpdate(id, data, {
+  async create(data: Patient): Promise<Patient> {
+    return await PatientModel.create(data);
+  }
+
+  async update(id: string, data: Partial<Patient>): Promise<Patient | null> {
+    return await PatientModel.findByIdAndUpdate(id, data, {
       new: true,
     }).lean();
   }
 
-  async deleteOne(id: string): Promise<LabStaff | null> {
-    return await LabStaffModel.findByIdAndDelete(id).lean();
+  async deleteOne(id: string): Promise<Patient | null> {
+    return await PatientModel.findByIdAndDelete(id).lean();
   }
 }
 
-const labStaffDao = new LabStaffDao();
-export default labStaffDao;
+const patientDAO = new LabStaffDao();
+export default patientDAO;

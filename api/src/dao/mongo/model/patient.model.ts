@@ -1,8 +1,9 @@
 import { model, Schema } from "mongoose";
+import { Patient } from "../../../../../types/patient.types";
 
 const collection = "Patients";
 
-const schema = new Schema(
+const schema = new Schema<Patient>(
   {
     name: {
       type: String,
@@ -29,5 +30,5 @@ const schema = new Schema(
   { timestamps: true }
 );
 
-const PatientModel = model(collection, schema);
+const PatientModel = model<Patient>(collection, schema);
 export default PatientModel;

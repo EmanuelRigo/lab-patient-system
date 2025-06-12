@@ -368,3 +368,5 @@ passport.use(
 );
 
 import envsUtils from "../utils/envs.utils";
+
+export default passport;

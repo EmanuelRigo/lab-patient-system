@@ -15,7 +15,7 @@ class LabStaffServices {
     return user;
   }
 
-  async create(data: Partial<LabStaff>): Promise<LabStaff> {
+  async create(data: LabStaff): Promise<LabStaff> {
     return await labStaffDao.create(data);
   }
 
