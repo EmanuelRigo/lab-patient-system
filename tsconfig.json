@@ -5,31 +5,26 @@
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
-    "noEmit": true, // Next.js maneja la compilación
+    "noEmit": true,
     "esModuleInterop": true,
-    "module": "commonjs", // Cambiar a commonjs para backend (Express)
-    "moduleResolution": "node", // node para backend también
+    "module": "commonjs",
+    "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      }
-    ],
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "types": ["node", "./types/express"] // ✅ Incluye tus tipos personalizados aquí
   },
   "include": [
     "**/*.ts",
     "**/*.tsx",
     "api/src/**/*.ts",
+    "types/**/*.d.ts",
     "next-env.d.ts",
-    ".next/types/**/*.ts",
-    "types"
+    ".next/types/**/*.ts"
   ],
-
   "exclude": ["node_modules"]
 }
