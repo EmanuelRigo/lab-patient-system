@@ -3,10 +3,10 @@ import { Request, Response } from "express";
 import mongoose from "mongoose";
 
 class LabStaffController {
-  async getAll(req: Request, res: Response): Promise<void> {
+  async getAll(req: Request, res: Response): Promise<Response> {
     const response = await labStaffServices.getAll();
     const message = "labstaff read";
-    res.json201(response, message);
+    return res.json201(response, message);
   }
 
   async getById(req: Request, res: Response) {
@@ -20,12 +20,10 @@ class LabStaffController {
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: Request, res: Response): Promise<Response> {
     const message = "movie created";
     const data = req.body;
-
     const response = await labStaffServices.create(data);
-
     return res.json201(response, message);
   }
 
