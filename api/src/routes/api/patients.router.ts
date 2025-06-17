@@ -1,33 +1,17 @@
-import { Router, Request, Response, NextFunction } from "express";
-import patientDao from "../../dao/mongo/patient.dao";
+import { patientController } from "../../controllers/patient.controller";
+import CustomRouter from "../../utils/CustomRouter.util";
 
-const patientsApiRouter = Router();
-
-patientsApiRouter.post(
-  "/",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const data = req.body;
-      const response: any = await patientDao.create(data);
-      const message = "PRODUCT CREATED";
-      res.status(200).json({ response, message });
-    } catch (error) {
-      next(error);
-    }
+class PatientRouter extends CustomRouter {
+  constructor() {
+    super();
+    this.init();
   }
-);
 
-patientsApiRouter.get(
-  "/",
-  async (req: Request, res: Response, next: NextFunction) => {
-    try {
-      const response: any[] = await patientDao.getAll();
-      const message = "GET /api/patient";
-      res.status(200).json({ response, message });
-    } catch (error) {
-      next(error);
-    }
-  }
-);
+  init = () => {
+    this.read("/", ["PUBLIC"], patientController.getAll);
+    this.update("/:id", ["PUBLIC"], patientController.update);
+  };
+}
 
-export default patientsApiRouter;
+let patientRouter = new PatientRouter();
+export default patientRouter.getRouter();

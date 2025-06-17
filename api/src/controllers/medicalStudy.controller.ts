@@ -1,18 +1,18 @@
-import patientServices from "../services/patient.services";
+import medicalStudyServices from "../services/medicalStudy.services";
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 
-class PatientController {
+class MedicalStudiesController {
   async getAll(req: Request, res: Response): Promise<void> {
-    const response = await patientServices.getAll();
+    const response = await medicalStudyServices.getAll();
     const message = "patients read";
     res.json201(response, message);
   }
 
-  async getById(req: Request, res: Response) {
-    const mid = req.params.mid;
-    const response = await patientServices.getById(mid);
-    const message = "patient read";
+  async getByName(req: Request, res: Response) {
+    const name = req.params.name;
+    const response = await medicalStudyServices.getByName(name);
+    const message = "medical study read";
     if (response) {
       return res.json201(response, message);
     } else {
@@ -20,18 +20,18 @@ class PatientController {
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: Request, res: Response): Promise<void> {
     const message = "pattient added";
     const data = req.body;
 
-    const response = await patientServices.create(data);
+    const response = await medicalStudyServices.create(data);
 
-    return res.json201(response, message);
+    res.json201(response, message);
   }
 
   async update(req: Request, res: Response): Promise<void> {
     const { id } = req.params;
-    const { name, age } = req.body;
+    const { name, price } = req.body;
 
     // Validación: nombre obligatorio
     if (!name) {
@@ -46,7 +46,7 @@ class PatientController {
     }
 
     // Intentamos actualizar
-    const response = await patientServices.update(id, { name, age });
+    const response = await medicalStudyServices.update(id, { name, price });
 
     // Si se encuentra y actualiza
     if (response) {
@@ -57,21 +57,20 @@ class PatientController {
     }
   }
 
-  async deleteOne(req: Request, res: Response) {
-    const { mid } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(mid)) {
-      return res.json404();
+  async deleteOne(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.json404();
     }
 
     const message = "patient deleted";
-    const response = await patientServices.deleteOne(mid);
+    const response = await medicalStudyServices.deleteOne(id);
     if (response) {
-      return res.json201(response, message);
+      res.json201(response, message);
     } else {
-      return res.json404();
+      res.json404();
     }
   }
 }
 
-export const patientController = new PatientController();
+export const medicalStudyController = new MedicalStudiesController();
