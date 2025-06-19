@@ -1,26 +1,29 @@
-import labStaffDao from "../dao/mongo/labStaff.dao";
+// import LabStaffDao from "../dao/mongo/labStaff.dao";
 import { LabStaff } from "../../../types/labStaff.types";
+import dao from "../dao/factory";
+
+const { LabStaffDao } = dao;
 
 class LabStaffServices {
   async getAll(): Promise<LabStaff[]> {
-    return await labStaffDao.getAll();
+    return await LabStaffDao.getAll();
   }
 
   async getById(id: string): Promise<LabStaff | null> {
-    return await labStaffDao.getById(id);
+    return await LabStaffDao.getById(id);
   }
 
   async getByUserName(username: string): Promise<LabStaff | null> {
-    const user = await labStaffDao.getByUserName(username);
+    const user = await LabStaffDao.getByUserName(username);
     return user;
   }
 
   async create(data: LabStaff): Promise<LabStaff> {
-    return await labStaffDao.create(data);
+    return await LabStaffDao.create(data);
   }
 
   async update(id: string, data: Partial<LabStaff>): Promise<LabStaff | null> {
-    return await labStaffDao.update(id, data);
+    return await LabStaffDao.update(id, data);
   }
 
   async deleteOne(id: string): Promise<{
@@ -28,7 +31,7 @@ class LabStaffServices {
     message: string;
     data: LabStaff;
   }> {
-    const deletedLabStaff = await labStaffDao.deleteOne(id);
+    const deletedLabStaff = await LabStaffDao.deleteOne(id);
 
     if (!deletedLabStaff) {
       throw new Error(

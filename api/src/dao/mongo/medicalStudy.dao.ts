@@ -1,5 +1,5 @@
-import MedicalStudyModel from "./mongo/model/medicalStudy.model";
-import { MedicalStudy } from "../../../types/medicalStudy.types";
+import MedicalStudyModel from "./model/medicalStudy.model";
+import { MedicalStudy } from "../../../../types/medicalStudy.types";
 
 class MedicalStudyDao {
   async getAll(): Promise<MedicalStudy[]> {

@@ -43,7 +43,7 @@ app.use(
   })
 );
 
-MongoSingleton.getInstance();
+// MongoSingleton.getInstance();
 
 app.use("/api/", indexRouter);
 

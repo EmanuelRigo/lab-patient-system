@@ -15,5 +15,6 @@ export default {
   MOVIES_COLLECTION: process.env.MOVIES_COLLECTION,
   BASE_URL: process.env.BASE_URL,
   MODE: process.env.MODE,
+  PERSISTENCE: process.env.PERESISTENCE,
   JWT_SECRET: process.env.JWT_SECRET,
 };

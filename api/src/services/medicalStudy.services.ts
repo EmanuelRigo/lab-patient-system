@@ -1,4 +1,4 @@
-import medicalStudyDAO from "../dao/medicalStudy.dao";
+import medicalStudyDAO from "../dao/mongo/medicalStudy.dao";
 import { MedicalStudy } from "../../../types/medicalStudy.types";
 
 class MedicalStudiesServices {
