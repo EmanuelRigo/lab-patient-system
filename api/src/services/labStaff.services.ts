@@ -1,29 +1,31 @@
-// import LabStaffDao from "../dao/mongo/labStaff.dao";
+// import labStaffRepository from "../dao/mongo/labStaff.dao";
 import { LabStaff } from "../../../types/labStaff.types";
 import dao from "../dao/factory";
+import LabStaffDTO from "../dto/labStaff.dto";
+import labStaffRepository from "../repository/labStaff.repository";
 
-const { LabStaffDao } = dao;
+// const { labStaffRepository } = dao;
 
 class LabStaffServices {
   async getAll(): Promise<LabStaff[]> {
-    return await LabStaffDao.getAll();
+    return await labStaffRepository.getAll();
   }
 
   async getById(id: string): Promise<LabStaff | null> {
-    return await LabStaffDao.getById(id);
+    return await labStaffRepository.getById(id);
   }
 
   async getByUserName(username: string): Promise<LabStaff | null> {
-    const user = await LabStaffDao.getByUserName(username);
+    const user = await labStaffRepository.getByUserName(username);
     return user;
   }
 
   async create(data: LabStaff): Promise<LabStaff> {
-    return await LabStaffDao.create(data);
+    return await labStaffRepository.create(data);
   }
 
   async update(id: string, data: Partial<LabStaff>): Promise<LabStaff | null> {
-    return await LabStaffDao.update(id, data);
+    return await labStaffRepository.update(id, data);
   }
 
   async deleteOne(id: string): Promise<{
@@ -31,19 +33,7 @@ class LabStaffServices {
     message: string;
     data: LabStaff;
   }> {
-    const deletedLabStaff = await LabStaffDao.deleteOne(id);
-
-    if (!deletedLabStaff) {
-      throw new Error(
-        "El personal de laboratorio no fue encontrado o ya fue eliminado."
-      );
-    }
-
-    return {
-      success: true,
-      message: "Personal de laboratorio eliminado correctamente.",
-      data: deletedLabStaff,
-    };
+    return await labStaffRepository.deleteOne(id);
   }
 }
 
