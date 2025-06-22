@@ -23,10 +23,13 @@ switch (PERSISTENCE) {
     const labStaffDao = require("./mongo/labStaff.dao").default;
     const medicalStudyDao = require("./mongo/medicalStudy.dao").default;
     const patientDao = require("./mongo/patient.dao").default;
+    const doctorsAppointmentDao =
+      require("./mongo/doctorsAppointment.dao").default;
     dao = {
       LabStaffDao: labStaffDao,
       MedicalStudyDao: medicalStudyDao,
       PatientDao: patientDao,
+      DoctorsAppointmentDao: doctorsAppointmentDao,
     };
     break;
 }
