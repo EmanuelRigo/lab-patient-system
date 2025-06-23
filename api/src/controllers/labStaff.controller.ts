@@ -9,6 +9,17 @@ class LabStaffController {
     res.json201(response, message);
   }
 
+  async getByName(req: Request, res: Response): Promise<void> {
+    const name = req.params.name;
+    const response = await labStaffServices.getByName(name);
+    const message = "lab staff read";
+    if (response) {
+      res.json201(response, message);
+    } else {
+      res.json404();
+    }
+  }
+
   async getById(req: Request, res: Response) {
     const mid = req.params.mid;
     const response = await labStaffServices.getById(mid);
@@ -27,42 +38,46 @@ class LabStaffController {
     res.json201(response, message);
   }
 
-  //   async update(req: Request, res: Response) {
-  //     const { mid } = req.params;
-  //     const { formats, checked } = req.body;
+  async update(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    const { name } = req.body;
 
-  //     if (!formats) {
-  //       const message = "Missing required fields";
-  //       return res.json400(message);
-  //     }
-
-  //     if (!mongoose.Types.ObjectId.isValid(mid)) {
-  //       return res.json404();
-  //     }
-
-  //     const message = "PRODUCT UPDATED";
-  //     const response = await labStaffServices.update(mid, { formats, checked });
-
-  //     if (response) {
-  //       return res.json201(response, message);
-  //     } else {
-  //       return res.json404();
-  //     }
-  //   }
-
-  async deleteOne(req: Request, res: Response) {
-    const { mid } = req.params;
-
-    if (!mongoose.Types.ObjectId.isValid(mid)) {
-      return res.json404();
+    // Validación: nombre obligatorio
+    if (!name) {
+      res.json400("Missing required fields");
+      return; // 👈 corta la ejecución si falta un campo obligatorio
     }
 
-    const message = "movie deleted";
-    const response = await labStaffServices.deleteOne(mid);
+    // Validación: ID debe ser un ObjectId válido de MongoDB
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.json404();
+      return; // 👈 corta la ejecución si el ID no es válido
+    }
+
+    // Intentamos actualizar
+    const response = await labStaffServices.update(id, { name });
+
+    // Si se encuentra y actualiza
     if (response) {
-      return res.json201(response, message);
+      res.json201(response, "LAB STAFF UPDATED");
     } else {
-      return res.json404();
+      // Si no se encontró nada para actualizar
+      res.json404();
+    }
+  }
+
+  async deleteOne(req: Request, res: Response): Promise<void> {
+    const { id } = req.params;
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      res.json404();
+    }
+
+    const message = "LAB STAFF DELETED";
+    const response = await labStaffServices.deleteOne(id);
+    if (response) {
+      res.json201(response, message);
+    } else {
+      res.json404();
     }
   }
 }

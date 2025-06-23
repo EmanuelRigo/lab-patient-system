@@ -9,6 +9,7 @@ class LabStaffRouter extends CustomRouter {
 
   init = () => {
     this.read("/", ["PUBLIC"], medicalStudyController.getAll);
+    this.read("/:name", ["PUBLIC"], medicalStudyController.getByName);
     this.create("/", ["PUBLIC"], medicalStudyController.create);
     this.update("/:id", ["PUBLIC"], medicalStudyController.update);
     this.destroy("/:id", ["PUBLIC"], medicalStudyController.deleteOne);

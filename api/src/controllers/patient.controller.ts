@@ -9,24 +9,24 @@ class PatientController {
     res.json201(response, message);
   }
 
-  async getById(req: Request, res: Response) {
+  async getById(req: Request, res: Response): Promise<void> {
     const mid = req.params.mid;
     const response = await patientServices.getById(mid);
     const message = "patient read";
     if (response) {
-      return res.json201(response, message);
+      res.json201(response, message);
     } else {
-      return res.json404();
+      res.json404();
     }
   }
 
-  async create(req: Request, res: Response) {
+  async create(req: Request, res: Response): Promise<void> {
     const message = "pattient added";
     const data = req.body;
 
     const response = await patientServices.create(data);
 
-    return res.json201(response, message);
+    res.json201(response, message);
   }
 
   async update(req: Request, res: Response): Promise<void> {
@@ -57,19 +57,19 @@ class PatientController {
     }
   }
 
-  async deleteOne(req: Request, res: Response) {
+  async deleteOne(req: Request, res: Response): Promise<void> {
     const { mid } = req.params;
 
     if (!mongoose.Types.ObjectId.isValid(mid)) {
-      return res.json404();
+      res.json404();
     }
 
     const message = "patient deleted";
     const response = await patientServices.deleteOne(mid);
     if (response) {
-      return res.json201(response, message);
+      res.json201(response, message);
     } else {
-      return res.json404();
+      res.json404();
     }
   }
 }

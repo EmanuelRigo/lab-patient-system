@@ -9,14 +9,14 @@ class DoctorsAppointmentController {
     res.json201(response, message);
   }
 
-  async getByName(req: Request, res: Response) {
+  async getByName(req: Request, res: Response): Promise<void> {
     const name = req.params.name;
     const response = await doctorsAppointmentService.getByName(name);
     const message = "doctor's appointment read";
     if (response) {
-      return res.json201(response, message);
+      res.json201(response, message);
     } else {
-      return res.json404();
+      res.json404();
     }
   }
 

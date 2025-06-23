@@ -9,8 +9,9 @@ class DoctorsAppointmentRouter extends CustomRouter {
 
   init = () => {
     this.read("/", ["PUBLIC"], doctorsAppointmentController.getAll);
+    this.read("/:name", ["PUBLIC"], doctorsAppointmentController.getByName);
     this.create("/", ["PUBLIC"], doctorsAppointmentController.create);
-    // this.update("/:id", ["PUBLIC"], doctorsAppointmentController.update);
+    this.update("/:id", ["PUBLIC"], doctorsAppointmentController.update);
     this.destroy("/:id", ["PUBLIC"], doctorsAppointmentController.deleteOne);
   };
 }

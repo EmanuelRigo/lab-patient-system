@@ -1,6 +1,7 @@
 // import LabStaffDao from "../dao/mongo/labStaff.dao";
 import { LabStaff } from "../../../types/labStaff.types";
 import dao from "../dao/factory";
+import labStaffDao from "../dao/mongo/labStaff.dao";
 import LabStaffDTO from "../dto/labStaff.dto";
 
 const { LabStaffDao } = dao;
@@ -8,6 +9,11 @@ const { LabStaffDao } = dao;
 class LabStaffRepository {
   async getAll(): Promise<LabStaff[]> {
     return await LabStaffDao.getAll();
+  }
+
+  async getByName(name: string): Promise<LabStaff | null> {
+    const user = await labStaffDao.getByName(name);
+    return user;
   }
 
   async getById(id: string): Promise<LabStaff | null> {

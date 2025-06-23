@@ -9,14 +9,14 @@ class MedicalStudiesController {
     res.json201(response, message);
   }
 
-  async getByName(req: Request, res: Response) {
+  async getByName(req: Request, res: Response): Promise<void> {
     const name = req.params.name;
     const response = await medicalStudyServices.getByName(name);
     const message = "medical study read";
     if (response) {
-      return res.json201(response, message);
+      res.json201(response, message);
     } else {
-      return res.json404();
+      res.json404();
     }
   }
 

@@ -8,8 +8,11 @@ class PatientRouter extends CustomRouter {
   }
 
   init = () => {
+    this.create("/", ["PUBLIC"], patientController.create);
     this.read("/", ["PUBLIC"], patientController.getAll);
+    this.read("/:id", ["PUBLIC"], patientController.getById);
     this.update("/:id", ["PUBLIC"], patientController.update);
+    this.destroy("/:id", ["PUBLIC"], patientController.deleteOne);
   };
 }
 

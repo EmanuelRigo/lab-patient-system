@@ -6,6 +6,11 @@ class LabStaffDao {
     return await LabStaffModel.find().lean();
   }
 
+  async getByName(name: string): Promise<LabStaff | null> {
+    const user = await LabStaffModel.findOne({ name }).lean();
+    return user;
+  }
+
   async getById(id: string): Promise<LabStaff | null> {
     return await LabStaffModel.findById(id).lean();
   }

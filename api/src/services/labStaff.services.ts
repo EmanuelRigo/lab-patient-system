@@ -11,6 +11,11 @@ class LabStaffServices {
     return await labStaffRepository.getAll();
   }
 
+  async getByName(username: string): Promise<LabStaff | null> {
+    const user = await labStaffRepository.getByName(username);
+    return user;
+  }
+
   async getById(id: string): Promise<LabStaff | null> {
     return await labStaffRepository.getById(id);
   }

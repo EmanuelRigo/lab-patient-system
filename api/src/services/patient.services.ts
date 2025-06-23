@@ -1,5 +1,7 @@
-import patientDAO from "../dao/mongo/patient.dao";
 import { Patient } from "../../../types/patient.types";
+import dao from "../dao/factory";
+
+const { patientDAO } = dao;
 
 class PatientServices {
   async getAll(): Promise<Patient[]> {

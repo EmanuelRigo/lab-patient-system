@@ -7,8 +7,7 @@ export interface LabStaff {
   role: LabStaffRole;
   email: string;
   phone: string;
-  department: string;
-  isOnline?: boolean;
+  isOnline: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   _id?: string;
