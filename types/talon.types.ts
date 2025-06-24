@@ -1,6 +1,7 @@
-export interface Payment {
-  amount: number;
-  method: "credit_card" | "debit_card" | "cash" | "bank_transfer";
+export interface Talon {
+  IdPatient: string;
+  IdLabTechnician: string;
+  IdBiochemist: string;
   status: "pending" | "completed" | "failed";
   IdPayment?: string;
   IdReceptionist: string;
