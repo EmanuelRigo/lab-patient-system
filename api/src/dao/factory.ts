@@ -1,5 +1,6 @@
 import MongoSingleton from "../utils/mongoDB.utils";
 import envsUtils from "../utils/envs.utils";
+import DaoIndex from "./mongo/index.dao";
 
 const { PERSISTENCE } = envsUtils;
 
@@ -20,6 +21,7 @@ switch (PERSISTENCE) {
 
   default:
     MongoSingleton.getInstance();
+    const DoctorsAppointmentDao = DaoIndex;
     const labStaffDao = require("./mongo/labStaff.dao").default;
     const medicalStudyDao = require("./mongo/medicalStudy.dao").default;
     const patientDao = require("./mongo/patient.dao").default;

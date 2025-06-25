@@ -19,8 +19,8 @@ class MedicalStudyDTO {
       this.createdAt = new Date();
       this.updatedAt = new Date();
     }
-    this.price = data.price;
     this.name = data.name;
+    this.price = data.price;
     this.description = data.description;
     this.duration = data.duration;
   }
