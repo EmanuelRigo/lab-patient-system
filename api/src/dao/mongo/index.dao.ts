@@ -8,7 +8,7 @@ import TalonModel from "./model/talon.model";
 
 import { Model } from "mongoose";
 
-class DaoIndex<T> {
+class DaoIndexMongo<T> {
   private model: Model<T>;
 
   constructor(model: Model<T>) {
@@ -37,12 +37,22 @@ class DaoIndex<T> {
   };
 }
 
-export default DaoIndex;
+export default DaoIndexMongo;
 
-export const DoctorsAppointmentDao = new DaoIndex(DoctorsAppointmentModel);
-export const LabStaffDao = new DaoIndex(LabStaffModel);
-export const MedicalStudyDao = new DaoIndex(MedicalStudyModel);
-export const PatientDao = new DaoIndex(PatientModel);
-export const PaymentDao = new DaoIndex(PaymentModel);
-export const ResultDao = new DaoIndex(ResultModel);
-export const TalonDao = new DaoIndex(TalonModel);
+const DoctorsAppointmentDaoMongo = new DaoIndexMongo(DoctorsAppointmentModel);
+const LabStaffDaoMongo = new DaoIndexMongo(LabStaffModel);
+const MedicalStudyDaoMongo = new DaoIndexMongo(MedicalStudyModel);
+const PatientDaoMongo = new DaoIndexMongo(PatientModel);
+const PaymentDaoMongo = new DaoIndexMongo(PaymentModel);
+const ResultDaoMongo = new DaoIndexMongo(ResultModel);
+const TalonDaoMongo = new DaoIndexMongo(TalonModel);
+
+export {
+  DoctorsAppointmentDaoMongo,
+  LabStaffDaoMongo,
+  MedicalStudyDaoMongo,
+  PatientDaoMongo,
+  PaymentDaoMongo,
+  ResultDaoMongo,
+  TalonDaoMongo,
+};

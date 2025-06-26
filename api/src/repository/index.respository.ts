@@ -8,7 +8,15 @@ import TalonDTO from "../dto/talon.dto";
 
 import dao from "../dao/factory";
 
-const { DoctorsAppointmentDao, LabStaffDao, MedicalStudyDao, PatientDao } = dao;
+const {
+  DoctorsAppointmentDao,
+  LabStaffDao,
+  MedicalStudyDao,
+  PatientDao,
+  PaymentDao,
+  ResultDao,
+  TalonDao,
+} = dao;
 
 type Constructor<T> = new (data: any) => T;
 
@@ -19,7 +27,7 @@ class Repository<T> {
     getById: (id: string) => Promise<T | null>;
     getByName?: (name: string) => Promise<T | null>;
     update: (id: string, data: Partial<T>) => Promise<T | null>;
-    deleteOne: (id: string) => Promise<boolean>;
+    deleteOne: (id: string) => Promise<T>;
   };
   private DTO: Constructor<T>;
 
@@ -50,7 +58,7 @@ class Repository<T> {
     return await this.dao.update(id, data);
   };
 
-  deleteOne = async (id: string): Promise<boolean> => {
+  deleteOne = async (id: string): Promise<T> => {
     return await this.dao.deleteOne(id);
   };
 }
@@ -67,3 +75,13 @@ const PatientRepository = new Repository(PatientDao, PatientDTO);
 const PaymentRepository = new Repository(PaymentDao, PaymentDTO);
 const ResultRepository = new Repository(ResultDao, ResultDTO);
 const TalonRepository = new Repository(TalonDao, TalonDTO);
+
+export {
+  DoctorsAppointmentRepository,
+  LabStaffRepository,
+  MedicalStudyRepository,
+  PatientRepository,
+  PaymentRepository,
+  ResultRepository,
+  TalonRepository,
+};
