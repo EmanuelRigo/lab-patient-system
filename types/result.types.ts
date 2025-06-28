@@ -3,7 +3,7 @@ export interface Result {
   IdBiochemist: string;
   IdLabTechnician: string;
   extractionDate?: Date;
-  extractionTime: string;
+  extractionTime?: string;
   createdAt?: Date;
   updatedAt?: Date;
   _id?: string;
