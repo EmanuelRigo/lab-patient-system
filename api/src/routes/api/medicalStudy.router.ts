@@ -1,4 +1,4 @@
-import controller from "../../controllers/patient.controller";
+import controller from "../../controllers/medicalStudy.controller";
 import CustomRouter from "../../utils/CustomRouter.util";
 
 function asyncHandler(fn: any) {
@@ -7,20 +7,20 @@ function asyncHandler(fn: any) {
   };
 }
 
-class PatientRouter extends CustomRouter {
+class LabStaffRouter extends CustomRouter {
   constructor() {
     super();
     this.init();
   }
 
   init = () => {
-    this.create("/", ["PUBLIC"], asyncHandler(controller.create));
     this.read("/", ["PUBLIC"], asyncHandler(controller.getAll));
-    this.read("/:id", ["PUBLIC"], asyncHandler(controller.getById));
+    this.read("/:name", ["PUBLIC"], asyncHandler(controller.getByName));
+    this.create("/", ["PUBLIC"], asyncHandler(controller.create));
     this.update("/:id", ["PUBLIC"], asyncHandler(controller.update));
     this.destroy("/:id", ["PUBLIC"], asyncHandler(controller.deleteOne));
   };
 }
 
-let patientRouter = new PatientRouter();
-export default patientRouter.getRouter();
+let medicalStudyRouter = new LabStaffRouter();
+export default medicalStudyRouter.getRouter();

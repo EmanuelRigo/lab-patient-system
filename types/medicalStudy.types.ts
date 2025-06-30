@@ -2,7 +2,7 @@ export interface MedicalStudy {
   name: string;
   price: number;
   description: string;
-  duration: number;
+  duration?: number;
   createdAt?: Date;
   updatedAt?: Date;
   _id?: string;

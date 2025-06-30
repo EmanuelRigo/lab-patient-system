@@ -1,4 +1,4 @@
-import controller from "../../controllers/patient.controller";
+import controller from "../../controllers/payment.controller";
 import CustomRouter from "../../utils/CustomRouter.util";
 
 function asyncHandler(fn: any) {
@@ -7,7 +7,7 @@ function asyncHandler(fn: any) {
   };
 }
 
-class PatientRouter extends CustomRouter {
+class PaymentRouter extends CustomRouter {
   constructor() {
     super();
     this.init();
@@ -22,5 +22,5 @@ class PatientRouter extends CustomRouter {
   };
 }
 
-let patientRouter = new PatientRouter();
-export default patientRouter.getRouter();
+let paymentRouter = new PaymentRouter();
+export default paymentRouter.getRouter();

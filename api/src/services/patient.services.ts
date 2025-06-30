@@ -1,28 +1,27 @@
 import { Patient } from "../../../types/patient.types";
-import dao from "../dao/factory";
 
-const { patientDAO } = dao;
+import { PatientRepository } from "../repository/index.respository";
 
 class PatientServices {
   async getAll(): Promise<Patient[]> {
-    return await patientDAO.getAll();
+    return await PatientRepository.getAll();
   }
 
   async getById(id: string): Promise<Patient | null> {
-    return await patientDAO.getById(id);
+    return await PatientRepository.getById(id);
   }
 
   async getByName(username: string): Promise<Patient | null> {
-    const user = await patientDAO.getByName(username);
+    const user = await PatientRepository.getByName(username);
     return user;
   }
 
   async create(data: Patient): Promise<Patient> {
-    return await patientDAO.create(data);
+    return await PatientRepository.create(data);
   }
 
   async update(id: string, data: Partial<Patient>): Promise<Patient | null> {
-    return await patientDAO.update(id, data);
+    return await PatientRepository.update(id, data);
   }
 
   async deleteOne(id: string): Promise<{
@@ -30,7 +29,7 @@ class PatientServices {
     message: string;
     data: Patient;
   }> {
-    const deletedPatient = await patientDAO.deleteOne(id);
+    const deletedPatient = await PatientRepository.deleteOne(id);
 
     if (!deletedPatient) {
       throw new Error(

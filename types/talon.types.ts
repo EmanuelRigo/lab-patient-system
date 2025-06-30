@@ -3,7 +3,7 @@ export interface Talon {
   IdLabTechnician: string;
   IdBiochemist: string;
   statusPayment: "pending" | "completed" | "failed";
-  IdPayment?: string;
+  IdPayment: string;
   IdReceptionist: string;
   IdDoctorAppointment: string;
   createdAt?: Date;

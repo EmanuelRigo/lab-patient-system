@@ -1,27 +1,28 @@
 import { MedicalStudy } from "../../../types/medicalStudy.types";
-import dao from "../dao/factory";
+// import dao from "../dao/factory";
+import { MedicalStudyRepository } from "../repository/index.respository";
 
-const { medicalStudyDAO } = dao;
+// const { MedicalStudyRepository } = dao;
 
 class MedicalStudiesServices {
   async getAll(): Promise<MedicalStudy[]> {
-    return await medicalStudyDAO.getAll();
+    return await MedicalStudyRepository.getAll();
   }
 
   async getByName(username: string): Promise<MedicalStudy | null> {
-    const user = await medicalStudyDAO.getByName(username);
+    const user = await MedicalStudyRepository.getByName(username);
     return user;
   }
 
   async create(data: MedicalStudy): Promise<MedicalStudy> {
-    return await medicalStudyDAO.create(data);
+    return await MedicalStudyRepository.create(data);
   }
 
   async update(
     id: string,
     data: Partial<MedicalStudy>
   ): Promise<MedicalStudy | null> {
-    return await medicalStudyDAO.update(id, data);
+    return await MedicalStudyRepository.update(id, data);
   }
 
   async deleteOne(id: string): Promise<{
@@ -29,7 +30,7 @@ class MedicalStudiesServices {
     message: string;
     data: MedicalStudy;
   }> {
-    const deletedMedicalStudy = await medicalStudyDAO.deleteOne(id);
+    const deletedMedicalStudy = await MedicalStudyRepository.deleteOne(id);
 
     if (!deletedMedicalStudy) {
       throw new Error(

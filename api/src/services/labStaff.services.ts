@@ -36,10 +36,16 @@ class LabStaffServices {
   }
 
   async deleteOne(id: string): Promise<{
-    data: LabStaff | null;
+    success: boolean;
+    message: string;
+    data: LabStaff;
   }> {
     const data = await LabStaffRepository.deleteOne(id);
-    return { data };
+    return {
+      success: true,
+      message: "Personal de laboratorio eliminado correctamente.",
+      data: data,
+    };
   }
 }
 
