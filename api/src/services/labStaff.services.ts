@@ -22,10 +22,10 @@ class LabStaffServices {
     return await LabStaffRepository.getById(id);
   }
 
-  // async getByUserName(username: string): Promise<LabStaff | null> {
-  //   const user = await LabStaffRepository.getByUserName(username);
-  //   return user;
-  // }
+  async getByUsername(username: string): Promise<LabStaff | null> {
+    const user = await LabStaffRepository.getByUsername(username);
+    return user;
+  }
 
   async create(data: LabStaff): Promise<LabStaff> {
     return await LabStaffRepository.create(data);

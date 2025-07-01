@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
 
+import envsUtils from "../utils/envs.utils";
 import { Request } from "express";
 
 // Extend Express Request interface to include custom properties
@@ -23,6 +24,7 @@ import labStaffServices from "../services/labStaff.services";
 import { LabStaff } from "../../../types/labStaff.types";
 
 const { BASE_URL } = envsUtils;
+
 //--REGISTER
 passport.use(
   "register",
@@ -33,11 +35,11 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const userExists = await labStaffServices.getByUserName(username);
+        const userExists = await labStaffServices.getByName(username);
 
         if (userExists) {
           const info = {
-            message: "User already exists",
+            message: "UserName already exists",
             statusCode: 400,
           };
           return done(null, false, info);
@@ -59,18 +61,18 @@ passport.use(
   new LocalStrategy(
     {
       passReqToCallback: true,
-      usernameField: "email",
+      usernameField: "username",
     },
-    async (req, email, password, done) => {
+    async (req, username, password, done) => {
       try {
-        if (!email || !password) {
+        if (!username || !password) {
           const info = {
             message: "EMAIL AND PASSWORD ARE REQUIRED",
             statusCode: 400,
           };
           return done(null, false, info);
         }
-        const user = await labStaffServices.getByUserName(email);
+        const user = await labStaffServices.getByUsername(username);
 
         if (!user) {
           const info = {
@@ -366,7 +368,5 @@ passport.use(
     }
   )
 );
-
-import envsUtils from "../utils/envs.utils";
 
 export default passport;

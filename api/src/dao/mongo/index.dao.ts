@@ -24,6 +24,11 @@ class DaoIndexMongo<T> {
   getByName = async (name: string): Promise<T | null> => {
     return (await this.model.findOne({ name }).lean()) as T | null;
   };
+
+  getByUsername = async (username: string): Promise<T | null> => {
+    return (await this.model.findOne({ username }).lean()) as T | null;
+  };
+
   create = async (data: Partial<T>): Promise<T> => {
     return (await this.model.create(data)) as T;
   };

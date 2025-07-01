@@ -9,6 +9,8 @@ import paymentRouter from "./payment.router";
 import resultRouter from "./result.router";
 import talonRouter from "./talon.router";
 
+import sessionRouter from "./session.router";
+
 const apiRouter = Router();
 
 apiRouter.get("/ping", (_req, res) => {
@@ -45,19 +47,12 @@ class IndexRouter extends CustomRouter {
     this.use("/result", ["PUBLIC"], asyncHandler(resultRouter));
 
     this.use("/talon", ["PUBLIC"], asyncHandler(talonRouter));
+
+    this.use("/session", ["PUBLIC"], sessionRouter);
+    // this.use("/cookies", ["USER"], cookiesRouter);
   };
 }
 
 let indexRouter = new IndexRouter();
 
 export default indexRouter.getRouter();
-
-// apiRouter.use("/doctorAppointment", doctorsAppointmentRouter);
-// apiRouter.use("/labstaff", labStaffRouter);
-// apiRouter.use("/medicalstudy", medicalStudyRouter);
-// apiRouter.use("/patient", patientsApiRouter);
-// apiRouter.use("/payment", paymentRouter);
-// apiRouter.use("/result", resultRouter);
-// apiRouter.use("/talon", talonRouter);
-
-// export default apiRouter;
