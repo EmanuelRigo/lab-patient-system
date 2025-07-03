@@ -10,6 +10,7 @@ import resultRouter from "./result.router";
 import talonRouter from "./talon.router";
 
 import sessionRouter from "./session.router";
+import cookiesRouter from "./cookies.router";
 
 const apiRouter = Router();
 
@@ -49,7 +50,8 @@ class IndexRouter extends CustomRouter {
     this.use("/talon", ["PUBLIC"], asyncHandler(talonRouter));
 
     this.use("/session", ["PUBLIC"], sessionRouter);
-    // this.use("/cookies", ["USER"], cookiesRouter);
+
+    this.use("/cookies", ["PUBLIC"], asyncHandler(cookiesRouter));
   };
 }
 

@@ -1,23 +1,55 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+
+import { loginUser } from "@/services/users.api";
+
 import Aside from "@/components/Aside";
 
 export default function page() {
   const router = useRouter();
-  const [usuario, setUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  function getCookie(name: string) {
+    const cookies = document.cookie.split("; ");
+    const cookie = cookies.find((c) => c.startsWith(name + "="));
+    return cookie ? cookie.split("=")[1] : undefined;
+  }
+
+  useEffect(() => {
+    const token = getCookie("onlineUser");
+    if (token) {
+      console.log("onlineUser");
+      //router.push("/");
+    }
+  }, [router]);
+
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Aquí va la lógica real de autenticación
-    if (usuario === "admin" && contrasena === "1234") {
-      document.cookie = `token=1234; path=/`; // cookie simulada
-      router.push("/dashboard");
-    } else {
-      alert("Credenciales incorrectas");
+    try {
+      const credentials = {
+        username,
+        password,
+      };
+      const response = await loginUser(credentials);
+      console.log("🚀🚀🚀  ~ handleLogin ~ response:", response);
+
+      if (response.ok) {
+        console.log("Inicio de sesión exitoso");
+        setError(""); // Limpiamos el error en caso de éxito
+        router.push("/");
+        // window.location.href = "/";
+      } else {
+        console.error("Error en el inicio de sesión");
+        setError("Email o contraseña incorrecta."); // Actualizamos el estado con el error
+      }
+    } catch (error) {
+      console.error("Error en el inicio de sesión:", error);
+      setError("Error en el inicio de sesión. Por favor, intente nuevamente.");
     }
   };
 
@@ -29,16 +61,16 @@ export default function page() {
             Login
           </h2>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-sky-700 font-medium mb-1">
                 Usuario
               </label>
               <input
                 type="text"
-                value={usuario}
-                onChange={(e) => setUsuario(e.target.value)}
-                className="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 text-neutral-800"
                 required
               />
             </div>
@@ -49,9 +81,9 @@ export default function page() {
               </label>
               <input
                 type="password"
-                value={contrasena}
-                onChange={(e) => setContrasena(e.target.value)}
-                className="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 text-neutral-800"
                 required
               />
             </div>

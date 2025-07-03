@@ -1,4 +1,8 @@
-export type LabStaffRole = "LabTechnician" | "Biochemist" | "Assistant";
+export type LabStaffRole =
+  | "LabTechnician"
+  | "Biochemist"
+  | "Assistant"
+  | "Admin";
 
 export interface LabStaff {
   name: string;

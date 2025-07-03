@@ -1,7 +1,7 @@
 import envsUtils from "./envs.utils";
 import jwt from "jsonwebtoken";
 
-const { SECRET_KEY } = envsUtils;
+const { SECRET_KEY, SECRET_KEY_FRONTEND } = envsUtils;
 
 type JwtPayloadData = {
   name: string;
@@ -16,6 +16,10 @@ function createTokenUtil(data: JwtPayloadData): string {
   return token;
 }
 
+function createUserInfoToken(data: { username: string; role: string }) {
+  return jwt.sign(data, SECRET_KEY_FRONTEND, { expiresIn: "30d" });
+}
+
 function finishTokenUtil(data: JwtPayloadData): string {
   const token = jwt.sign(data, SECRET_KEY, { expiresIn: 1 });
   return token;
@@ -26,5 +30,10 @@ function verifyTokenUtil(token: string): JwtPayloadData | null {
   return verify;
 }
 
-export { createTokenUtil, finishTokenUtil, verifyTokenUtil };
+export {
+  createTokenUtil,
+  finishTokenUtil,
+  verifyTokenUtil,
+  createUserInfoToken,
+};
 export type { JwtPayloadData };

@@ -11,12 +11,17 @@ declare global {
     interface Request {
       token?: string;
       onlineUser?: string;
+      userInfoToken?: string;
     }
   }
 }
 
 import { createHashUtil, verifyHashUtil } from "../utils/hash.util";
-import { createTokenUtil, verifyTokenUtil } from "../utils/token.util";
+import {
+  createTokenUtil,
+  createUserInfoToken,
+  verifyTokenUtil,
+} from "../utils/token.util";
 
 import LabStaffDTO from "../dto/labStaff.dto";
 import labStaffServices from "../services/labStaff.services";
@@ -107,8 +112,11 @@ passport.use(
           role: user.role,
           isOnline: true,
         };
+
         const token = createTokenUtil(data);
+
         req.token = token;
+
         const onlineUser = createTokenUtil({
           name: user.name,
           username: user.username,
@@ -116,11 +124,82 @@ passport.use(
           role: user.role,
           isOnline: true,
         });
+
         req.onlineUser = onlineUser;
+
+        const userInfoToken = createUserInfoToken({
+          username: user.username,
+          role: user.role,
+        });
+
+        req.userInfoToken = userInfoToken;
+
         return done(null, user);
       } catch (error) {
         console.error("Error durante el proceso de autenticación:", error);
         return done(error);
+      }
+    }
+  )
+);
+
+//--SIGNOUT
+passport.use(
+  "signout",
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
+      secretOrKey: String(envsUtils.SECRET_KEY),
+    },
+    async (data, done) => {
+      try {
+        const { user_id } = data;
+        await labStaffServices.update(user_id, { isOnline: false });
+        return done(null, { user_id: null });
+      } catch (error) {
+        const info = {
+          message: "Error in signout process",
+          statusCode: 500,
+        };
+        return done(null, false, info);
+      }
+    }
+  )
+);
+
+//--UPDATE
+passport.use(
+  "update",
+  new JwtStrategy(
+    {
+      jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
+      secretOrKey: String(envsUtils.SECRET_KEY),
+      passReqToCallback: true,
+    },
+    async (req, data, done) => {
+      console.log("🚀 ~ data:", data);
+      console.log("📦 ~ req.body:", req.body);
+
+      try {
+        const { user_id } = data;
+        const user = await labStaffServices.getById(user_id);
+
+        if (!user) {
+          return done(null, false, {
+            message: "USER NOT FOUND",
+            statusCode: 404,
+          });
+        }
+
+        const updatedUser = await labStaffServices.update(user_id, req.body);
+        console.log("🚀 ~ updatedUser:", updatedUser);
+
+        return done(null, updatedUser);
+      } catch (error) {
+        return done(null, false, {
+          message: "Error in update process",
+          statusCode: 500,
+        });
       }
     }
   )
@@ -178,90 +257,51 @@ passport.use(
   )
 );
 
-//--UPDATE
-passport.use(
-  "update",
-  new JwtStrategy(
-    {
-      jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
-      secretOrKey: String(envsUtils.SECRET_KEY),
-      passReqToCallback: true,
-    },
-    async (req, data, done) => {
-      console.log("🚀 ~ data:", data);
-      console.log("📦 ~ req.body:", req.body);
-
-      try {
-        const { user_id } = data;
-        const user = await labStaffServices.getById(user_id);
-
-        if (!user) {
-          return done(null, false, {
-            message: "USER NOT FOUND",
-            statusCode: 404,
-          });
-        }
-
-        // Usás lo que venga por body (lo nuevo que quiere actualizar el usuario)
-        const updatedUser = await labStaffServices.update(user_id, req.body);
-        console.log("🚀 ~ updatedUser:", updatedUser);
-
-        return done(null, updatedUser);
-      } catch (error) {
-        return done(null, false, {
-          message: "Error in update process",
-          statusCode: 500,
-        });
-      }
-    }
-  )
-);
-
 //--DELETE ACCOUNT
-passport.use(
-  "deleteAccount",
-  new JwtStrategy(
-    {
-      jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
-      secretOrKey: String(envsUtils.SECRET_KEY),
-      passReqToCallback: true,
-    },
-    async (req, data, done) => {
-      console.log("🚀 ~ data:", data);
-      console.log("-reqbody", req.body);
+// passport.use(
+//   "deleteAccount",
+//   new JwtStrategy(
+//     {
+//       jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
+//       secretOrKey: String(envsUtils.SECRET_KEY),
+//       passReqToCallback: true,
+//     },
+//     async (req, data, done) => {
+//       console.log("🚀 ~ data:", data);
+//       console.log("-reqbody", req.body);
 
-      try {
-        const { user_id } = data;
-        const user = await labStaffServices.getById(user_id);
-        console.log("🚀 ~ user:", user);
-        if (!user) {
-          const info = {
-            message: "INVALID CREDENTIALS1",
-            statusCode: 401,
-          };
-          return done(null, false, info);
-        }
+//       try {
+//         const { user_id } = data;
+//         const user = await labStaffServices.getById(user_id);
+//         console.log("🚀 ~ user:", user);
+//         if (!user) {
+//           const info = {
+//             message: "INVALID CREDENTIALS1",
+//             statusCode: 401,
+//           };
+//           return done(null, false, info);
+//         }
 
-        const verify = verifyHashUtil(req.body.password, user.password);
-        if (!verify) {
-          const info = {
-            message: "INVALID CREDENTIALS2",
-            statusCode: 401,
-          };
-          return done(null, false, info);
-        }
+//         const verify = verifyHashUtil(req.body.password, user.password);
+//         if (!verify) {
+//           const info = {
+//             message: "INVALID CREDENTIALS2",
+//             statusCode: 401,
+//           };
+//           return done(null, false, info);
+//         }
 
-        const deletedUser = await labStaffServices.deleteOne(user_id);
-        console.log("🚀 ~ deletedUser:", deletedUser);
+//         const deletedUser = await labStaffServices.deleteOne(user_id);
+//         console.log("🚀 ~ deletedUser:", deletedUser);
 
-        // await labStaffServices.delete(user_id);
-        return done(null, { message: "User deleted successfully" });
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
+//         // await labStaffServices.delete(user_id);
+//         return done(null, { message: "User deleted successfully" });
+//       } catch (error) {
+//         return done(error);
+//       }
+//     }
+//   )
+// );
 
 //--ADMIN
 passport.use(
@@ -286,30 +326,6 @@ passport.use(
         return done(null, user);
       } catch (error) {
         return done(error);
-      }
-    }
-  )
-);
-
-//--SIGNOUT
-passport.use(
-  "signout",
-  new JwtStrategy(
-    {
-      jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
-      secretOrKey: String(envsUtils.SECRET_KEY),
-    },
-    async (data, done) => {
-      try {
-        const { user_id } = data;
-        await labStaffServices.update(user_id, { isOnline: false });
-        return done(null, { user_id: null });
-      } catch (error) {
-        const info = {
-          message: "Error in signout process",
-          statusCode: 500,
-        };
-        return done(null, false, info);
       }
     }
   )
