@@ -1,7 +1,6 @@
 "use client";
 import { createContext, useContext, useState, ReactNode } from "react";
 import { MedicalStudy } from "../../types/medicalStudy.types";
-import MedicalStudyList from "@/app/medical-studies/page";
 
 interface CustomContextProps {
   //   updateCardMovie: (movie: Movie) => void;
@@ -29,11 +28,6 @@ const CustomProvider = ({ children }: CustomProviderProps) => {
   const [medicalStudiesList, setMedicalStudiesList] = useState<MedicalStudy[]>(
     []
   );
-
-  //   const updateCardMovie = (movie: Movie) => {
-  //     setMovieList((prevMovies) => [...prevMovies, movie]);
-  //     console.log(movie);
-  //   };
 
   const contextValue = { medicalStudiesList, setMedicalStudiesList };
 
