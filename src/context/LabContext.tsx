@@ -10,11 +10,15 @@ import React, {
 import { MedicalStudy } from "../../types/medicalStudy.types";
 import { LabStaff } from "../../types/labStaff.types";
 
+import { Role } from "../../types/frontend.types";
+
 interface LabSystemContextProps {
   medicalStudyList: MedicalStudy[];
   setMedicalStudyList: React.Dispatch<React.SetStateAction<MedicalStudy[]>>;
   userLabData: LabStaff | null;
   setUserLabData: React.Dispatch<React.SetStateAction<LabStaff | null>>;
+  role: Role;
+  setRole: React.Dispatch<React.SetStateAction<Role>>;
 }
 
 export const labSystemContext = createContext<
@@ -33,15 +37,19 @@ interface LabSystemProviderProps {
   children: ReactNode;
 }
 
-const MovieProvider = ({ children }: LabSystemProviderProps) => {
+const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [medicalStudyList, setMedicalStudyList] = useState<MedicalStudy[]>([]);
   const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
+  const [role, setRole] = useState<Role>("Public");
+  console.log("🚀 ~ LabSystemProvider ~ role:", role);
 
   const value: LabSystemContextProps = {
     medicalStudyList,
     setMedicalStudyList,
     userLabData,
     setUserLabData,
+    role,
+    setRole,
   };
 
   return (
@@ -51,4 +59,4 @@ const MovieProvider = ({ children }: LabSystemProviderProps) => {
   );
 };
 
-export default MovieProvider;
+export default LabSystemProvider;

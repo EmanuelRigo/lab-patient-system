@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import Aside from "@/components/Aside";
 import "./globals.css";
+import LabSystemProvider from "@/context/LabContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,9 +34,11 @@ export default function RootLayout({
           backgroundPosition: "center",
         }}
       >
-        <div className="h-full w-3/6 bg-neutral-100 p-4"> {children}</div>
+        <LabSystemProvider>
+          <div className="h-full w-3/6 bg-neutral-100 p-4"> {children}</div>
 
-        <Aside />
+          <Aside />
+        </LabSystemProvider>
       </body>
     </html>
   );

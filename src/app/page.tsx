@@ -1,20 +1,23 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import ButtonPanel from "@/components/homepage/ButtonPanel";
 
-// Tipo para los datos del token
+import { useLabSystemContext } from "@/context/LabContext";
+
+import { Role } from "../../types/frontend.types";
+
 type UserInfoToken = {
   username: string;
-  role: "Admin" | "Secretary" | "LabTechnician"; // Ajustalo a tus roles reales
+  role: Role;
   iat: number;
   exp: number;
 };
 
 export default function DashboardButtons() {
-  const [role, setRole] = useState<string | null>(null);
+  // const [role, setRole] = useState<string | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const { role, setRole } = useLabSystemContext();
 
   useEffect(() => {
     const getCookie = (name: string) => {
