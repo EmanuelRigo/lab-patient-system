@@ -4,7 +4,7 @@ import React from "react";
 import { FaTrash } from "react-icons/fa";
 
 interface LabStaffCardProps {
-  id: string;
+  id: string | undefined;
   name: string;
   role: string;
   onDelete: (id: string) => void;

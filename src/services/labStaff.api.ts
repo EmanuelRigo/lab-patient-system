@@ -32,7 +32,7 @@ export async function loginUser(credentials: {
   return res;
 }
 
-export async function getAllLabStaff(): Promise<Response> {
+export async function getAllLabStaff(): Promise<LabStaff[]> {
   const res = await fetch(`${BACKEND_URL}/api/labstaff`, {
     method: "GET",
     credentials: "include",
@@ -40,7 +40,13 @@ export async function getAllLabStaff(): Promise<Response> {
       "Content-Type": "application/json",
     },
   });
-  return res;
+
+  if (!res.ok) {
+    throw new Error("❌ No se pudo obtener el personal de laboratorio.");
+  }
+
+  const data = await res.json();
+  return data.data as LabStaff[];
 }
 
 export async function updateUser(userData: LabStaff): Promise<Response> {

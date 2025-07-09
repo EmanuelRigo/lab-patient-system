@@ -5,12 +5,13 @@ import { FaTrash } from "react-icons/fa";
 
 import { getAllLabStaff } from "@/services/labStaff.api";
 import LabStaffCard from "./LabStaffCard";
+import { LabStaff } from "../../../types/labStaff.types";
 
-type LabStaff = {
-  id: string;
-  name: string;
-  role: "ADMIN" | "Secretary" | "LabTechnician";
-};
+// type LabStaff = {
+//   id: string;
+//   name: string;
+//   role: "ADMIN" | "Secretary" | "LabTechnician";
+// };
 
 const LabStaffList = () => {
   const [staff, setStaff] = useState<LabStaff[]>([]);
@@ -30,17 +31,17 @@ const LabStaffList = () => {
     fetchStaff();
   }, []);
 
-  const handleDelete = (id: string) => {
-    setStaff((prev) => prev.filter((person) => person.id !== id));
+  const handleDelete = (_id: string) => {
+    setStaff((prev) => prev.filter((person) => person._id !== _id));
   };
 
   return (
     <div className="space-y-4 p-2 rounded-lg shadow-md bg-white">
       {staff.map((person) => (
         <LabStaffCard
-          key={person.id}
-          id={person.id}
-          name={person.name}
+          key={person._id}
+          id={person._id}
+          name={person.firstName}
           role={person.role}
           onDelete={handleDelete}
         />

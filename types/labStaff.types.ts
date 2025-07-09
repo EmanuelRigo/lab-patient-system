@@ -15,5 +15,5 @@ export interface LabStaff {
   isOnline?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
+  _id: string;
 }
