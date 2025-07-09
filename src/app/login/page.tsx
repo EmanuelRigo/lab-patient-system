@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { loginUser } from "@/services/users.api";
+import { loginUser } from "@/services/labStaff.api";
 
 import Aside from "@/components/Aside";
 

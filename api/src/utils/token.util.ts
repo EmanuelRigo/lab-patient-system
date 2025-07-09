@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 const { SECRET_KEY, SECRET_KEY_FRONTEND } = envsUtils;
 
 type JwtPayloadData = {
-  name: string;
+  firstName: string;
   username: string;
   user_id: string;
   role: string;

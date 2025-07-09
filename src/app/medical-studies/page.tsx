@@ -3,6 +3,8 @@
 import { FaTrash } from "react-icons/fa";
 import React, { useState } from "react";
 
+import MedicalStudyForm from "@/components/medicalStudies/MedicalStudyForm";
+
 type Study = {
   id: number;
   name: string;
@@ -33,7 +35,8 @@ const MedicalStudyList = () => {
   };
 
   return (
-    <div className="h-full overflow-y-auto p-4 space-y-4">
+    <div className="h-full overflow-y-auto p-4 space-y-4 text-black">
+      <MedicalStudyForm></MedicalStudyForm>
       {studies.map((study) => (
         <div
           key={study.id}

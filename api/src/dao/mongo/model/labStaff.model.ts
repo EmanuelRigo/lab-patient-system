@@ -5,10 +5,14 @@ const collection = "lab_staff";
 
 const schema = new Schema<LabStaff>(
   {
-    name: {
+    firstName: {
       type: String,
       required: true,
       index: true,
+    },
+    lastName: {
+      type: String,
+      required: true,
     },
     username: {
       type: String,

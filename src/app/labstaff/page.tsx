@@ -1,14 +1,20 @@
+"use client";
+
 import React from "react";
 import LabStaffList from "@/components/labstaff/LabStaffList";
 import LabStaffForm from "@/components/labstaff/LabStaffForm";
 
-const page = () => {
+const Page = () => {
   return (
-    <div className="text-black h-full overflow-y-auto p-6">
-      <LabStaffForm></LabStaffForm>
-      <LabStaffList />
+    <div className="h-full p-6  flex flex-col text-black">
+      <LabStaffForm />
+
+      {/* Contenedor flexible con scroll si hay overflow */}
+      <div className="flex-1 overflow-y-auto mt-4 scrollbar-hidden">
+        <LabStaffList />
+      </div>
     </div>
   );
 };
 
-export default page;
+export default Page;

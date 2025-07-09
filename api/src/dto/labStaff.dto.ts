@@ -5,13 +5,14 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class LabStaffDTO {
-  name: string;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
   role: LabStaffRole;
   email: string;
   phone: string;
-  isOnline: boolean;
+  isOnline?: boolean = false;
   createdAt?: Date;
   updatedAt?: Date;
   _id?: string;
@@ -22,7 +23,8 @@ class LabStaffDTO {
       this.createdAt = new Date();
       this.updatedAt = new Date();
     }
-    this.name = data.name;
+    this.firstName = data.firstName;
+    this.lastName = data.lastName;
     this.username = data.username;
     this.email = data.email;
     this.password = data.password;

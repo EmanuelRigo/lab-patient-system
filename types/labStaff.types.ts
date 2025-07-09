@@ -5,13 +5,14 @@ export type LabStaffRole =
   | "Admin";
 
 export interface LabStaff {
-  name: string;
+  firstName: string;
+  lastName: string;
   username: string;
   password: string;
   role: LabStaffRole;
   email: string;
   phone: string;
-  isOnline: boolean;
+  isOnline?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   _id?: string;

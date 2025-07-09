@@ -1,12 +1,10 @@
 import { LabStaff } from "../../types/labStaff.types";
-// import envsUtils from "../../api/src/utils/envs.utils";
 import envsUtils from "@/utils/envs.utils";
 
 const BACKEND_URL = envsUtils.BACKEND_URL;
 console.log("🚀🚀🚀 ~ API_URL:", BACKEND_URL);
 
 export async function createUser(userData: LabStaff): Promise<Response> {
-  console.log("🚀 ~ envsUtils:", envsUtils);
   const res = await fetch(`${BACKEND_URL}/api/session/register`, {
     method: "POST",
     headers: {
@@ -21,8 +19,6 @@ export async function loginUser(credentials: {
   username: string;
   password: string;
 }): Promise<Response> {
-  console.log("🚀 ~ loginUser ~ credentials:", credentials);
-  console.log("🚀 ~ API_URL:", BACKEND_URL);
   const res = await fetch(`${BACKEND_URL}/api/session/login`, {
     method: "POST",
 
@@ -33,6 +29,17 @@ export async function loginUser(credentials: {
     body: JSON.stringify(credentials),
   });
 
+  return res;
+}
+
+export async function getAllLabStaff(): Promise<Response> {
+  const res = await fetch(`${BACKEND_URL}/api/labstaff`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   return res;
 }
 
