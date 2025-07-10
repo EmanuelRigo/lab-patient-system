@@ -1,35 +1,35 @@
 "use client";
 
 import React from "react";
-import { FaTrash } from "react-icons/fa";
+import Link from "next/link"; // Solo necesitas Link ahora
 
 interface LabStaffCardProps {
-  id: string | undefined;
+  id: string;
   name: string;
+  lastname: string;
   role: string;
-  onDelete: (id: string) => void;
+  // onDelete ya no es necesario aquí
 }
 
 const LabStaffCard: React.FC<LabStaffCardProps> = ({
   id,
   name,
+  lastname,
   role,
-  onDelete,
 }) => {
   return (
-    <div className="flex items-center justify-between border border-gray-300 p-4 rounded-lg shadow-md bg-white">
+    <Link
+      href={`/labstaff/${id}`} // Usamos el ID para una URL dinámica
+      className="flex items-center justify-between border border-gray-300 p-4 rounded-lg shadow-md bg-white hover:bg-gray-200 transition-colors "
+    >
       <div>
-        <h3 className="text-lg font-bold text-sky-800">{name}</h3>
+        <h3 className="text-lg font-bold text-sky-800">
+          {name} {lastname}
+        </h3>
         <p className="text-sm text-gray-600">Rol: {role}</p>
       </div>
-      <button
-        onClick={() => onDelete(id)}
-        className="text-red-500 hover:text-red-700"
-        title="Eliminar"
-      >
-        <FaTrash size={18} />
-      </button>
-    </div>
+      {/* El botón de eliminar y su lógica han sido removidos */}
+    </Link>
   );
 };
 

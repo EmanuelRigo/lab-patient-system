@@ -15,8 +15,8 @@ class DaoIndexMongo<T> {
     this.model = model;
   }
 
-  getAll = async (): Promise<T[]> => {
-    return (await this.model.find().lean()) as T[];
+  getAll = async (): Promise<T[] | null> => {
+    return (await this.model.find().lean()) as T[] | null;
   };
   getById = async (id: string): Promise<T | null> => {
     return (await this.model.findById(id).lean()) as T | null;

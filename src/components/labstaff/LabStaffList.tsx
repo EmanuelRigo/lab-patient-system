@@ -31,10 +31,6 @@ const LabStaffList = () => {
     fetchStaff();
   }, []);
 
-  const handleDelete = (_id: string) => {
-    setStaff((prev) => prev.filter((person) => person._id !== _id));
-  };
-
   return (
     <div className="space-y-4 p-2 rounded-lg shadow-md bg-white">
       {staff.map((person) => (
@@ -42,8 +38,8 @@ const LabStaffList = () => {
           key={person._id}
           id={person._id}
           name={person.firstName}
+          lastname={person.lastName}
           role={person.role}
-          onDelete={handleDelete}
         />
       ))}
     </div>

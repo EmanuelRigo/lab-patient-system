@@ -69,6 +69,7 @@ passport.use(
       usernameField: "username",
     },
     async (req, username, password, done) => {
+      console.log("🚀 ~ username:", username);
       try {
         if (!username || !password) {
           const info = {
@@ -77,7 +78,9 @@ passport.use(
           };
           return done(null, false, info);
         }
+
         const user = await labStaffServices.getByUsername(username);
+        console.log("🚀 ~ user:", user);
 
         if (!user) {
           const info = {

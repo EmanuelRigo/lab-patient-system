@@ -3,7 +3,7 @@ import { Patient } from "../../../types/patient.types";
 import { PatientRepository } from "../repository/index.respository";
 
 class PatientServices {
-  async getAll(): Promise<Patient[]> {
+  async getAll(): Promise<Patient[] | null> {
     return await PatientRepository.getAll();
   }
 

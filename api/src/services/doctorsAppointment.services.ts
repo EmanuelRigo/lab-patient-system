@@ -5,7 +5,7 @@ import { DoctorsAppointmentRepository } from "../repository/index.respository";
 // const { doctorsAppointment } = dao;
 
 class DoctorsAppointmentService {
-  async getAll(): Promise<DoctorsAppointment[]> {
+  async getAll(): Promise<DoctorsAppointment[] | null> {
     return await DoctorsAppointmentRepository.getAll();
   }
 

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 
 interface IService<T> {
-  getAll?: (id?: string) => Promise<T[]>;
+  getAll?: (id?: string) => Promise<T[] | null>;
   getById?: (id: string) => Promise<T | null>;
   getByName?: (name: string) => Promise<T | null>;
   create?: (data: T) => Promise<T>;
@@ -18,13 +18,13 @@ class Controller<T> {
     this.service = service;
   }
 
-  getAll = async (req: Request, res: Response): Promise<Response> => {
+  getAll = async (req: Request, res: Response): Promise<Response | null> => {
     const message = "Found!";
     const { id } = req.params;
 
     if (this.service.getAll) {
       const response = await this.service.getAll(id);
-      if (response.length > 0) {
+      if (response && response.length > 0) {
         return res.status(200).json({ data: response, message });
       } else {
         return res.status(404).json({ message: "Not found" });

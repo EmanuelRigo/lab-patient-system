@@ -2,7 +2,7 @@ import { Result } from "../../../types/result.types";
 import { ResultRepository } from "../repository/index.respository";
 
 class ResultService {
-  async getAll(): Promise<Result[]> {
+  async getAll(): Promise<Result[] | null> {
     return await ResultRepository.getAll();
   }
 

@@ -15,13 +15,17 @@ class LabStaffDTO {
   isOnline?: boolean = false;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
+  _id: string;
 
   constructor(data: LabStaff) {
     if (PERSISTENCE !== "MONGO") {
       this._id = crypto.randomBytes(12).toString("hex");
       this.createdAt = new Date();
       this.updatedAt = new Date();
+    } else {
+      this._id = data._id;
+      this.createdAt = data.createdAt;
+      this.updatedAt = data.updatedAt;
     }
     this.firstName = data.firstName;
     this.lastName = data.lastName;

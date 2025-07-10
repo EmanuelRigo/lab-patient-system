@@ -2,7 +2,7 @@ import { Payment } from "../../../types/payment.types";
 import { PaymentRepository } from "../repository/index.respository";
 
 class PaymentService {
-  async getAll(): Promise<Payment[]> {
+  async getAll(): Promise<Payment[] | null> {
     return await PaymentRepository.getAll();
   }
 

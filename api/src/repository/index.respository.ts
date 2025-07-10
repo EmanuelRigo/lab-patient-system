@@ -23,7 +23,7 @@ type Constructor<T> = new (data: any) => T;
 class Repository<T> {
   private dao: {
     create: (data: T) => Promise<T>;
-    getAll: () => Promise<T[]>;
+    getAll: () => Promise<T[] | null>;
     getById: (id: string) => Promise<T | null>;
     getByName?: (name: string) => Promise<T | null>;
     getByUsername?: (username: string) => Promise<T | null>;
@@ -42,7 +42,7 @@ class Repository<T> {
     return await this.dao.create(formattedData);
   };
 
-  getAll = async (): Promise<T[]> => {
+  getAll = async (): Promise<T[] | null> => {
     return await this.dao.getAll();
   };
 

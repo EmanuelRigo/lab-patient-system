@@ -9,7 +9,7 @@ console.log("🚀 ~ LabStaffRepository:", LabStaffRepository);
 // const { labStaffRepository } = dao;
 
 class LabStaffServices {
-  async getAll(): Promise<LabStaff[]> {
+  async getAll(): Promise<LabStaff[] | null> {
     return await LabStaffRepository.getAll();
   }
 

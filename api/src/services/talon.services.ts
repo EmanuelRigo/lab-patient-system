@@ -2,7 +2,7 @@ import { Talon } from "../../../types/talon.types";
 import { TalonRepository } from "../repository/index.respository";
 
 class TalonService {
-  async getAll(): Promise<Talon[]> {
+  async getAll(): Promise<Talon[] | null> {
     return await TalonRepository.getAll();
   }
 
