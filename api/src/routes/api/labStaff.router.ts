@@ -15,7 +15,7 @@ class LabStaffRouter extends CustomRouter {
 
   init = () => {
     this.read("/", ["PUBLIC"], asyncHandler(controller.getAll));
-    this.read("/:name", ["PUBLIC"], asyncHandler(controller.getById));
+    this.read("/:id", ["PUBLIC"], asyncHandler(controller.getById));
     this.create("/", ["PUBLIC"], asyncHandler(controller.create));
     this.update("/:id", ["PUBLIC"], asyncHandler(controller.update));
     this.destroy("/:id", ["PUBLIC"], asyncHandler(controller.deleteOne));

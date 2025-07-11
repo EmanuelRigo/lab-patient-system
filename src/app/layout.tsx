@@ -35,7 +35,10 @@ export default function RootLayout({
         }}
       >
         <LabSystemProvider>
-          <div className="h-full w-3/6 bg-neutral-100 p-4"> {children}</div>
+          <div className="h-full w-3/6 bg-neutral-100 p-4 text-black">
+            {" "}
+            {children}
+          </div>
 
           <Aside />
         </LabSystemProvider>

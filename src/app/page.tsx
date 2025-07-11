@@ -46,7 +46,7 @@ export default function DashboardButtons() {
   }, []);
 
   return (
-    <div className="h-full flex items-center justify-center">
+    <div className="h-full flex items-center justify-center ">
       {!role && <p>Cargando rol de usuario...</p>}
       {role && (
         <ButtonPanel

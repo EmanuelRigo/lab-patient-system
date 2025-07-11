@@ -1,11 +1,10 @@
 import Link from "next/link";
-import { getAllMedicalStudy } from "@/services/medicalStudies.api";
+import { getAllDoctorsAppointment } from "@/services/doctorsAppointment.api";
 import GenericList from "@/components/generics/GenericList";
 import GenericCard from "@/components/generics/GenericCard";
-import { MedicalStudy } from "../../../types/medicalStudy.types";
-
+import { DoctorsAppointment } from "../../../../types/doctorsAppointment.types";
 const Page = async () => {
-  const patients = await getAllMedicalStudy();
+  const patients = await getAllDoctorsAppointment();
 
   return (
     <div className="text-black h-full overflow-y-auto flex flex-col">
@@ -16,13 +15,13 @@ const Page = async () => {
         Agregar paciente
       </Link>
 
-      <GenericList<MedicalStudy>
+      <GenericList<DoctorsAppointment>
         items={patients}
         getKey={(p) => p._id!}
         emptyMessage="No hay pacientes registrados."
         className="scrollbar-hidden overflow-y-auto"
         Card={({ data }) => (
-          <GenericCard item={data} title="name" fields={["price"]} />
+          <GenericCard item={data} title="reason" fields={["status"]} />
         )}
       />
     </div>

@@ -34,7 +34,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           <>
             {renderButton("Pacientes", "/lab-dashboard/patients")}
             {renderButton("Resultados", "/resultados/generar")}
-            {renderButton("Crear Cita", "/citas/crear")}
+            {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
             {renderButton("Personal", "/labstaff")}
             {renderButton("Estudios médicos", "/medical-studies")}
           </>

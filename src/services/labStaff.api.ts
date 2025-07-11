@@ -49,6 +49,25 @@ export async function getAllLabStaff(): Promise<LabStaff[]> {
   return data.data as LabStaff[];
 }
 
+export async function getById(id: string): Promise<LabStaff> {
+  const res = await fetch(`${BACKEND_URL}/api/labstaff/${id}`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("❌ No se pudo obtener el personal de laboratorio.");
+  }
+
+  const data = await res.json();
+  console.log("🚀 ~ getById ~ data:", data);
+  console.log(data);
+  return data.data as LabStaff;
+}
+
 export async function updateUser(userData: LabStaff): Promise<Response> {
   const res = await fetch(`${BACKEND_URL}/api/sessions/update`, {
     method: "PUT",

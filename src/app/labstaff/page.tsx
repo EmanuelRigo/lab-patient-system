@@ -1,18 +1,30 @@
-"use client";
+import Link from "next/link";
+import { getAllLabStaff } from "@/services/labStaff.api";
+import GenericList from "@/components/generics/GenericList";
+import GenericCard from "@/components/generics/GenericCard";
+import { LabStaff } from "../../../types/labStaff.types";
 
-import React from "react";
-import LabStaffList from "@/components/labstaff/LabStaffList";
-import LabStaffForm from "@/components/labstaff/LabStaffForm";
+const Page = async () => {
+  const labStaff = await getAllLabStaff();
 
-const Page = () => {
   return (
-    <div className="h-full p-6  flex flex-col text-black">
-      <LabStaffForm />
+    <div className="text-black h-full overflow-y-auto flex flex-col">
+      <Link
+        href="/lab-dashboard/patients/add-patient"
+        className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
+      >
+        Agregar paciente
+      </Link>
 
-      {/* Contenedor flexible con scroll si hay overflow */}
-      <div className="flex-1 overflow-y-auto mt-4 scrollbar-hidden">
-        <LabStaffList />
-      </div>
+      <GenericList<LabStaff>
+        items={labStaff}
+        getKey={(p) => p._id!}
+        emptyMessage="No hay pacientes registrados."
+        className="scrollbar-hidden overflow-y-auto"
+        Card={({ data }) => (
+          <GenericCard item={data} title="firstName" fields={["role"]} />
+        )}
+      />
     </div>
   );
 };

@@ -17,3 +17,20 @@ export async function createMedicalStudy(
   });
   return res;
 }
+
+export async function getAllMedicalStudy(): Promise<MedicalStudy[]> {
+  const res = await fetch(`${BACKEND_URL}/api/medicalstudy`, {
+    method: "GET",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!res.ok) {
+    throw new Error("❌ No se pudo obtener los estudios medicos.");
+  }
+
+  const data = await res.json();
+  return data.data as MedicalStudy[];
+}
