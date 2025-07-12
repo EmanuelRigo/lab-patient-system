@@ -1,23 +1,24 @@
+// import { getAllMedicalStudy } from "@/services/medicalStudies.api";
 import Link from "next/link";
-import { getAllMedicalStudy } from "@/services/medicalStudies.api";
+import medicalStudiesApi from "@/services/medicalStudies.api";
 import GenericList from "@/components/generics/GenericList";
 import GenericCard from "@/components/generics/GenericCard";
 import { MedicalStudy } from "../../../types/medicalStudy.types";
 
 const Page = async () => {
-  const patients = await getAllMedicalStudy();
+  const medicalStudies = await medicalStudiesApi.getAll();
 
   return (
     <div className="text-black h-full overflow-y-auto flex flex-col">
       <Link
-        href="/lab-dashboard/patients/add-patient"
+        href="/medical-studies/add-study"
         className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
       >
-        Agregar paciente
+        Agregar estudio medico
       </Link>
 
       <GenericList<MedicalStudy>
-        items={patients}
+        items={medicalStudies}
         getKey={(p) => p._id!}
         emptyMessage="No hay pacientes registrados."
         className="scrollbar-hidden overflow-y-auto"
