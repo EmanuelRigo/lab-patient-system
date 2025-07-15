@@ -1,11 +1,11 @@
 import Link from "next/link";
-import { getAllLabStaff } from "@/services/labStaff.api";
+import { getAllDoctorsAppointment } from "@/services/doctorsAppointment.api";
 import GenericList from "@/components/generics/GenericList";
 import GenericCard from "@/components/generics/GenericCard";
-import { LabStaff } from "../../../types/labStaff.types";
+import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
 
 const Page = async () => {
-  const labStaff = await getAllLabStaff();
+  const doctorsAppointments = await getAllDoctorsAppointment();
 
   return (
     <div className="text-black h-full overflow-y-auto flex flex-col">
@@ -16,8 +16,8 @@ const Page = async () => {
         Agregar paciente
       </Link>
 
-      <GenericList<LabStaff>
-        items={labStaff}
+      <GenericList<DoctorsAppointment>
+        items={doctorsAppointments}
         getKey={(p) => p._id!}
         emptyMessage="No hay pacientes registrados."
         className="scrollbar-hidden overflow-y-auto"

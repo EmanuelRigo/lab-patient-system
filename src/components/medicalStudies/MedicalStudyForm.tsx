@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { createMedicalStudy } from "@/services/medicalStudies.api";
+import medicalStudiesApi from "@/services/medicalStudies.api";
 
 const MedicalStudyForm = () => {
   const [form, setForm] = useState({
@@ -32,7 +32,7 @@ const MedicalStudyForm = () => {
     };
 
     console.log("📦 Enviando estudio médico:", payload);
-    await createMedicalStudy(payload);
+    await medicalStudiesApi.create(payload);
 
     // (Opcional) reset form
     setForm({

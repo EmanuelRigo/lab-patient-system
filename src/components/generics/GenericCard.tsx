@@ -1,13 +1,15 @@
 "use client";
 import React from "react";
+import Link from "next/link";
 
 interface GenericCardProps<T> {
   item: T;
-  title: keyof T; // campo principal
-  fields: (keyof T)[]; // campos extra a mostrar
+  id: keyof T;
+  title: keyof T;
+  fields: (keyof T)[];
+  basePath: string; // <-- nueva prop
 }
 
-// Diccionario de traducción para los labels
 const fieldLabels: Record<string, string> = {
   price: "Precio",
   role: "Rol",
@@ -21,20 +23,30 @@ const fieldLabels: Record<string, string> = {
   title: "Título",
 };
 
-const GenericCard = <T,>({ item, title, fields }: GenericCardProps<T>) => (
-  <div
-    className="border border-gray-300 p-4 rounded-lg shadow-md bg-white
-               hover:bg-sky-50 transition-colors"
-  >
-    <h3 className="text-lg font-bold text-sky-800">{String(item[title])}</h3>
+const GenericCard = <T,>({
+  item,
+  id,
+  title,
+  fields,
+  basePath,
+}: GenericCardProps<T>) => {
+  const itemId = String(item[id]);
 
-    {fields.map((field) => (
-      <p key={String(field)} className="text-sm text-gray-600">
-        <strong>{fieldLabels[String(field)] ?? String(field)}:</strong>{" "}
-        {String(item[field])}
-      </p>
-    ))}
-  </div>
-);
+  return (
+    <Link
+      href={`/${basePath}/${itemId}`}
+      className="border flex flex-col border-gray-300 p-4 rounded-lg shadow-md bg-white hover:bg-sky-50 transition-colors"
+    >
+      <h3 className="text-lg font-bold text-sky-800">{String(item[title])}</h3>
+
+      {fields.map((field) => (
+        <p key={String(field)} className="text-sm text-gray-600">
+          <strong>{fieldLabels[String(field)] ?? String(field)}:</strong>{" "}
+          {String(item[field])}
+        </p>
+      ))}
+    </Link>
+  );
+};
 
 export default GenericCard;

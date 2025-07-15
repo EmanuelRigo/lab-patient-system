@@ -23,7 +23,7 @@ const Page = async () => {
         emptyMessage="No hay pacientes registrados."
         className="scrollbar-hidden overflow-y-auto"
         Card={({ data }) => (
-          <GenericCard item={data} title="name" fields={["price"]} />
+          <GenericCard item={data} title="name" id="name" fields={["price"]} />
         )}
       />
     </div>
