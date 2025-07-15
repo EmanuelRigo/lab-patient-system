@@ -12,7 +12,6 @@ const resultSchema = new Schema<Result>(
     },
     IdBiochemist: {
       type: String,
-      required: true,
     },
     IdLabTechnician: {
       type: String,

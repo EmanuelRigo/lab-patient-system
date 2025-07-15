@@ -1,6 +1,6 @@
 export interface Result {
   status: "pending" | "completed" | "failed";
-  IdBiochemist: string;
+  IdBiochemist?: string;
   IdLabTechnician: string;
   extractionDate?: Date;
   extractionTime?: string;

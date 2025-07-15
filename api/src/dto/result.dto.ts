@@ -6,7 +6,7 @@ const { PERSISTENCE } = envsUtils;
 
 class ResultDTO {
   status: "pending" | "completed" | "failed";
-  IdBiochemist: string;
+  IdBiochemist?: string;
   IdLabTechnician: string;
   extractionDate?: Date;
   extractionTime?: string;

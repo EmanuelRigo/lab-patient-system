@@ -33,7 +33,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
         {role === "Admin" && (
           <>
             {renderButton("Pacientes", "/lab-dashboard/patients")}
-            {renderButton("Resultados", "/resultados/generar")}
+            {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
             {renderButton("Personal", "/labstaff")}
             {renderButton("Estudios médicos", "/medical-studies")}
