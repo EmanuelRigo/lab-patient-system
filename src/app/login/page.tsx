@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { loginUser } from "@/services/labStaff.api";
+// import { loginUser } from "@/services/labStaff.api";
+import sessionApi from "@/services/session.api";
 
 import Aside from "@/components/Aside";
 
@@ -35,7 +36,7 @@ export default function page() {
         username,
         password,
       };
-      const response = await loginUser(credentials);
+      const response = await sessionApi.login(credentials);
       console.log("🚀🚀🚀  ~ handleLogin ~ response:", response);
 
       if (response.ok) {

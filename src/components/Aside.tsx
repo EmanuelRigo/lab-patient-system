@@ -15,6 +15,8 @@ import AnalysisInfo from "./AnalysisInfo";
 
 import AsideMenu from "./aside/AsideMenu";
 
+import sessionApi from "@/services/session.api";
+
 import { useLabSystemContext } from "@/context/LabContext";
 
 const Aside = () => {
@@ -44,7 +46,7 @@ const Aside = () => {
           </button>
 
           <button
-            onClick={() => alert("Cerrar sesión")}
+            onClick={() => sessionApi.logout()}
             className={`flex items-center my-1 space-x-2 hover:outline hover:bg-white ps-5 py-2 w-full rounded-e group ${
               pathname === "/login" ? "hidden" : ""
             }`}
