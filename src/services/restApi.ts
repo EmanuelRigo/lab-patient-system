@@ -22,6 +22,7 @@ export default class RestApi<T> {
     const res = await fetch(this.url(`/${id}`), {
       credentials: "include",
     });
+    console.log("🚀 ~ RestApi<T> ~ res ~ id:", id);
     if (!res.ok) throw new Error(`❌ No se encontró ${this.resource} (${id}).`);
     const { data } = await res.json();
     return data as T;

@@ -20,6 +20,7 @@ const fieldLabels: Record<string, string> = {
   createdAt: "Creado",
   updatedAt: "Actualizado",
   name: "Nombre",
+  firstName: "Nombre",
   title: "Título",
 };
 

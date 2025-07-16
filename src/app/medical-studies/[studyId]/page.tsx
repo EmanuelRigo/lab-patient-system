@@ -1,16 +1,20 @@
+import React from "react";
 import medicalStudiesApi from "@/services/medicalStudies.api";
-
+import CardMedicalStudies from "@/components/medicalStudies/CardMedicalStudies";
 interface PageProps {
   params: { studyId: string };
 }
 
 const Page = async ({ params }: PageProps) => {
-  const decodedName = decodeURIComponent(params.studyId); // 👈 importante
-  const mStudy = await medicalStudiesApi.getByName(decodedName);
-  console.log("🚀 ~ page ~ mStudy:", mStudy);
+  const study = await medicalStudiesApi.getByName(
+    decodeURIComponent(params.studyId)
+  );
 
-  console.log("🚀 ~ Page ~ params:", params.studyId);
-  return <div>Hola</div>;
+  return (
+    <div className="p-6 text-black">
+      <CardMedicalStudies study={study} />
+    </div>
+  );
 };
 
 export default Page;

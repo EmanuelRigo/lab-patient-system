@@ -1,12 +1,12 @@
-import { getById } from "@/services/labStaff.api";
+import labStaffApi from "@/services/labStaff.api";
 import { LabStaff } from "../../../../types/labStaff.types";
 
 interface PageProps {
-  params: { id: string };
+  params: { lid: string };
 }
 
 const Page = async ({ params }: PageProps) => {
-  const labstaff: LabStaff = await getById(params.id);
+  const labstaff: LabStaff = await labStaffApi.getById(params.lid);
 
   return (
     <div className="text-black p-6 space-y-2">

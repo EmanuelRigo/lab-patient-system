@@ -1,4 +1,3 @@
-import React from "react";
 import patientsApi from "@/services/patients.api";
 
 interface PageProps {
