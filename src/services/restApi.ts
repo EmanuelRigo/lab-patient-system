@@ -35,7 +35,20 @@ export default class RestApi<T> {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),
     });
-    if (!res.ok) throw new Error(`❌ No se pudo crear ${this.resource}.`);
+
+    if (!res.ok) {
+      // Esperamos la respuesta JSON del backend
+      const errorData = await res.json();
+
+      // Mostramos el mensaje que vino del backend
+      console.error("Error del backend:", errorData.message);
+
+      // Lanzamos un error para manejarlo en el frontend
+      throw new Error(
+        errorData.message || `❌ No se pudo crear ${this.resource}.`
+      );
+    }
+
     const { data } = await res.json();
     return data as T;
   }

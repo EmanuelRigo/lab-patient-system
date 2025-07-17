@@ -7,6 +7,7 @@ const { PERSISTENCE } = envsUtils;
 class PatientDTO {
   name: string;
   age: number;
+  dni: number;
   email: string | undefined;
   phone: string;
   address: string;
@@ -17,6 +18,7 @@ class PatientDTO {
   constructor(data: Patient) {
     this.name = data.name;
     this.age = data.age;
+    this.dni = data.dni;
     this.email = data.email;
     this.phone = data.phone;
     this.address = data.address;

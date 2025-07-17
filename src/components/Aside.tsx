@@ -19,7 +19,18 @@ import sessionApi from "@/services/session.api";
 
 import { useLabSystemContext } from "@/context/LabContext";
 
+import { useRouter } from "next/navigation";
+
 const Aside = () => {
+  const router = useRouter();
+
+  function logOut() {
+    sessionApi.logout().then(() => {
+      console.log("Logged out successfully");
+      router.push("/login");
+    });
+  }
+
   const { role } = useLabSystemContext();
   console.log("🚀 ~ role - -- aside:", role);
   const pathname = usePathname();
@@ -46,7 +57,7 @@ const Aside = () => {
           </button>
 
           <button
-            onClick={() => sessionApi.logout()}
+            onClick={() => logOut()}
             className={`flex items-center my-1 space-x-2 hover:outline hover:bg-white ps-5 py-2 w-full rounded-e group ${
               pathname === "/login" ? "hidden" : ""
             }`}

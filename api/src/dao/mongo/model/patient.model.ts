@@ -16,7 +16,6 @@ const schema = new Schema<Patient>(
     },
     email: {
       type: String,
-      required: true,
     },
     phone: {
       type: String,
@@ -25,6 +24,11 @@ const schema = new Schema<Patient>(
     address: {
       type: String,
       required: true,
+    },
+    dni: {
+      type: Number,
+      required: true,
+      unique: true,
     },
   },
   { timestamps: true }
