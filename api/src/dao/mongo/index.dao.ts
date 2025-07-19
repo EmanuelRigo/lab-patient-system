@@ -29,6 +29,10 @@ class DaoIndexMongo<T> {
     return (await this.model.findOne({ username }).lean()) as T | null;
   };
 
+  search = async (criteria: Record<string, any>): Promise<T[]> => {
+    return (await this.model.find(criteria).lean()) as T[];
+  };
+
   create = async (data: Partial<T>): Promise<T> => {
     return (await this.model.create(data)) as T;
   };
