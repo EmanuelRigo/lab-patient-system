@@ -5,11 +5,11 @@ const collection = "doctors_appointments";
 
 const doctorsAppointmentSchema = new Schema<DoctorsAppointment>(
   {
-    doctorId: {
+    patientId: {
       type: String,
       required: true,
     },
-    patientDNI: {
+    medicalStudyId: {
       type: String,
       required: true,
     },

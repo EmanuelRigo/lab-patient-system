@@ -5,8 +5,8 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class DoctorsAppointmentDTO {
-  doctorId: string;
-  patientDNI: string;
+  patientId: string;
+  medicalStudyId: string;
   date: string;
   reason: string;
   status: "scheduled" | "completed" | "cancelled";
@@ -15,8 +15,8 @@ class DoctorsAppointmentDTO {
   updatedAt?: Date;
 
   constructor(data: DoctorsAppointment) {
-    this.doctorId = data.doctorId;
-    this.patientDNI = data.patientDNI;
+    this.patientId = data.patientId;
+    this.medicalStudyId = data.medicalStudyId;
     this.date = data.date;
     this.reason = data.reason;
     this.status = data.status || "scheduled";
