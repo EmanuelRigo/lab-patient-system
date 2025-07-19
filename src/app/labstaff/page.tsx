@@ -9,10 +9,10 @@ const Page = async () => {
   return (
     <div className="text-black h-full overflow-y-auto flex flex-col">
       <Link
-        href="/lab-dashboard/patients/add-patient"
+        href="/labstaff/add-staff"
         className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
       >
-        Agregar paciente
+        Agregar personal
       </Link>
 
       <GenericList<LabStaff>

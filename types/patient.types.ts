@@ -1,5 +1,7 @@
 export interface Patient {
-  name: string;
+  firstName: string;
+  secondName?: string;
+  lastName: string;
   age: number;
   dni: number;
   email?: string;
@@ -7,5 +9,5 @@ export interface Patient {
   address: string;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
+  _id: string;
 }

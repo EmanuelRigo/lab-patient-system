@@ -43,6 +43,10 @@ class PatientServices {
       data: deletedPatient,
     };
   }
+
+  async searchPatients(criteria: Record<string, any>): Promise<Patient[]> {
+    return await PatientRepository.search(criteria);
+  }
 }
 
 const patientServices = new PatientServices();

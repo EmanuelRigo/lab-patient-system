@@ -1,6 +1,6 @@
 import React from "react";
 import medicalStudiesApi from "@/services/medicalStudies.api";
-import CardMedicalStudies from "@/components/medicalStudies/CardMedicalStudies";
+import MedicalStudiesCard from "@/components/medicalStudies/MedicalStudiesCard";
 interface PageProps {
   params: { studyId: string };
 }
@@ -12,7 +12,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <div className="p-6 text-black">
-      <CardMedicalStudies study={study} />
+      <MedicalStudiesCard study={study} />
     </div>
   );
 };

@@ -9,23 +9,74 @@ export default class RestApi<T> {
     return `${BASE}/api/${this.resource}${path}`;
   }
 
+  // async getAll(): Promise<T[]> {
+  //   const res = await fetch(this.url(), {
+  //     credentials: "include",
+  //   });
+  //   if (!res.ok)
+
+  //     throw new Error(`❌ No se pudo obtener ${this.resource}.`);
+  //   const { data } = await res.json();
+  //   return data as T[];
+  // }
+
   async getAll(): Promise<T[]> {
-    const res = await fetch(this.url(), {
-      credentials: "include",
-    });
-    if (!res.ok) throw new Error(`❌ No se pudo obtener ${this.resource}.`);
-    const { data } = await res.json();
-    return data as T[];
+    try {
+      const res = await fetch(this.url(), {
+        credentials: "include",
+      });
+
+      if (!res.ok) {
+        console.warn(`⚠️ Error al obtener ${this.resource}:`, res.statusText);
+        return []; // devolvemos array vacío para evitar romper el frontend
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      if (!Array.isArray(data)) {
+        console.warn(
+          `⚠️ La respuesta no contiene un array válido de ${this.resource}.`
+        );
+        return [];
+      }
+
+      return data as T[];
+    } catch (error) {
+      console.error(`❌ Error inesperado al obtener ${this.resource}:`, error);
+      return [];
+    }
   }
 
-  async getById(id: string): Promise<T> {
-    const res = await fetch(this.url(`/${id}`), {
-      credentials: "include",
-    });
-    console.log("🚀 ~ RestApi<T> ~ res ~ id:", id);
-    if (!res.ok) throw new Error(`❌ No se encontró ${this.resource} (${id}).`);
-    const { data } = await res.json();
-    return data as T;
+  async getById(id: string): Promise<T | null> {
+    try {
+      const res = await fetch(this.url(`/${id}`), {
+        credentials: "include",
+      });
+
+      console.log("🚀 ~ RestApi<T> ~ res ~ id:", id);
+
+      if (!res.ok) {
+        console.warn(`⚠️ No se encontró ${this.resource} (${id}).`);
+        return null;
+      }
+
+      const json = await res.json();
+      const data = json?.data;
+
+      if (!data) {
+        console.warn(`⚠️ La respuesta no contiene un campo "data" válido.`);
+        return null;
+      }
+
+      return data as T;
+    } catch (error) {
+      console.error(
+        `❌ Error inesperado al obtener ${this.resource} (${id}):`,
+        error
+      );
+      return null;
+    }
   }
 
   async create(payload: Partial<T>): Promise<T> {

@@ -5,5 +5,5 @@ export interface MedicalStudy {
   duration?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
+  _id: string;
 }

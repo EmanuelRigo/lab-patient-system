@@ -1,35 +1,86 @@
 "use client";
-
-import React from "react";
-import Link from "next/link"; // Solo necesitas Link ahora
+import { useState } from "react";
+import { LabStaff } from "../../../types/labStaff.types";
+import { FaTrash, FaEdit } from "react-icons/fa";
+import labStaffApi from "@/services/labStaff.api";
+import { useRouter } from "next/navigation";
+import ModalEditGeneric from "../generics/ModalEditGeneric";
 
 interface LabStaffCardProps {
-  id: string;
-  name: string;
-  lastname: string;
-  role: string;
-  // onDelete ya no es necesario aquí
+  staff: LabStaff;
 }
 
-const LabStaffCard: React.FC<LabStaffCardProps> = ({
-  id,
-  name,
-  lastname,
-  role,
-}) => {
+const LabStaffCard = ({ staff }: LabStaffCardProps) => {
+  const router = useRouter();
+  const [showModal, setShowModal] = useState(false);
+
+  const onDelete = async (id: string) => {
+    if (confirm("¿Estás seguro de eliminar el personal?")) {
+      try {
+        await labStaffApi.remove(id);
+        alert("Personal eliminado correctamente.");
+        router.push("/labstaff");
+      } catch (error) {
+        console.error("Error al eliminar el personal:", error);
+        alert(
+          "Error al eliminar el estudio médico. Inténtalo de nuevo más tarde."
+        );
+      }
+    }
+  };
+
+  const onUpdate = async (updatedFields: Partial<LabStaff>) => {
+    try {
+      await labStaffApi.update(staff._id, updatedFields);
+      alert("Personal actualizado correctamente.");
+      router.refresh(); // Actualiza la vista sin redireccionar
+    } catch (error) {
+      console.error("Error al actualizar el personal:", error);
+      alert("Error al actualizar el personal. Inténtalo de nuevo más tarde.");
+    }
+  };
+
   return (
-    <Link
-      href={`/labstaff/${id}`} // Usamos el ID para una URL dinámica
-      className="flex items-center justify-between border border-gray-300 p-4 rounded-lg shadow-md bg-white hover:bg-gray-200 transition-colors "
-    >
-      <div>
-        <h3 className="text-lg font-bold text-sky-800">
-          {name} {lastname}
-        </h3>
-        <p className="text-sm text-gray-600">Rol: {role}</p>
+    <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
+      <h2 className="text-2xl font-bold text-sky-800 mb-2">
+        {staff.firstName}{" "}
+      </h2>
+
+      <p className="text-gray-700 mb-1">
+        <strong>Role:</strong> ${staff.role}
+      </p>
+
+      <div className="flex gap-4">
+        <button
+          onClick={() => setShowModal(true)}
+          className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md"
+        >
+          <FaEdit />
+          Editar
+        </button>
+
+        <button
+          onClick={() => onDelete(staff._id)}
+          className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+        >
+          <FaTrash />
+          Eliminar
+        </button>
       </div>
-      {/* El botón de eliminar y su lógica han sido removidos */}
-    </Link>
+
+      {showModal && (
+        <ModalEditGeneric
+          initialData={staff}
+          editableFields={[
+            { name: "firstName", label: "Nombre" },
+
+            { name: "description", label: "Descripción", type: "textarea" },
+          ]}
+          onClose={() => setShowModal(false)}
+          onUpdate={onUpdate}
+        />
+      )}
+    </div>
   );
 };
 

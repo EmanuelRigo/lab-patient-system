@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { createUser } from "@/services/labStaff.api";
+import labStaffApi from "@/services/labStaff.api";
 import { create } from "domain";
 import { LabStaffRole } from "../../../types/labStaff.types";
 
@@ -48,7 +48,7 @@ const LabStaffForm = () => {
     };
 
     console.log("Enviando personal:", payload);
-    createUser(payload);
+    labStaffApi.create(payload);
   };
 
   return (

@@ -5,7 +5,9 @@ import { Patient } from "../../../types/patient.types";
 import patientsApi from "@/services/patients.api";
 import ErrorModal from "../atomics/ErrorModal";
 type PatientFormState = {
-  name: string;
+  firstName: string;
+  lastName: string;
+  secondName: string;
   age: string;
   dni: string;
   email: string;
@@ -15,7 +17,9 @@ type PatientFormState = {
 
 const PatientForm = () => {
   const [form, setForm] = useState<PatientFormState>({
-    name: "",
+    firstName: "",
+    lastName: "",
+    secondName: "",
     age: "",
     dni: "",
     email: "",
@@ -45,7 +49,9 @@ const PatientForm = () => {
 
       // Limpiar solo si fue exitoso
       setForm({
-        name: "",
+        firstName: "",
+        secondName: "",
+        lastName: "",
         age: "",
         dni: "",
         email: "",
@@ -70,17 +76,33 @@ const PatientForm = () => {
         className="bg-white max-w-md w-full p-6 rounded-lg shadow-md space-y-4"
       >
         <h2 className="text-xl font-semibold text-sky-700">Agregar Paciente</h2>
-
         <input
           type="text"
-          name="name"
-          placeholder="Nombre completo"
-          value={form.name}
+          name="firstName"
+          placeholder="Nombre"
+          value={form.firstName}
+          onChange={handleChange}
+          className="w-full border p-2 rounded-md"
+          required
+        />{" "}
+        <input
+          type="text"
+          name="secondName"
+          placeholder="Segundo Nombre (opcional)"
+          value={form.secondName}
+          onChange={handleChange}
+          className="w-full border p-2 rounded-md"
+          required
+        />{" "}
+        <input
+          type="text"
+          name="Apellido"
+          placeholder="Apellido"
+          value={form.lastName}
           onChange={handleChange}
           className="w-full border p-2 rounded-md"
           required
         />
-
         <input
           type="number"
           name="age"
@@ -90,7 +112,6 @@ const PatientForm = () => {
           className="w-full border p-2 rounded-md"
           required
         />
-
         <input
           type="number"
           name="dni"
@@ -100,7 +121,6 @@ const PatientForm = () => {
           className="w-full border p-2 rounded-md"
           required
         />
-
         <input
           type="email"
           name="email"
@@ -109,7 +129,6 @@ const PatientForm = () => {
           onChange={handleChange}
           className="w-full border p-2 rounded-md"
         />
-
         <input
           type="tel"
           name="phone"
@@ -119,7 +138,6 @@ const PatientForm = () => {
           className="w-full border p-2 rounded-md"
           required
         />
-
         <input
           type="text"
           name="address"
@@ -129,7 +147,6 @@ const PatientForm = () => {
           className="w-full border p-2 rounded-md"
           required
         />
-
         <button
           type="submit"
           className="bg-sky-600 hover:bg-sky-700 text-white py-2 px-4 rounded-md w-full"

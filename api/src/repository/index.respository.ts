@@ -25,6 +25,8 @@ class Repository<T> {
     create: (data: T) => Promise<T>;
     getAll: () => Promise<T[] | null>;
     getById: (id: string) => Promise<T | null>;
+    search?: (criteria: Record<string, any>) => Promise<T[]>;
+
     getByName?: (name: string) => Promise<T | null>;
     getByUsername?: (username: string) => Promise<T | null>;
     update: (id: string, data: Partial<T>) => Promise<T | null>;
@@ -59,6 +61,11 @@ class Repository<T> {
     if (!this.dao.getByUsername)
       throw new Error("getByUsername not implemented");
     return await this.dao.getByUsername(username);
+  };
+
+  search = async (criteria: Record<string, any>): Promise<T[]> => {
+    if (!this.dao.search) throw new Error("search not implemented");
+    return await this.dao.search(criteria);
   };
 
   update = async (id: string, data: Partial<T>): Promise<T | null> => {

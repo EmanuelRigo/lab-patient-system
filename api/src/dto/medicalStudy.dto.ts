@@ -1,8 +1,8 @@
 import { MedicalStudy } from "../../../types/medicalStudy.types";
-import envsUtils from "../utils/envs.utils";
+// import envsUtils from "../utils/envs.utils";
 import crypto from "crypto";
 
-const { PERSISTENCE } = envsUtils;
+// const { PERSISTENCE } = envsUtils;
 
 class MedicalStudyDTO {
   name: string;
@@ -11,14 +11,12 @@ class MedicalStudyDTO {
   duration?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
+  _id: string; // ← ya no es opcional
 
   constructor(data: MedicalStudy) {
-    if (PERSISTENCE !== "MONGO") {
-      this._id = crypto.randomBytes(12).toString("hex");
-      this.createdAt = new Date();
-      this.updatedAt = new Date();
-    }
+    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = data.updatedAt ?? new Date();
     this.name = data.name;
     this.price = data.price;
     this.description = data.description;
