@@ -4,6 +4,7 @@ export interface DoctorsAppointment {
   date: string;
   reason: string;
   status: "scheduled" | "completed" | "cancelled";
+  isPaid: boolean;
   _id: string;
   createdAt?: Date;
   updatedAt?: Date;

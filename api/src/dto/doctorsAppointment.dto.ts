@@ -10,7 +10,7 @@ class DoctorsAppointmentDTO {
   date: string;
   reason: string;
   status: "scheduled" | "completed" | "cancelled";
-  _id?: string;
+  _id: string;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -20,11 +20,9 @@ class DoctorsAppointmentDTO {
     this.date = data.date;
     this.reason = data.reason;
     this.status = data.status || "scheduled";
-    if (PERSISTENCE !== "MONGO") {
-      this._id = crypto.randomBytes(12).toString("hex");
-      this.createdAt = new Date();
-      this.updatedAt = new Date();
-    }
+    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = data.updatedAt ?? new Date();
   }
 }
 

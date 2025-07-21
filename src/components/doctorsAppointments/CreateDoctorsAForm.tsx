@@ -1,27 +1,51 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import GenericSearchInput from "../generics/GenericSearchInput";
 import { Patient } from "../../../types/patient.types";
+import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
+import medicalStudiesApi from "@/services/medicalStudies.api";
+import { MedicalStudy } from "../../../types/medicalStudy.types";
+
+interface DoctorsAppointmentFormData {
+  patientId: string;
+  medicalStudyId: string;
+  date: string;
+  reason: string;
+  status: "scheduled" | "completed" | "cancelled";
+}
 
 const CreateDoctorsAForm = () => {
-  const [form, setForm] = useState({
-    doctorId: "",
-    patientDNI: "",
+  const [form, setForm] = useState<DoctorsAppointmentFormData>({
+    patientId: "",
+    medicalStudyId: "",
     date: "",
     reason: "",
     status: "scheduled",
   });
 
-  const [patients, setPatients] = useState<Patient[]>([]);
+  const [patient, setPatient] = useState<Patient>();
+  const [medicalStudies, setMedicalStudies] = useState<MedicalStudy[]>([]);
+
+  useEffect(() => {
+    const fetchStudies = async () => {
+      try {
+        const response = await medicalStudiesApi.getAll();
+        console.log("🚀 ~ fetchStudies ~ response:", response);
+        setMedicalStudies(response);
+      } catch (error) {
+        console.error("Error al cargar estudios médicos:", error);
+      }
+    };
+
+    fetchStudies();
+  }, []);
 
   const fetchPatients = useCallback(
     async (query: string): Promise<Patient[]> => {
       const url = `http://localhost:8080/api/patient/search?firstName=${encodeURIComponent(
         query
       )}`;
-      console.log("Fetching from:", url);
-
       const res = await fetch(url);
 
       if (!res.ok) {
@@ -30,13 +54,11 @@ const CreateDoctorsAForm = () => {
       }
 
       const data = await res.json();
-      console.log("Pacientes encontrados:", data.response);
-
-      setPatients(data.response || []);
       return data.response || [];
     },
     []
   );
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -46,19 +68,20 @@ const CreateDoctorsAForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
-    // Aquí podrías llamar a una función para enviar los datos al backend
+
+    doctorsAppointmentApi.create(form);
   };
 
+  console.log("🚀 ~ CreateDoctorsAForm ~ medicalStudies:", medicalStudies);
   return (
     <div className="p-6 bg-white rounded shadow space-y-4 max-w-md mx-auto">
       <GenericSearchInput<Patient>
         onSearch={fetchPatients}
         onSelect={(patient: Patient) => {
-          console.log("Paciente seleccionado:", patient);
+          setPatient(patient);
           setForm((prev) => ({
             ...prev,
-            patientDNI: patient.dni.toString(),
+            patientId: patient._id,
           }));
         }}
         renderItem={(patient: Patient) => (
@@ -68,45 +91,44 @@ const CreateDoctorsAForm = () => {
         )}
         placeholder="Buscar paciente..."
       />
-      <p></p>
-      <form onSubmit={handleSubmit} className="">
-        {/* Lista de pacientes encontrados
-        {patients.length > 0 && (
-          <ul className="border p-2 rounded bg-gray-50">
-            {patients.map((p) => (
-              <li key={p.dni}>
-                {p.dni} - {p.firstName} {p.lastName}
-              </li>
-            ))}
-          </ul>
-        )} */}
 
+      {patient && (
+        <div className="bg-gray-50 border rounded p-3 text-sm text-gray-700">
+          <p>
+            <strong>DNI:</strong> {patient.dni}
+          </p>
+          <p>
+            <strong>Nombre:</strong> {patient.firstName}
+          </p>
+          <p>
+            <strong>Apellido:</strong> {patient.lastName}
+          </p>
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {/* ✅ Select dinámico */}
         <div>
-          <label className="block font-semibold mb-1">Doctor ID:</label>
-          <input
-            type="text"
-            name="doctorId"
-            value={form.doctorId}
+          <label className="block font-semibold mb-1">Estudio médico:</label>
+          <select
+            name="medicalStudyId"
+            value={form.medicalStudyId}
             onChange={handleChange}
             className="w-full p-2 border rounded"
             required
-          />
+          >
+            <option value="">Selecciona un estudio</option>
+            {Array.isArray(medicalStudies) &&
+              medicalStudies.map((study) => (
+                <option key={study._id} value={study._id}>
+                  {study.name} ({study.duration} min)
+                </option>
+              ))}
+          </select>
         </div>
 
         <div>
-          <label className="block font-semibold mb-1">Patient DNI:</label>
-          <input
-            type="text"
-            name="patientDNI"
-            value={form.patientDNI}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block font-semibold mb-1">Date and Time:</label>
+          <label className="block font-semibold mb-1">Fecha y hora:</label>
           <input
             type="datetime-local"
             name="date"
@@ -118,7 +140,7 @@ const CreateDoctorsAForm = () => {
         </div>
 
         <div>
-          <label className="block font-semibold mb-1">Reason:</label>
+          <label className="block font-semibold mb-1">Motivo:</label>
           <input
             type="text"
             name="reason"
@@ -130,22 +152,22 @@ const CreateDoctorsAForm = () => {
         </div>
 
         <div>
-          <label className="block font-semibold mb-1">Status:</label>
+          <label className="block font-semibold mb-1">Estado:</label>
           <select
             name="status"
             value={form.status}
             onChange={handleChange}
             className="w-full p-2 border rounded"
           >
-            <option value="scheduled">Scheduled</option>
-            <option value="completed">Completed</option>
-            <option value="cancelled">Cancelled</option>
+            <option value="scheduled">Programada</option>
+            <option value="completed">Completada</option>
+            <option value="cancelled">Cancelada</option>
           </select>
         </div>
 
         <button
           type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
         >
           Crear cita
         </button>
