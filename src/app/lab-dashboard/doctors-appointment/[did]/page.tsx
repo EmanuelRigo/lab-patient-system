@@ -1,12 +1,28 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
-import Link from "next/link";
+import { useParams } from "next/navigation";
+import EditAppointmentModal from "@/components/doctorsAppointments/EditAppointmentModal";
 
-interface PageProps {
-  params: { did: string };
-}
+const Page = () => {
+  const { did } = useParams() as { did: string };
+  const [dAppointment, setDAppointment] = useState<any>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-const Page = async ({ params }: PageProps) => {
-  const dAppointment = await doctorsAppointmentApi.getById(params.did);
+  useEffect(() => {
+    const fetchAppointment = async () => {
+      const data = await doctorsAppointmentApi.getById(did);
+      setDAppointment(data);
+    };
+    fetchAppointment();
+  }, [did]);
+
+  const handleUpdate = async (updatedFields: Record<string, any>) => {
+    const updated = await doctorsAppointmentApi.update(did, updatedFields);
+    setDAppointment((prev: any) => ({ ...prev, ...updated }));
+    setIsModalOpen(false);
+  };
 
   if (!dAppointment) {
     return (
@@ -48,13 +64,23 @@ const Page = async ({ params }: PageProps) => {
           {new Date(dAppointment.updatedAt!).toLocaleString()}
         </p>
       </div>
-      <Link
-        href="/lab-dashboard/doctors-appointment/edit"
+
+      <button
+        onClick={() => setIsModalOpen(true)}
         className="mt-4 inline-block bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
       >
         Editar
-      </Link>
+      </button>
+
+      {isModalOpen && (
+        <EditAppointmentModal
+          appointment={dAppointment}
+          onSave={handleUpdate}
+          onClose={() => setIsModalOpen(false)}
+        />
+      )}
     </div>
   );
 };
+
 export default Page;

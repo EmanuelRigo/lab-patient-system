@@ -5,6 +5,14 @@ const collection = "doctors_appointments";
 
 const doctorsAppointmentSchema = new Schema<DoctorsAppointment>(
   {
+    isPaid: {
+      type: Boolean,
+      default: false,
+    },
+    paymentId: {
+      type: String,
+      required: false,
+    },
     patientId: {
       type: String,
       required: true,

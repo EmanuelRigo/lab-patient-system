@@ -5,6 +5,8 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class DoctorsAppointmentDTO {
+  isPaid: boolean = false;
+  paymentId?: string;
   patientId: string;
   medicalStudyId: string;
   date: string;
@@ -15,6 +17,8 @@ class DoctorsAppointmentDTO {
   updatedAt?: Date;
 
   constructor(data: DoctorsAppointment) {
+    this.isPaid = data.isPaid ?? false;
+    this.paymentId = data.paymentId;
     this.patientId = data.patientId;
     this.medicalStudyId = data.medicalStudyId;
     this.date = data.date;

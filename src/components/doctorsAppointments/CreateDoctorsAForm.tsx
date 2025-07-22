@@ -7,6 +7,10 @@ import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
 import medicalStudiesApi from "@/services/medicalStudies.api";
 import { MedicalStudy } from "../../../types/medicalStudy.types";
 
+interface CreateDoctorsAFormProps {
+  onCreated?: (appointment: any) => void;
+}
+
 interface DoctorsAppointmentFormData {
   patientId: string;
   medicalStudyId: string;
@@ -15,7 +19,7 @@ interface DoctorsAppointmentFormData {
   status: "scheduled" | "completed" | "cancelled";
 }
 
-const CreateDoctorsAForm = () => {
+const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
   const [form, setForm] = useState<DoctorsAppointmentFormData>({
     patientId: "",
     medicalStudyId: "",
@@ -31,7 +35,6 @@ const CreateDoctorsAForm = () => {
     const fetchStudies = async () => {
       try {
         const response = await medicalStudiesApi.getAll();
-        console.log("🚀 ~ fetchStudies ~ response:", response);
         setMedicalStudies(response);
       } catch (error) {
         console.error("Error al cargar estudios médicos:", error);
@@ -66,10 +69,23 @@ const CreateDoctorsAForm = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    doctorsAppointmentApi.create(form);
+    try {
+      const created = await doctorsAppointmentApi.create(form);
+      if (onCreated) onCreated(created);
+      // reset form si querés
+      setForm({
+        patientId: "",
+        medicalStudyId: "",
+        date: "",
+        reason: "",
+        status: "scheduled",
+      });
+      setPatient(undefined);
+    } catch (err) {
+      console.error("Error al crear el turno", err);
+    }
   };
 
   console.log("🚀 ~ CreateDoctorsAForm ~ medicalStudies:", medicalStudies);
