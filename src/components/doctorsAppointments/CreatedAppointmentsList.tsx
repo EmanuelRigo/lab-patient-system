@@ -18,10 +18,16 @@ const CreatedAppointmentsList = ({
       return alert("Selecciona al menos un turno");
 
     try {
-      const response = await talonApi.create({
-        DAppointmentId: checkedAppointments,
-        ReceptionistID: "686d757346b9e019c5b5d135",
-      });
+      const response = await talonApi.createWithPayment(
+        {
+          DAppointmentId: checkedAppointments,
+          ReceptionistID: "686d757346b9e019c5b5d135",
+        },
+        {
+          method: "credit_card",
+          amount: 100,
+        }
+      );
 
       console.log("Talon creado:", response);
       alert("Talon creado correctamente.");
