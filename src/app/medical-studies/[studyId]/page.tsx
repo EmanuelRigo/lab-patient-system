@@ -1,6 +1,7 @@
 import React from "react";
 import medicalStudiesApi from "@/services/medicalStudies.api";
 import MedicalStudiesCard from "@/components/medicalStudies/MedicalStudiesCard";
+
 interface PageProps {
   params: { studyId: string };
 }

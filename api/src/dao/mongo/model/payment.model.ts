@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, Schema, Types } from "mongoose";
 import { Payment } from "../../../../../types/payment.types";
 
 const collection = "payments";
@@ -9,6 +9,8 @@ const paymentSchema = new Schema<Payment>(
       type: Number,
       required: true,
     },
+    talonId: Types.ObjectId,
+
     method: {
       type: String,
       enum: ["credit_card", "debit_card", "cash", "bank_transfer"],

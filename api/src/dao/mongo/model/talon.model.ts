@@ -1,44 +1,22 @@
-import { model, Schema } from "mongoose";
-import { Talon } from "../../../../../types/talon.types";
+// models/talon.model.ts
 
-const collection = "talons";
+import { Schema, model, Types } from "mongoose";
 
-const talonSchema = new Schema<Talon>(
+const talonSchema = new Schema(
   {
-    IdPatient: {
-      type: String,
-      required: true,
-    },
-    IdLabTechnician: {
-      type: String,
-      required: true,
-    },
-    IdBiochemist: {
-      type: String,
-      required: true,
-    },
-    statusPayment: {
-      type: String,
-      enum: ["pending", "completed", "failed"],
-      default: "pending",
-    },
-    IdPayment: {
-      type: String,
-      required: true,
-    },
-    IdReceptionist: {
-      type: String,
-      required: true,
-    },
-    IdDoctorAppointment: {
-      type: String,
-      required: true,
+    DAppointmentId: [
+      {
+        type: Types.ObjectId,
+        ref: "DoctorAppointment",
+        required: true,
+      },
+    ],
+    ReceptionistID: {
+      type: Types.ObjectId,
+      ref: "LabStaff",
     },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-const TalonModel = model<Talon>(collection, talonSchema);
-export default TalonModel;
+export default model("Talon", talonSchema);

@@ -5,31 +5,18 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class TalonDTO {
-  IdPatient: string;
-  IdLabTechnician: string;
-  IdBiochemist: string;
-  statusPayment: "pending" | "completed" | "failed";
-  IdPayment: string;
-  IdReceptionist: string;
-  IdDoctorAppointment: string;
+  DAppointmentId: string[];
+  ReceptionistID?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
+  _id: string;
 
   constructor(data: Talon) {
-    this.IdPatient = data.IdPatient;
-    this.IdLabTechnician = data.IdLabTechnician;
-    this.IdBiochemist = data.IdBiochemist;
-    this.statusPayment = data.statusPayment;
-    this.IdPayment = data.IdPayment;
-    this.IdReceptionist = data.IdReceptionist;
-    this.IdDoctorAppointment = data.IdDoctorAppointment;
-
-    if (PERSISTENCE !== "MONGO") {
-      this._id = crypto.randomBytes(12).toString("hex");
-      this.createdAt = new Date();
-      this.updatedAt = new Date();
-    }
+    this.DAppointmentId = data.DAppointmentId;
+    this.ReceptionistID = data.ReceptionistID;
+    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = data.updatedAt ?? new Date();
   }
 }
 

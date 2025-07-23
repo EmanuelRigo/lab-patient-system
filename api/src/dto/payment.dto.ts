@@ -7,18 +7,18 @@ const { PERSISTENCE } = envsUtils;
 class PaymentDTO {
   amount: number;
   method: "credit_card" | "debit_card" | "cash" | "bank_transfer";
-  _id?: string;
+  talonId: string;
+  _id: string;
   createdAt?: Date;
   updatedAt?: Date;
 
   constructor(data: Payment) {
     this.amount = data.amount;
     this.method = data.method;
-    if (PERSISTENCE !== "MONGO") {
-      this._id = crypto.randomBytes(12).toString("hex");
-      this.createdAt = new Date();
-      this.updatedAt = new Date();
-    }
+    this.talonId = data.talonId;
+    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = data.updatedAt ?? new Date();
   }
 }
 

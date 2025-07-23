@@ -1,5 +1,7 @@
 import { Talon } from "../../../types/talon.types";
 import { TalonRepository } from "../repository/index.respository";
+import paymentService from "./payment.services";
+import { Payment } from "../../../types/payment.types";
 
 class TalonService {
   async getAll(): Promise<Talon[] | null> {
@@ -32,6 +34,19 @@ class TalonService {
       message: "Resultado eliminado correctamente.",
       data: deletedResult,
     };
+  }
+
+  async createWithPayment(
+    talonData: Talon,
+    paymentData: Payment
+  ): Promise<{ talon: Talon; payment: Payment }> {
+    const talon = await TalonRepository.create(talonData);
+    const payment = await paymentService.create({
+      ...paymentData,
+      talonId: talon._id,
+    });
+
+    return { talon, payment };
   }
 }
 
