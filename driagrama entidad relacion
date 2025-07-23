@@ -174,7 +174,7 @@
         <mxCell id="49cADLBPBtZ4L44L_sYj-47" value="C/R/U/D" style="rhombus;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-670" y="-1020" width="80" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="49cADLBPBtZ4L44L_sYj-54" value="MedicalStudy" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14;gradientColor=none;arcSize=50;" parent="1" vertex="1">
+        <mxCell id="49cADLBPBtZ4L44L_sYj-54" value="MedicalStudy" style="swimlane;html=1;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#e0e0e0;horizontalStack=0;resizeParent=1;resizeLast=0;collapsible=1;marginBottom=0;swimlaneFillColor=#ffffff;align=center;rounded=1;shadow=0;comic=0;labelBackgroundColor=none;strokeWidth=1;fontFamily=Verdana;fontSize=14;gradientColor=none;arcSize=13;" parent="1" vertex="1">
           <mxGeometry x="-840" y="-1290" width="160" height="222" as="geometry" />
         </mxCell>
         <mxCell id="49cADLBPBtZ4L44L_sYj-55" value="_id" style="shape=partialRectangle;top=0;left=0;right=0;bottom=1;html=1;align=left;verticalAlign=middle;fillColor=none;spacingLeft=34;spacingRight=4;whiteSpace=wrap;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;dropTarget=0;fontStyle=5;" parent="49cADLBPBtZ4L44L_sYj-54" vertex="1">
