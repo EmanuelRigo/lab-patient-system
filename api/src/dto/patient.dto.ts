@@ -8,7 +8,7 @@ class PatientDTO {
   firstName: string;
   secondName?: string;
   lastName: string;
-  age: number;
+  birthDate: Date;
   dni: number;
   email: string | undefined;
   phone: string;
@@ -21,7 +21,7 @@ class PatientDTO {
     this.firstName = data.firstName;
     this.secondName = data.secondName;
     this.lastName = data.lastName;
-    this.age = data.age;
+    this.birthDate = new Date(data.birthDate);
     this.dni = data.dni;
     this.email = data.email;
     this.phone = data.phone;

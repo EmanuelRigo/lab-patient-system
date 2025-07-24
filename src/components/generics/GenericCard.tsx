@@ -13,13 +13,12 @@ interface GenericCardProps<T> {
 const fieldLabels: Record<string, string> = {
   price: "Precio",
   role: "Rol",
-  age: "Edad",
+  birthDate: "Fecha de nacimiento",
   email: "Correo",
   phone: "Teléfono",
   address: "Dirección",
   createdAt: "Creado",
   updatedAt: "Actualizado",
-  name: "Nombre",
   firstName: "Nombre",
   title: "Título",
 };

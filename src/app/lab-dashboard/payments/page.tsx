@@ -22,10 +22,12 @@ const Page = async () => {
         emptyMessage="No hay pacientes registrados."
         className="scrollbar-hidden overflow-y-auto"
         Card={({ data }) => (
-          <GenericCard
+          <GenericCard<Patient>
             item={data}
-            title="name"
-            fields={["age", "phone", "address"]}
+            id="_id"
+            title="firstName"
+            fields={["birthDate", "phone", "address"]}
+            basePath="lab-dashboard/patients"
           />
         )}
       />

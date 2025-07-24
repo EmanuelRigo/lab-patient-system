@@ -27,7 +27,7 @@ const Page = async () => {
             item={data}
             title="firstName"
             id="_id"
-            fields={["age", "phone", "address"]}
+            fields={["birthDate", "phone", "address"]}
             basePath="lab-dashboard/patients/"
           />
         )}

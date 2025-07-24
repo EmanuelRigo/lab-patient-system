@@ -19,8 +19,8 @@ const schema = new Schema<Patient>(
       required: true,
       index: true,
     },
-    age: {
-      type: Number,
+    birthDate: {
+      type: Date,
       required: true,
     },
     email: {

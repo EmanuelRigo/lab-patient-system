@@ -8,7 +8,7 @@ type PatientFormState = {
   firstName: string;
   lastName: string;
   secondName: string;
-  age: string;
+  birthDate: Date;
   dni: string;
   email: string;
   phone: string;
@@ -20,7 +20,7 @@ const PatientForm = () => {
     firstName: "",
     lastName: "",
     secondName: "",
-    age: "",
+    birthDate: new Date(),
     dni: "",
     email: "",
     phone: "",
@@ -43,7 +43,7 @@ const PatientForm = () => {
     try {
       await patientsApi.create({
         ...form,
-        age: Number(form.age),
+        birthDate: form.birthDate,
         dni: Number(form.dni),
       });
 
@@ -52,7 +52,7 @@ const PatientForm = () => {
         firstName: "",
         secondName: "",
         lastName: "",
-        age: "",
+        birthDate: new Date(),
         dni: "",
         email: "",
         phone: "",
@@ -92,11 +92,10 @@ const PatientForm = () => {
           value={form.secondName}
           onChange={handleChange}
           className="w-full border p-2 rounded-md"
-          required
-        />{" "}
+        />
         <input
           type="text"
-          name="Apellido"
+          name="lastName"
           placeholder="Apellido"
           value={form.lastName}
           onChange={handleChange}
@@ -104,11 +103,16 @@ const PatientForm = () => {
           required
         />
         <input
-          type="number"
-          name="age"
-          placeholder="Edad"
-          value={form.age}
-          onChange={handleChange}
+          type="date"
+          name="birthDate"
+          placeholder="Fecha de nacimiento"
+          value={form.birthDate.toISOString().split("T")[0]}
+          onChange={(e) =>
+            setForm((prev) => ({
+              ...prev,
+              birthDate: new Date(e.target.value),
+            }))
+          }
           className="w-full border p-2 rounded-md"
           required
         />

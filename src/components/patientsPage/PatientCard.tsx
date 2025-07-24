@@ -45,7 +45,11 @@ const PatientCard = ({ patient }: PatientCardProps) => {
       </h2>
 
       <p className="text-gray-700 mb-1">
-        <strong>Edad:</strong> {patient.age} años
+        <strong>Fecha de nacimiento:</strong>{" "}
+        {patient.birthDate instanceof Date
+          ? patient.birthDate.toLocaleDateString()
+          : patient.birthDate}{" "}
+        años
       </p>
 
       <p className="text-gray-700 mb-1">
@@ -88,7 +92,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
           editableFields={[
             { name: "firstName", label: "Nombre" },
             { name: "lastName", label: "Apellido" },
-            { name: "age", label: "Edad", type: "number" },
+            { name: "birthDate", label: "Fecha de nacimiento" },
             { name: "dni", label: "DNI", type: "number" },
             { name: "phone", label: "Teléfono" },
             { name: "address", label: "Dirección" },
