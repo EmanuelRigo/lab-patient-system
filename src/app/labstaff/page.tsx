@@ -25,7 +25,7 @@ const Page = async () => {
             item={data}
             title="firstName"
             id="_id"
-            fields={["role"]}
+            fields={["role", "username"]}
             basePath="labstaff/"
           />
         )}

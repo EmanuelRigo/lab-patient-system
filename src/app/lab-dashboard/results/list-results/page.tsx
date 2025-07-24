@@ -6,19 +6,12 @@ import GenericCard from "@/components/generics/GenericCard";
 import { Result } from "../../../../../types/result.types";
 
 const Page = async () => {
-  const medicalStudies = await resultApi.getAll();
+  const results = await resultApi.getAll();
 
   return (
     <div className="text-black h-full overflow-y-auto flex flex-col">
-      <Link
-        href="/medical-studies/add-study"
-        className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
-      >
-        Agregar estudio medico
-      </Link>
-
       <GenericList<Result>
-        items={medicalStudies}
+        items={results}
         getKey={(p) => p._id!}
         emptyMessage="No hay pacientes registrados."
         className="scrollbar-hidden overflow-y-auto"

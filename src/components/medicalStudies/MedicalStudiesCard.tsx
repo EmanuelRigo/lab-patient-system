@@ -5,6 +5,7 @@ import { FaTrash, FaEdit } from "react-icons/fa";
 import medicalStudiesApi from "@/services/medicalStudies.api";
 import { useRouter } from "next/navigation";
 import ModalEditGeneric from "../generics/ModalEditGeneric";
+import RoleWrapper from "../generics/RoleWrapper";
 
 interface MedicalStudiesCardProps {
   study: MedicalStudy;
@@ -57,24 +58,25 @@ const MedicalStudiesCard = ({ study }: MedicalStudiesCardProps) => {
       <p className="text-gray-700 mb-4">
         <strong>Descripción:</strong> {study.description}
       </p>
+      <RoleWrapper allowedRoles={["Admin"]}>
+        <div className="flex gap-4">
+          <button
+            onClick={() => setShowModal(true)}
+            className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md"
+          >
+            <FaEdit />
+            Editar
+          </button>
 
-      <div className="flex gap-4">
-        <button
-          onClick={() => setShowModal(true)}
-          className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md"
-        >
-          <FaEdit />
-          Editar
-        </button>
-
-        <button
-          onClick={() => onDelete(study._id)}
-          className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
-        >
-          <FaTrash />
-          Eliminar
-        </button>
-      </div>
+          <button
+            onClick={() => onDelete(study._id)}
+            className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
+          >
+            <FaTrash />
+            Eliminar
+          </button>
+        </div>
+      </RoleWrapper>
 
       {showModal && (
         <ModalEditGeneric

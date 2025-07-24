@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import labStaffApi from "@/services/labStaff.api";
+import sessionApi from "@/services/session.api";
 import { create } from "domain";
 import { LabStaffRole } from "../../../types/labStaff.types";
 
@@ -48,7 +49,7 @@ const LabStaffForm = () => {
     };
 
     console.log("Enviando personal:", payload);
-    labStaffApi.create(payload);
+    sessionApi.createUser(payload);
   };
 
   return (
@@ -131,7 +132,8 @@ const LabStaffForm = () => {
         </option>
 
         <option value="LabTechnician">Técnico de Laboratorio</option>
-        <option value="Secretary">Secretaria</option>
+        <option value="Biochemist">Bioquimico</option>
+        <option value="Receptionist">Recepcionista</option>
         <option value="Admin">Administrador</option>
       </select>
 

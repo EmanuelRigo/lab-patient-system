@@ -1,4 +1,5 @@
 export interface Result {
+  _id: string;
   status: "pending" | "completed" | "failed";
   IdBiochemist?: string;
   IdLabTechnician: string;
@@ -6,5 +7,4 @@ export interface Result {
   extractionTime?: string;
   createdAt?: Date;
   updatedAt?: Date;
-  _id?: string;
 }

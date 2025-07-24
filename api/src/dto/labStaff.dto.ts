@@ -1,4 +1,5 @@
-import { LabStaff, LabStaffRole } from "../../../types/labStaff.types";
+import { LabStaff } from "../../../types/labStaff.types";
+import { LabStaffRole } from "../../../types/labStaff.types";
 import envsUtils from "../utils/envs.utils";
 import crypto from "crypto";
 

@@ -1,1 +1,6 @@
-export type Role = "Admin" | "Secretary" | "LabTechnician" | "Public" | null;
+export type Role =
+  | "Receptionist"
+  | "LabTechnician"
+  | "Biochemist"
+  | "Admin"
+  | "Public";

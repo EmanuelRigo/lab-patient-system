@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 type ButtonPanelProps = {
-  role: "Admin" | "Secretary" | "LabTechnician" | "Biochemist" | null;
+  role: "Admin" | "Receptionist" | "LabTechnician" | "Biochemist" | null;
 };
 
 const ButtonPanel = ({ role }: ButtonPanelProps) => {
@@ -40,17 +40,19 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "Secretary" && (
+        {role === "Receptionist" && (
           <>
-            {renderButton("Agregar Paciente", "/pacientes/agregar")}
+            {renderButton("Agregar Paciente", "/lab-dashboard/patients")}
             {renderButton("Crear Cita", "/citas/crear")}
+            {renderButton("Estudios médicos", "/medical-studies")}
+            {renderButton("Resultados", "/lab-dashboard/results")}
           </>
         )}
 
         {role === "LabTechnician" && (
           <>
-            {renderButton("Generar Resultado", "/resultados/generar")}
-            {renderButton("Estudios médicos", "/estudios")}
+            {renderButton("Resultados", "/lab-dashboard/results")}
+            {renderButton("Estudios médicos", "/medical-studies")}
           </>
         )}
       </div>

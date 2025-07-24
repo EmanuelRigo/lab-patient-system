@@ -167,9 +167,42 @@
 
 import { LabStaff } from "../../types/labStaff.types";
 import RestApi from "@/services/restApi";
+import envsUtils from "@/utils/envs.utils";
 
-export default new (class LabStaffApi extends RestApi<LabStaff> {
+const BACKEND_URL = envsUtils.BACKEND_URL;
+
+class LabStaffApi extends RestApi<LabStaff> {
   constructor() {
     super("labStaff");
   }
-})();
+
+  async createUser(userData: LabStaff): Promise<Response> {
+    const res = await fetch(`${BACKEND_URL}/api/session/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    return res;
+  }
+}
+
+export default new LabStaffApi();
+
+// export default new (class LabStaffApi extends RestApi<LabStaff> {
+//   constructor() {
+//     super("labStaff");
+//   }
+
+//   async function createUser(userData: LabStaff): Promise<Response> {
+//   const res = await fetch(`${BACKEND_URL}/api/session/register`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify(userData),
+//   });
+//   return res;
+// }
+// })();

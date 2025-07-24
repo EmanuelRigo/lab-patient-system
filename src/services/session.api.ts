@@ -1,9 +1,31 @@
 // services/session.api.ts
 
 import envsUtils from "@/utils/envs.utils";
+import { LabStaff } from "../../types/labStaff.types";
+import { register } from "module";
 const BACKEND_URL = envsUtils.BACKEND_URL;
 
 const sessionApi = {
+  getCookie: async () => {
+    return await fetch(`${BACKEND_URL}/api/cookies/read`, {
+      method: "GET",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+    });
+  },
+
+  createUser: async (userData: LabStaff): Promise<Response> => {
+    console.log("🚀 ~ envsUtils:", envsUtils);
+    const res = await fetch(`${BACKEND_URL}/api/session/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+    return res;
+  },
+
   login: async (credentials: { username: string; password: string }) => {
     return await fetch(`${BACKEND_URL}/api/session/login`, {
       method: "POST",
