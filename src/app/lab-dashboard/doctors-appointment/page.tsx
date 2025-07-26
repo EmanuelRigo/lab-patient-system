@@ -3,18 +3,21 @@ import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
 import GenericList from "@/components/generics/GenericList";
 import GenericCard from "@/components/generics/GenericCard";
 import { DoctorsAppointment } from "../../../../types/doctorsAppointment.types";
+import RoleWrapper from "@/components/generics/RoleWrapper";
 
 const Page = async () => {
   const doctorsAppointment = await doctorsAppointmentApi.getAll();
 
   return (
     <div className="text-black h-full overflow-y-auto flex flex-col">
-      <Link
-        href="/lab-dashboard/doctors-appointment/create-appointment"
-        className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
-      >
-        Crear nueva cita
-      </Link>
+      <RoleWrapper allowedRoles={["Receptionist"]}>
+        <Link
+          href="/lab-dashboard/doctors-appointment/create-appointment"
+          className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
+        >
+          Crear nueva cita
+        </Link>
+      </RoleWrapper>
 
       <GenericList<DoctorsAppointment>
         items={doctorsAppointment}

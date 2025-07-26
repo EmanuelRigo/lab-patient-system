@@ -3,32 +3,30 @@ import React from "react";
 import Link from "next/link";
 import RoleWrapper from "@/components/generics/RoleWrapper";
 import ModalEditGeneric from "../generics/ModalEditGeneric";
+import resultApi from "@/services/result.api";
 import { useState } from "react";
+import { Result } from "../../../types/result.types";
+import { useRouter } from "next/navigation";
+import { FaEdit } from "react-icons/fa";
 
 interface CardResultProps {
-  result: {
-    _id: string;
-    IdLabTechnician: string;
-    status: string;
-    extractionDate?: Date;
-    extractionTime?: string;
-    IdBiochemist?: string;
-  };
+  result: Result;
 }
-
-const onUpdate = async (updatedFields: Partial<LabStaff>) => {
-  try {
-    await labStaffApi.update(staff._id, updatedFields);
-    alert("Personal actualizado correctamente.");
-    router.refresh(); // Actualiza la vista sin redireccionar
-  } catch (error) {
-    console.error("Error al actualizar el personal:", error);
-    alert("Error al actualizar el personal. Inténtalo de nuevo más tarde.");
-  }
-};
 
 const CardResult = ({ result }: CardResultProps) => {
   const [showModal, setShowModal] = useState(false);
+  const router = useRouter();
+
+  const onUpdate = async (updatedFields: Partial<Result>) => {
+    try {
+      await resultApi.update(result._id, updatedFields);
+      alert("Personal actualizado correctamente.");
+      router.refresh(); // Actualiza la vista sin redireccionar
+    } catch (error) {
+      console.error("Error al actualizar el personal:", error);
+      alert("Error al actualizar el personal. Inténtalo de nuevo más tarde.");
+    }
+  };
 
   return (
     <div className="max-w-md mx-auto bg-white border border-gray-300 shadow-md rounded-lg p-6">
@@ -55,12 +53,22 @@ const CardResult = ({ result }: CardResultProps) => {
       </p>
 
       <RoleWrapper allowedRoles={["LabTechnician", "Biochemist"]}>
-        <Link
-          className="bg-sky-500 text-white rounded-lg p-2 mt-4 inline-block"
-          href={`/result/edit/${result._id}`}
+        <button
+          onClick={() => setShowModal(true)}
+          className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md"
         >
-          Edit
-        </Link>
+          <FaEdit />
+          Editar
+        </button>
+
+        {showModal && (
+          <ModalEditGeneric
+            initialData={result}
+            editableFields={[{ name: "status", label: "Estado" }]}
+            onClose={() => setShowModal(false)}
+            onUpdate={onUpdate}
+          />
+        )}
       </RoleWrapper>
     </div>
   );

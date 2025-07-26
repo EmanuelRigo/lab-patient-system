@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
 import { useParams } from "next/navigation";
 import EditAppointmentModal from "@/components/doctorsAppointments/EditAppointmentModal";
+import RoleWrapper from "@/components/generics/RoleWrapper";
 
 const Page = () => {
   const { did } = useParams() as { did: string };
@@ -65,12 +66,14 @@ const Page = () => {
         </p>
       </div>
 
-      <button
-        onClick={() => setIsModalOpen(true)}
-        className="mt-4 inline-block bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
-      >
-        Editar
-      </button>
+      <RoleWrapper allowedRoles={["Receptionist", "LabTechnician"]}>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="mt-4 inline-block bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
+        >
+          Editar
+        </button>
+      </RoleWrapper>
 
       {isModalOpen && (
         <EditAppointmentModal

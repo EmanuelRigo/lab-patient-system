@@ -2,12 +2,9 @@ import React from "react";
 import resultApi from "@/services/result.api";
 import CardResult from "@/components/results/CardResult";
 
-interface PageProps {
-  params: { rid: string };
-}
-
-const Page = async ({ params }: PageProps) => {
-  const result = await resultApi.getById(params.rid);
+const Page = async ({ params }: { params: Promise<{ rid: string }> }) => {
+  const { rid } = await params;
+  const result = await resultApi.getById(rid);
 
   if (!result) {
     return <div className="text-red-500">Resultado no encontrado</div>;

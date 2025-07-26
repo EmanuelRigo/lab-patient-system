@@ -5,7 +5,7 @@ import RoleWrapper from "@/components/generics/RoleWrapper";
 const page = () => {
   return (
     <div className="h-full flex flex-col gap-4">
-      <RoleWrapper allowedRoles={["LabTechnician", "Biochemist"]}>
+      <RoleWrapper allowedRoles={["LabTechnician"]}>
         <Link
           href="results/add-result"
           className="bg-sky-500 rounded-lg p-4 text-white"

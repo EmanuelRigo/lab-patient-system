@@ -37,19 +37,31 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
             {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
             {renderButton("Personal", "/labstaff")}
             {renderButton("Estudios médicos", "/medical-studies")}
+            {renderButton("Cobros", "/lab-dashboard/payments")}
+            {renderButton("Talones", "/lab-dashboard/talon")}
           </>
         )}
 
         {role === "Receptionist" && (
           <>
             {renderButton("Agregar Paciente", "/lab-dashboard/patients")}
-            {renderButton("Crear Cita", "/citas/crear")}
+            {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
             {renderButton("Estudios médicos", "/medical-studies")}
             {renderButton("Resultados", "/lab-dashboard/results")}
+            {renderButton("Cobros", "/lab-dashboard/payments")}
+            {renderButton("Talones", "/lab-dashboard/talon")}
           </>
         )}
 
         {role === "LabTechnician" && (
+          <>
+            {renderButton("Resultados", "/lab-dashboard/results")}
+            {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
+            {renderButton("Estudios médicos", "/medical-studies")}
+          </>
+        )}
+
+        {role === "Biochemist" && (
           <>
             {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Estudios médicos", "/medical-studies")}

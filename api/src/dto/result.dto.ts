@@ -10,7 +10,7 @@ class ResultDTO {
   IdLabTechnician: string;
   extractionDate?: Date;
   extractionTime?: string;
-  _id?: string;
+  _id: string;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -20,11 +20,9 @@ class ResultDTO {
     this.IdLabTechnician = data.IdLabTechnician;
     this.extractionDate = data.extractionDate;
     this.extractionTime = data.extractionTime;
-    if (PERSISTENCE !== "MONGO") {
-      this._id = crypto.randomBytes(12).toString("hex");
-      this.createdAt = new Date();
-      this.updatedAt = new Date();
-    }
+    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt ?? new Date();
+    this.updatedAt = data.updatedAt ?? new Date();
   }
 }
 
