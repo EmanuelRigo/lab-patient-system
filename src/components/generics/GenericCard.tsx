@@ -35,7 +35,7 @@ const GenericCard = <T,>({
   return (
     <Link
       href={`/${basePath}/${itemId}`}
-      className="border flex flex-col border-gray-300 p-4 rounded-lg shadow-md bg-white hover:bg-sky-50 transition-colors"
+      className="border-2 flex flex-col border-gray-300 p-4 rounded-lg bg-white hover:bg-sky-50 transition-colors"
     >
       <h3 className="text-lg font-bold text-sky-800">{String(item[title])}</h3>
 

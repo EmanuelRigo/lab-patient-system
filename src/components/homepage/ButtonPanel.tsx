@@ -17,19 +17,19 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
   const renderButton = (label: string, path: string) => (
     <button
       onClick={() => handleNavigation(path)}
-      className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-3 rounded-md transition duration-200 text-lg"
+      className="border-2 flex flex-col border-gray-300 p-4 rounded-lg bg-white hover:bg-sky-50 transition-colors w-full"
     >
       {label}
     </button>
   );
 
   return (
-    <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-lg text-center">
-      <h2 className="text-3xl font-bold mb-8 text-sky-700">
+    <div className="">
+      <h2 className="text-3xl font-bold mb-8 text-gray-800">
         Bienvenido a LabSystem
       </h2>
 
-      <div className="space-y-6">
+      <div className="space-y-5">
         {role === "Admin" && (
           <>
             {renderButton("Pacientes", "/lab-dashboard/patients")}
