@@ -1,8 +1,6 @@
-import Link from "next/link";
 import GenericList from "@/components/generics/GenericList";
 import GenericCard from "@/components/generics/GenericCard";
 import paymentApi from "@/services/payment.api";
-import { Patient } from "../../../../types/patient.types";
 import { Payment } from "../../../../types/payment.types";
 
 const Page = async () => {

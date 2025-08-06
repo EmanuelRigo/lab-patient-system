@@ -11,12 +11,7 @@ type Props = {
   role: Role;
 };
 
-const AsideMenu = ({
-  selectedView,
-  setSelectedView,
-  isLoginPath,
-  role,
-}: Props) => {
+const AsideMenu = ({ setSelectedView, isLoginPath, role }: Props) => {
   return (
     <div className="flex flex-col w-40">
       {/* Pacientes: visible para todos */}

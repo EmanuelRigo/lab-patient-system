@@ -1,9 +1,7 @@
 "use client";
 
-import React, { useState } from "react";
-import labStaffApi from "@/services/labStaff.api";
+import { useState } from "react";
 import sessionApi from "@/services/session.api";
-import { create } from "domain";
 import { LabStaffRole } from "../../../types/labStaff.types";
 
 const LabStaffForm = () => {
@@ -14,7 +12,7 @@ const LabStaffForm = () => {
     password: string;
     email: string;
     phone: string;
-    role: LabStaffRole; // ✅ lo importante
+    role: LabStaffRole;
   }>({
     firstName: "",
     lastName: "",
@@ -22,7 +20,7 @@ const LabStaffForm = () => {
     password: "",
     email: "",
     phone: "",
-    role: "LabTechnician", // ✅ valor inicial válido
+    role: "LabTechnician",
   });
 
   const handleChange = (

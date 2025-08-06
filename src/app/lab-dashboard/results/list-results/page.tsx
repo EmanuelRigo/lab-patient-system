@@ -1,5 +1,4 @@
 // import { getAllMedicalStudy } from "@/services/medicalStudies.api";
-import Link from "next/link";
 import resultApi from "@/services/result.api";
 import GenericList from "@/components/generics/GenericList";
 import GenericCard from "@/components/generics/GenericCard";

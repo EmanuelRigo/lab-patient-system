@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
 interface EditableField {
   name: string;
@@ -7,21 +7,21 @@ interface EditableField {
   type?: "text" | "number" | "textarea";
 }
 
-interface ModalEditGenericProps {
-  initialData: Record<string, any>;
+interface ModalEditGenericProps<T> {
+  initialData: T;
   editableFields: EditableField[];
   onClose: () => void;
-  onUpdate: (updatedFields: Record<string, any>) => void;
+  onUpdate: (updatedFields: Partial<T>) => void;
 }
 
-const ModalEditGeneric = ({
+function ModalEditGeneric<T extends Record<string, unknown>>({
   initialData,
   editableFields,
   onClose,
   onUpdate,
-}: ModalEditGenericProps) => {
-  const [formData, setFormData] = useState<Record<string, any>>({});
-  const [modifiedFields, setModifiedFields] = useState<Record<string, any>>({});
+}: ModalEditGenericProps<T>) {
+  const [formData, setFormData] = useState<T>(initialData);
+  const [modifiedFields, setModifiedFields] = useState<Partial<T>>({});
 
   useEffect(() => {
     setFormData(initialData);
@@ -29,21 +29,28 @@ const ModalEditGeneric = ({
   }, [initialData]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
 
-    if (value !== initialData[name]) {
-      setModifiedFields((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    if (name in initialData && initialData[name as keyof T] !== value) {
+      setModifiedFields((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     } else {
       const updated = { ...modifiedFields };
-      delete updated[name];
+      delete updated[name as keyof T];
       setModifiedFields(updated);
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (Object.keys(modifiedFields).length > 0) {
       onUpdate(modifiedFields);
@@ -67,7 +74,7 @@ const ModalEditGeneric = ({
               {type === "textarea" ? (
                 <textarea
                   name={name}
-                  value={formData[name]}
+                  value={formData[name as keyof T] as string}
                   onChange={handleChange}
                   rows={3}
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
@@ -76,7 +83,7 @@ const ModalEditGeneric = ({
                 <input
                   type={type}
                   name={name}
-                  value={formData[name]}
+                  value={formData[name as keyof T] as string}
                   onChange={handleChange}
                   className="w-full border border-gray-300 rounded-md px-3 py-2"
                 />
@@ -103,6 +110,6 @@ const ModalEditGeneric = ({
       </div>
     </div>
   );
-};
+}
 
 export default ModalEditGeneric;

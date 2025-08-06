@@ -1,15 +1,16 @@
 "use client";
 
 import { useState } from "react";
+import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
 
 type Appointment = {
-  id: string;
+  _id: string;
   date: string;
-  status: "pendiente" | "completado" | "cancelado";
+  status: "scheduled" | "completed" | "cancelled";
 };
 
 type Props = {
-  appointment: Appointment;
+  appointment: DoctorsAppointment;
   onSave: (updated: Appointment) => void;
   onClose: () => void;
 };
@@ -25,7 +26,7 @@ const EditAppointmentModal = ({ appointment, onSave, onClose }: Props) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-md">
+      <div className="bg-white rounded-md p-6 w-full max-w-md">
         <h2 className="text-xl font-semibold text-gray-800 mb-4">
           Editar Turno
         </h2>

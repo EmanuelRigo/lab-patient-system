@@ -1,13 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import {
-  FaUser,
-  FaClinicMedical,
-  FaVials,
-  FaArrowLeft,
-  FaSignOutAlt,
-} from "react-icons/fa";
+import { FaArrowLeft, FaSignOutAlt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 import Locations from "@/components/Locations";
 import PatientsInfo from "./PatientsInfo";

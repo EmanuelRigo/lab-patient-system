@@ -6,9 +6,10 @@ import { Patient } from "../../../types/patient.types";
 import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
 import medicalStudiesApi from "@/services/medicalStudies.api";
 import { MedicalStudy } from "../../../types/medicalStudy.types";
+import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
 
 interface CreateDoctorsAFormProps {
-  onCreated?: (appointment: any) => void;
+  onCreated?: (appointment: DoctorsAppointment) => void;
 }
 
 interface DoctorsAppointmentFormData {

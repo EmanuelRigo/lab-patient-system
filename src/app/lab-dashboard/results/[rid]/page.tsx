@@ -1,4 +1,3 @@
-import React from "react";
 import resultApi from "@/services/result.api";
 import CardResult from "@/components/results/CardResult";
 

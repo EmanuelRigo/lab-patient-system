@@ -34,7 +34,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           <>
             {renderButton("Pacientes", "/lab-dashboard/patients")}
             {renderButton("Resultados", "/lab-dashboard/results")}
-            {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
+            {renderButton("Citas", "/lab-dashboard/doctors-appointment")}
             {renderButton("Personal", "/labstaff")}
             {renderButton("Estudios médicos", "/medical-studies")}
             {renderButton("Cobros", "/lab-dashboard/payments")}
@@ -45,7 +45,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
         {role === "Receptionist" && (
           <>
             {renderButton("Agregar Paciente", "/lab-dashboard/patients")}
-            {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
+            {renderButton("Citas", "/lab-dashboard/doctors-appointment")}
             {renderButton("Estudios médicos", "/medical-studies")}
             {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Cobros", "/lab-dashboard/payments")}

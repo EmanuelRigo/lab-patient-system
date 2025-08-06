@@ -3,12 +3,9 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-// import { loginUser } from "@/services/labStaff.api";
 import sessionApi from "@/services/session.api";
 
-import Aside from "@/components/Aside";
-
-export default function page() {
+export default function Page() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -95,6 +92,13 @@ export default function page() {
             >
               Iniciar sesión
             </button>
+
+            {/* ⚠️ Mostrar error si existe */}
+            {error && (
+              <div className="text-red-600 text-sm font-medium mt-2 text-center">
+                {error}
+              </div>
+            )}
           </form>
         </div>
       </div>
