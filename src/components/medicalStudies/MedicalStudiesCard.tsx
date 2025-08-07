@@ -11,6 +11,10 @@ interface MedicalStudiesCardProps {
   study: MedicalStudy;
 }
 
+interface MedicalStudyForModal extends MedicalStudy {
+  [key: string]: unknown;
+}
+
 const MedicalStudiesCard = ({ study }: MedicalStudiesCardProps) => {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
@@ -80,7 +84,7 @@ const MedicalStudiesCard = ({ study }: MedicalStudiesCardProps) => {
 
       {showModal && (
         <ModalEditGeneric
-          initialData={study}
+          initialData={study as MedicalStudyForModal}
           editableFields={[
             { name: "name", label: "Nombre" },
             { name: "price", label: "Precio", type: "number" },

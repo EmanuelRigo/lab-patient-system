@@ -21,8 +21,12 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
           className="flex items-center justify-between border border-gray-300 p-4 rounded-lg shadow-md bg-white"
         >
           <div>
-            <h3 className="text-lg font-bold text-sky-800">{patient.name}</h3>
-            <p className="text-sm text-gray-600">Edad: {patient.age}</p>
+            <h3 className="text-lg font-bold text-sky-800">
+              {patient.firstName}
+            </h3>
+            <p className="text-sm text-gray-600">
+              Edad: {patient.birthDate.toLocaleDateString()}
+            </p>
           </div>
           <button
             onClick={() => handleDelete(patient._id)}

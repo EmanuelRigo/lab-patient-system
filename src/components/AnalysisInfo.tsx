@@ -3,7 +3,13 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { FaTimes, FaInfoCircle } from "react-icons/fa";
 
-const analyses = [
+interface Analysis {
+  id: number;
+  name: string;
+  details: string;
+}
+
+const analysis = [
   {
     id: 1,
     name: "Análisis de Sangre",
@@ -57,9 +63,11 @@ const analyses = [
 ];
 
 const AnalysisInfo = () => {
-  const [selectedAnalysis, setSelectedAnalysis] = useState(null);
+  const [selectedAnalysis, setSelectedAnalysis] = useState(
+    null as Analysis | null
+  );
 
-  const handleInfoClick = (analysis) => {
+  const handleInfoClick = (analysis: Analysis) => {
     setSelectedAnalysis(analysis);
   };
 
@@ -74,7 +82,7 @@ const AnalysisInfo = () => {
         </Link>
         <h2 className="text-2xl font-bold mb-4">Lista de Análisis</h2>
         <div className="overflow-y-auto h-5/6 scrollbar-custom">
-          {analyses.map((analysis) => (
+          {analysis.map((analysis) => (
             <div
               key={analysis.id}
               className="mb-2 p-2 flex justify-between items-center hover:bg-white/20 duration-200 rounded-s-md"

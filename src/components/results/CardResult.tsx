@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import RoleWrapper from "@/components/generics/RoleWrapper";
 import ModalEditGeneric from "../generics/ModalEditGeneric";
 import resultApi from "@/services/result.api";
@@ -11,6 +10,10 @@ import { FaEdit } from "react-icons/fa";
 
 interface CardResultProps {
   result: Result;
+}
+
+interface ResultForModal extends Result {
+  [key: string]: unknown;
 }
 
 const CardResult = ({ result }: CardResultProps) => {
@@ -63,7 +66,7 @@ const CardResult = ({ result }: CardResultProps) => {
 
         {showModal && (
           <ModalEditGeneric
-            initialData={result}
+            initialData={result as ResultForModal}
             editableFields={[{ name: "status", label: "Estado" }]}
             onClose={() => setShowModal(false)}
             onUpdate={onUpdate}

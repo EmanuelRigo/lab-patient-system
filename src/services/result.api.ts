@@ -1,8 +1,12 @@
 import { Result } from "../../types/result.types";
 import RestApi from "@/services/restApi";
 
-export default new (class ResultApi extends RestApi<Result> {
+class ResultApi extends RestApi<Result> {
   constructor() {
-    super("result");
+    super("doctorAppointment");
   }
-})();
+}
+
+const resultApi = new ResultApi();
+
+export default resultApi;

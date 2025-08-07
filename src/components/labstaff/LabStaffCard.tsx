@@ -10,6 +10,10 @@ interface LabStaffCardProps {
   staff: LabStaff;
 }
 
+interface LabStaffForModal extends LabStaff {
+  [key: string]: unknown;
+}
+
 const LabStaffCard = ({ staff }: LabStaffCardProps) => {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
@@ -70,7 +74,7 @@ const LabStaffCard = ({ staff }: LabStaffCardProps) => {
 
       {showModal && (
         <ModalEditGeneric
-          initialData={staff}
+          initialData={staff as LabStaffForModal}
           editableFields={[
             { name: "firstName", label: "Nombre" },
 

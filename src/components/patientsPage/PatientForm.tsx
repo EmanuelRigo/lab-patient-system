@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { Patient } from "../../../types/patient.types";
 import patientsApi from "@/services/patients.api";
 import ErrorModal from "../atomics/ErrorModal";
 type PatientFormState = {

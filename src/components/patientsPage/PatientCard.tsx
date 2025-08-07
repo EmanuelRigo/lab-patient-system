@@ -10,6 +10,10 @@ interface PatientCardProps {
   patient: Patient;
 }
 
+interface PatientForModal extends Patient {
+  [key: string]: unknown;
+}
+
 const PatientCard = ({ patient }: PatientCardProps) => {
   const router = useRouter();
   const [showModal, setShowModal] = useState(false);
@@ -88,7 +92,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
 
       {showModal && (
         <ModalEditGeneric
-          initialData={patient}
+          initialData={patient as PatientForModal}
           editableFields={[
             { name: "firstName", label: "Nombre" },
             { name: "lastName", label: "Apellido" },

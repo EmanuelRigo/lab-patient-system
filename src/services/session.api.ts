@@ -2,7 +2,9 @@
 
 import envsUtils from "@/utils/envs.utils";
 import { LabStaff } from "../../types/labStaff.types";
-import { register } from "module";
+
+type LabStaffInput = Omit<LabStaff, "_id"> & Partial<Pick<LabStaff, "_id">>;
+
 const BACKEND_URL = envsUtils.BACKEND_URL;
 
 const sessionApi = {
@@ -14,8 +16,7 @@ const sessionApi = {
     });
   },
 
-  createUser: async (userData: LabStaff): Promise<Response> => {
-    console.log("🚀 ~ envsUtils:", envsUtils);
+  createUser: async (userData: LabStaffInput): Promise<Response> => {
     const res = await fetch(`${BACKEND_URL}/api/session/register`, {
       method: "POST",
       headers: {
@@ -25,7 +26,6 @@ const sessionApi = {
     });
     return res;
   },
-
   login: async (credentials: { username: string; password: string }) => {
     return await fetch(`${BACKEND_URL}/api/session/login`, {
       method: "POST",

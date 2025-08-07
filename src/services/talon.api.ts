@@ -29,4 +29,5 @@ class TalonApi extends RestApi<Talon> {
   }
 }
 
-export default new TalonApi();
+const talonApi = new TalonApi();
+export default talonApi;

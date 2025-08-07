@@ -188,7 +188,9 @@ class LabStaffApi extends RestApi<LabStaff> {
   }
 }
 
-export default new LabStaffApi();
+const labStaffApi = new LabStaffApi();
+
+export default labStaffApi;
 
 // export default new (class LabStaffApi extends RestApi<LabStaff> {
 //   constructor() {

@@ -4,15 +4,14 @@ import React, {
   useContext,
   useState,
   ReactNode,
-  useEffect,
-  useRef,
+  // useEffect,
 } from "react";
 import { MedicalStudy } from "../../types/medicalStudy.types";
 import { LabStaff } from "../../types/labStaff.types";
 
 import { Role } from "../../types/frontend.types";
 
-import { jwtDecode } from "jwt-decode";
+// import { jwtDecode } from "jwt-decode";
 
 interface LabSystemContextProps {
   medicalStudyList: MedicalStudy[];
@@ -39,45 +38,45 @@ interface LabSystemProviderProps {
   children: ReactNode;
 }
 
-type UserInfoToken = {
-  username: string;
-  role: Role;
-  iat: number;
-  exp: number;
-};
+// type UserInfoToken = {
+//   username: string;
+//   role: Role;
+//   iat: number;
+//   exp: number;
+// };
 
 const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [medicalStudyList, setMedicalStudyList] = useState<MedicalStudy[]>([]);
   const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
   const [role, setRole] = useState<Role>("Public");
-  const [token, setToken] = useState<string | null>(null);
+  // const [token, setToken] = useState<string | null>(null);
 
-  useEffect(() => {
-    const getCookie = (name: string) => {
-      const cookies = document.cookie.split("; ");
-      const cookie = cookies.find((c) => c.startsWith(`${name}=`));
-      return cookie?.split("=")[1];
-    };
+  // useEffect(() => {
+  //   const getCookie = (name: string) => {
+  //     const cookies = document.cookie.split("; ");
+  //     const cookie = cookies.find((c) => c.startsWith(`${name}=`));
+  //     return cookie?.split("=")[1];
+  //   };
 
-    const token = getCookie("token");
-    const infoUserToken = getCookie("infoUserToken");
+  //   const token = getCookie("token");
+  //   const infoUserToken = getCookie("infoUserToken");
 
-    setToken(token || null);
+  //   setToken(token || null);
 
-    if (infoUserToken) {
-      try {
-        const decoded = jwtDecode<UserInfoToken>(infoUserToken);
-        console.log("📦 Decoded infoUserToken:", decoded);
-        setRole(decoded.role);
-        console.log("🚀 ~ useEffect ~ role:", decoded.role);
+  //   if (infoUserToken) {
+  //     try {
+  //       const decoded = jwtDecode<UserInfoToken>(infoUserToken);
+  //       console.log("📦 Decoded infoUserToken:", decoded);
+  //       setRole(decoded.role);
+  //       console.log("🚀 ~ useEffect ~ role:", decoded.role);
 
-        console.log(role);
-        // console.log("🚀 ~ LabSystemProvider ~ role:", role);
-      } catch (error) {
-        console.error("❌ Error decoding infoUserToken:", error);
-      }
-    }
-  }, []);
+  //       console.log(role);
+  //       // console.log("🚀 ~ LabSystemProvider ~ role:", role);
+  //     } catch (error) {
+  //       console.error("❌ Error decoding infoUserToken:", error);
+  //     }
+  //   }
+  // }, []);
 
   const value: LabSystemContextProps = {
     medicalStudyList,

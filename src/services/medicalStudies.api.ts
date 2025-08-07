@@ -34,4 +34,6 @@ class MedicalStudyApi extends RestApi<MedicalStudy> {
   }
 }
 
-export default new MedicalStudyApi();
+const medicalStudyApi = new MedicalStudyApi();
+
+export default medicalStudyApi;

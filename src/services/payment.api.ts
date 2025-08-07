@@ -1,8 +1,12 @@
 import { Payment } from "../../types/payment.types";
 import RestApi from "@/services/restApi";
 
-export default new (class PaymentApi extends RestApi<Payment> {
+class PaymentApi extends RestApi<Payment> {
   constructor() {
-    super("payment");
+    super("doctorAppointment");
   }
-})();
+}
+
+const paymentApi = new PaymentApi();
+
+export default paymentApi;
