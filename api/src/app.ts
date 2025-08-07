@@ -43,7 +43,7 @@ app.use(
   })
 );
 
-// MongoSingleton.getInstance();
+MongoSingleton.getInstance();
 
 app.use("/api/", indexRouter);
 
@@ -52,11 +52,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const PORT = process.env.PORT || 4000;
-
-app.listen(PORT, () => {
-  console.log(`🚀 Backend listening at http://localhost:${PORT}`);
-});
-
 app.use((_req, _res, next) => pathHandler(_req, _res, next));
 app.use(errorHandler);
+
+export default app;
