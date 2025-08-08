@@ -22,7 +22,7 @@ const AsideMenu = ({ setSelectedView, isLoginPath, role }: Props) => {
         }`}
       >
         <FaUser className="text-2xl me-4 group-hover:text-sky-700" />
-        <p className="text-white ps-2 group-hover:text-sky-700">Pacientes</p>
+        <p className="text-white ps-2 group-hover:text-sky-700">Pacientesss</p>
       </button>
 
       {/* Sucursales: solo para Admin */}
