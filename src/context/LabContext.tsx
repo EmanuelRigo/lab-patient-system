@@ -58,7 +58,7 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
       return cookie?.split("=")[1];
     };
 
-    const token = getCookie("token");
+    // const token = getCookie("token");
     const infoUserToken = getCookie("infoUserToken");
 
     // setToken(token || null);
