@@ -49,7 +49,7 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [medicalStudyList, setMedicalStudyList] = useState<MedicalStudy[]>([]);
   const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
   const [role, setRole] = useState<Role>("Public");
-  const [token, setToken] = useState<string | null>(null);
+  // const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const getCookie = (name: string) => {
@@ -61,7 +61,7 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     const token = getCookie("token");
     const infoUserToken = getCookie("infoUserToken");
 
-    setToken(token || null);
+    // setToken(token || null);
 
     if (infoUserToken) {
       try {
