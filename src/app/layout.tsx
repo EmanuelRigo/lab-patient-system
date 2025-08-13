@@ -38,6 +38,7 @@ export default function RootLayout({
         <LabSystemProvider>
           <OnlineStatus>
             <div className="h-full w-3/6 bg-neutral-100 p-4 text-black min-w-[480px]">
+              main
               {children}
             </div>
           </OnlineStatus>
