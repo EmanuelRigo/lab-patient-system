@@ -8,7 +8,8 @@ export default function Aside() {
   const { role } = useLabSystemContext();
 
   return (
-    <div className="h-full flex items-center justify-center  ">
+    <div className="h-full flex items-center justify-center bg-gray-50/90 ">
+      aside
       {!role && <p>Cargando rol de usuario...</p>}
       {role && (
         <ButtonPanel
@@ -17,9 +18,6 @@ export default function Aside() {
           }
         />
       )}
-      <div className="bg-red-500">
-        <h1>hola</h1>
-      </div>
       {/* <AsideMenu
         selectedView={selectedView}
         setSelectedView={setSelectedView}

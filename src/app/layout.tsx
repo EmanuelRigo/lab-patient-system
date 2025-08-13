@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Aside from "@/components/Aside";
+// import Aside from "@/components/Aside";
+import Aside from "@/components/aside/Aside";
 import "./globals.css";
 import LabSystemProvider from "@/context/LabContext";
 import OnlineStatus from "@/utils/OnlineStatus";
@@ -37,12 +38,11 @@ export default function RootLayout({
       >
         <LabSystemProvider>
           <OnlineStatus>
-            <div className="h-full w-3/6 bg-neutral-100 p-4 text-black min-w-[480px]">
-              aside
+            <div className="h-full flex w-full text-black min-w-[480px]">
+              <Aside></Aside>
               {children}
             </div>
           </OnlineStatus>
-          <Aside />
         </LabSystemProvider>
       </body>
     </html>
