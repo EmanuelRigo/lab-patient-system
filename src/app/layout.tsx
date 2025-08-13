@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Aside from "@/components/Aside";
 import "./globals.css";
 import LabSystemProvider from "@/context/LabContext";
+import OnlineStatus from "@/utils/OnlineStatus";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,11 +36,11 @@ export default function RootLayout({
         }}
       >
         <LabSystemProvider>
-          <div className="h-full w-3/6 bg-neutral-100 p-4 text-black min-w-[480px]">
-            {" "}
-            {children}
-          </div>
-
+          <OnlineStatus>
+            <div className="h-full w-3/6 bg-neutral-100 p-4 text-black min-w-[480px]">
+              {children}
+            </div>
+          </OnlineStatus>
           <Aside />
         </LabSystemProvider>
       </body>

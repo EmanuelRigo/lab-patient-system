@@ -82,11 +82,6 @@ async function register(req: Request, res: Response) {
     const { _id } = req.user;
     const message = "User Registered";
 
-    // await labStaffServices.create({
-    //   user_id: _id,
-    //   movies: [],
-    // });
-
     return res.json201(_id, message);
   } catch (error) {
     console.error("Error during registration:", error);
