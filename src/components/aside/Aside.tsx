@@ -8,7 +8,7 @@ export default function Aside() {
   const { role } = useLabSystemContext();
 
   return (
-    <div className="h-full flex items-center justify-center bg-gray-50/90 ">
+    <div className="h-full flex flex-col items-center justify-center bg-gray-50/90 p-8">
       aside
       {!role && <p>Cargando rol de usuario...</p>}
       {role && (

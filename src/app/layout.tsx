@@ -40,7 +40,11 @@ export default function RootLayout({
           <OnlineStatus>
             <div className="h-full flex w-full text-black min-w-[480px]">
               <Aside></Aside>
-              {children}
+              <div className="relative w-full h-full">
+                <div className="text-black h-full overflow-y-auto flex-col w-full flex justify-center items-end absolute overflow-hidden">
+                  {children}
+                </div>
+              </div>
             </div>
           </OnlineStatus>
         </LabSystemProvider>

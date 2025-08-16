@@ -9,7 +9,7 @@ const Page = async () => {
   const patients = await patientsApi.getAll();
 
   return (
-    <div className="text-black h-full overflow-y-auto flex flex-col">
+    <div className="bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
       <Link
         href="/lab-dashboard/patients/add-patient"
         className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"
