@@ -8,22 +8,24 @@ const Page = async () => {
   const talons = await talonApi.getAll();
 
   return (
-    <div className="text-black h-full overflow-y-auto flex flex-col">
-      <GenericList<Talon>
-        items={talons}
-        getKey={(p) => p._id!}
-        emptyMessage="No hay talones registrados."
-        className="scrollbar-hidden overflow-y-auto"
-        Card={({ data }) => (
-          <GenericCard
-            item={data}
-            title="_id"
-            id="_id"
-            fields={["createdAt"]}
-            basePath="lab-dashboard/talon/"
-          />
-        )}
-      />
+    <div className="bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
+      <div className="text-black h-full overflow-y-auto flex flex-col">
+        <GenericList<Talon>
+          items={talons}
+          getKey={(p) => p._id!}
+          emptyMessage="No hay talones registrados."
+          className="scrollbar-hidden overflow-y-auto"
+          Card={({ data }) => (
+            <GenericCard
+              item={data}
+              title="_id"
+              id="_id"
+              fields={["createdAt"]}
+              basePath="lab-dashboard/talon/"
+            />
+          )}
+        />
+      </div>
     </div>
   );
 };
