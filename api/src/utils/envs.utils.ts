@@ -15,6 +15,12 @@ interface EnvConfig {
   PERSISTENCE: string | undefined;
   JWT_SECRET: string | undefined;
   BACKEND_URL: string | undefined;
+
+  MYSQL_HOST: string | undefined;
+  MYSQL_PORT: string | undefined;
+  MYSQL_USER: string | undefined;
+  MYSQL_PASSWORD: string | undefined;
+  MYSQL_DATABASE: string | undefined;
 }
 
 // Realiza la validación de las variables de entorno críticas inmediatamente
@@ -51,6 +57,11 @@ const envsUtils: EnvConfig = {
   PERSISTENCE: process.env.PERSISTENCE,
   JWT_SECRET: process.env.JWT_SECRET,
   BACKEND_URL: process.env.BACKEND_URL,
+  MYSQL_HOST: process.env.MYSQL_HOST,
+  MYSQL_PORT: process.env.MYSQL_PORT,
+  MYSQL_USER: process.env.MYSQL_USER,
+  MYSQL_PASSWORD: process.env.MYSQL_PASSWORD,
+  MYSQL_DATABASE: process.env.MYSQL_DATABASE,
 };
 
 export default envsUtils;

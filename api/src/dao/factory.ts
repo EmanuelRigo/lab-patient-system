@@ -1,6 +1,10 @@
 import MongoSingleton from "../utils/mongoDB.utils";
 import envsUtils from "../utils/envs.utils";
 // import DaoIndexMongo from "./mongo/index.dao";
+import { testMySQLConnection } from "../utils/mysqlDB.utils";
+
+import PatientDaoSQL from "./mysql/patient.dao";
+
 import {
   DoctorsAppointmentDaoMongo,
   LabStaffDaoMongo,
@@ -28,17 +32,13 @@ daoMongo = {
 };
 
 switch (PERSISTENCE) {
-  // case "SQL":
-  //   console.log("connected to FS");
-  //   const ProductsManagerFS = require("./fs/managers/products.manager.fs.js").default;
-  //   const UsersManagerFS = require("./fs/managers/users.manager.fs.js").default;
-  //   const CartsManagerFS = require("./fs/managers/carts.manager.fs.js").default;
-  //   dao = {
-  //     ProductsManager: ProductsManagerFS,
-  //     UsersManager: UsersManagerFS,
-  //     CartsManager: CartsManagerFS,
-  //   };
-  //   break;
+  case "SQL":
+    testMySQLConnection();
+    // Aquí después irán los DAOs que trabajen con MySQL
+    dao = {
+      PatientDao: PatientDaoSQL,
+    };
+    break;
 
   default:
     MongoSingleton.getInstance();
