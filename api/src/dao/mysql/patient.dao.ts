@@ -1,6 +1,20 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
 
 export default class PatientDaoSQL {
+  static async create(data: Record<string, any>) {
+    const keys = Object.keys(data);
+    const values = Object.values(data);
+
+    if (keys.length === 0) return null;
+
+    const columns = keys.join(", ");
+    const placeholders = keys.map(() => "?").join(", ");
+    const query = `INSERT INTO Patient (${columns}) VALUES (${placeholders})`;
+
+    const [result] = await MySQLPool.query(query, values);
+    return result;
+  }
+
   static async getAll() {
     const [rows] = await MySQLPool.query("SELECT * FROM Patient");
     return rows;
