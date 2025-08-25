@@ -6,16 +6,16 @@ import { LabStaffRole } from "../../../types/labStaff.types";
 
 const LabStaffForm = () => {
   const [form, setForm] = useState<{
-    firstName: string;
-    lastName: string;
+    firstname: string;
+    lastname: string;
     username: string;
     password: string;
     email: string;
     phone: string;
     role: LabStaffRole;
   }>({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     username: "",
     password: "",
     email: "",
@@ -37,8 +37,8 @@ const LabStaffForm = () => {
     e.preventDefault();
 
     const payload = {
-      firstName: form.firstName,
-      lastName: form.lastName,
+      firstname: form.firstname,
+      lastname: form.lastname,
       username: form.username,
       password: form.password,
       email: form.email,
@@ -60,18 +60,18 @@ const LabStaffForm = () => {
       <div className="flex gap-4">
         <input
           type="text"
-          name="firstName"
+          name="firstname"
           placeholder="Nombre"
-          value={form.firstName}
+          value={form.firstname}
           onChange={handleChange}
           className="border p-2 rounded-md w-1/2"
           required
         />
         <input
           type="text"
-          name="lastName"
+          name="lastname"
           placeholder="Apellido"
-          value={form.lastName}
+          value={form.lastname}
           onChange={handleChange}
           className="border p-2 rounded-md w-1/2"
           required

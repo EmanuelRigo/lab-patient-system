@@ -37,8 +37,8 @@
 //         <LabStaffCard
 //           key={person._id}
 //           id={person._id}
-//           name={person.firstName}
-//           lastname={person.lastName}
+//           name={person.firstname}
+//           lastname={person.lastname}
 //           role={person.role}
 //         />
 //       ))}

@@ -47,7 +47,7 @@ const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
 
   const fetchPatients = useCallback(
     async (query: string): Promise<Patient[]> => {
-      const url = `http://localhost:8080/api/patient/search?firstName=${encodeURIComponent(
+      const url = `http://localhost:8080/api/patient/search?firstname=${encodeURIComponent(
         query
       )}`;
       const res = await fetch(url);
@@ -103,7 +103,7 @@ const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
         }}
         renderItem={(patient: Patient) => (
           <span>
-            {patient.dni} - {patient.firstName} {patient.lastName}
+            {patient.dni} - {patient.firstname} {patient.lastname}
           </span>
         )}
         placeholder="Buscar paciente..."
@@ -115,10 +115,10 @@ const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
             <strong>DNI:</strong> {patient.dni}
           </p>
           <p>
-            <strong>Nombre:</strong> {patient.firstName}
+            <strong>Nombre:</strong> {patient.firstname}
           </p>
           <p>
-            <strong>Apellido:</strong> {patient.lastName}
+            <strong>Apellido:</strong> {patient.lastname}
           </p>
         </div>
       )}

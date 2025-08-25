@@ -109,7 +109,7 @@ passport.use(
           return done(null, false, info);
         }
         const data = {
-          firstName: user.firstName,
+          firstname: user.firstname,
           username: user.username,
           user_id: user._id,
           role: user.role,
@@ -121,7 +121,7 @@ passport.use(
         req.token = token;
 
         const onlineUser = createTokenUtil({
-          firstName: user.firstName,
+          firstname: user.firstname,
           username: user.username,
           user_id: user._id,
           role: user.role,
@@ -367,7 +367,7 @@ passport.use(
         }
 
         const userData = {
-          firstName: user.firstName,
+          firstname: user.firstname,
           username: user.username,
           user_id: user._id,
           role: user.role,

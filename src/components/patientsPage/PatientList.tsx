@@ -22,7 +22,7 @@ const PatientList: React.FC<PatientListProps> = ({ patients }) => {
         >
           <div>
             <h3 className="text-lg font-bold text-sky-800">
-              {patient.firstName}
+              {patient.firstname}
             </h3>
             <p className="text-sm text-gray-600">
               Edad: {patient.birthDate.toLocaleDateString()}

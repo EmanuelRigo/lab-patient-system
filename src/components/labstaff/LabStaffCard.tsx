@@ -47,7 +47,7 @@ const LabStaffCard = ({ staff }: LabStaffCardProps) => {
   return (
     <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
       <h2 className="text-2xl font-bold text-sky-800 mb-2">
-        {staff.firstName}{" "}
+        {staff.firstname}{" "}
       </h2>
 
       <p className="text-gray-700 mb-1">
@@ -76,7 +76,7 @@ const LabStaffCard = ({ staff }: LabStaffCardProps) => {
         <ModalEditGeneric
           initialData={staff as LabStaffForModal}
           editableFields={[
-            { name: "firstName", label: "Nombre" },
+            { name: "firstname", label: "Nombre" },
 
             { name: "description", label: "Descripción", type: "textarea" },
           ]}

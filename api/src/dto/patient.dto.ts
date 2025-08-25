@@ -5,9 +5,9 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class PatientDTO {
-  firstName: string;
+  firstname: string;
   secondName?: string;
-  lastName: string;
+  lastname: string;
   birthDate: Date;
   dni: number;
   email: string | undefined;
@@ -18,9 +18,9 @@ class PatientDTO {
   updatedAt?: Date;
 
   constructor(data: Patient) {
-    this.firstName = data.firstName;
+    this.firstname = data.firstname;
     this.secondName = data.secondName;
-    this.lastName = data.lastName;
+    this.lastname = data.lastname;
     this.birthDate = new Date(data.birthDate);
     this.dni = data.dni;
     this.email = data.email;

@@ -9,13 +9,13 @@ class PatientController extends Controller<Patient> {
   }
 
   search = async (req: Request, res: Response) => {
-    const { dni, firstName, lastName } = req.query;
+    const { dni, firstname, lastname } = req.query;
 
     const criteria: any = {};
 
     if (dni) criteria.dni = { $regex: dni, $options: "i" };
-    if (firstName) criteria.firstName = { $regex: firstName, $options: "i" };
-    if (lastName) criteria.lastName = { $regex: lastName, $options: "i" };
+    if (firstname) criteria.firstname = { $regex: firstname, $options: "i" };
+    if (lastname) criteria.lastname = { $regex: lastname, $options: "i" };
 
     // Validación simple: si no se pasó ningún criterio
     if (Object.keys(criteria).length === 0) {

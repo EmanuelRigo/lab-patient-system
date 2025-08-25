@@ -5,7 +5,7 @@ const collection = "Patients";
 
 const schema = new Schema<Patient>(
   {
-    firstName: {
+    firstname: {
       type: String,
       required: true,
       index: true,
@@ -14,7 +14,7 @@ const schema = new Schema<Patient>(
       type: String,
       index: true,
     },
-    lastName: {
+    lastname: {
       type: String,
       required: true,
       index: true,

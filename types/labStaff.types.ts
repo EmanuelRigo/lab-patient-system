@@ -5,9 +5,9 @@ export type LabStaffRole =
   | "Admin";
 
 export interface LabStaff {
-  firstName: string;
+  firstname: string;
   secondName?: string;
-  lastName: string;
+  lastname: string;
   username: string;
   password: string;
   role: LabStaffRole;

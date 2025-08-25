@@ -4,8 +4,8 @@ import React, { useState } from "react";
 import patientsApi from "@/services/patients.api";
 import ErrorModal from "../atomics/ErrorModal";
 type PatientFormState = {
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   secondName: string;
   birthDate: Date;
   dni: string;
@@ -16,8 +16,8 @@ type PatientFormState = {
 
 const PatientForm = () => {
   const [form, setForm] = useState<PatientFormState>({
-    firstName: "",
-    lastName: "",
+    firstname: "",
+    lastname: "",
     secondName: "",
     birthDate: new Date(),
     dni: "",
@@ -48,9 +48,9 @@ const PatientForm = () => {
 
       // Limpiar solo si fue exitoso
       setForm({
-        firstName: "",
+        firstname: "",
         secondName: "",
-        lastName: "",
+        lastname: "",
         birthDate: new Date(),
         dni: "",
         email: "",
@@ -77,9 +77,9 @@ const PatientForm = () => {
         <h2 className="text-xl font-semibold text-sky-700">Agregar Paciente</h2>
         <input
           type="text"
-          name="firstName"
+          name="firstname"
           placeholder="Nombre"
-          value={form.firstName}
+          value={form.firstname}
           onChange={handleChange}
           className="w-full border p-2 rounded-md"
           required
@@ -94,9 +94,9 @@ const PatientForm = () => {
         />
         <input
           type="text"
-          name="lastName"
+          name="lastname"
           placeholder="Apellido"
-          value={form.lastName}
+          value={form.lastname}
           onChange={handleChange}
           className="w-full border p-2 rounded-md"
           required

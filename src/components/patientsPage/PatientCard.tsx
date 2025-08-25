@@ -45,7 +45,7 @@ const PatientCard = ({ patient }: PatientCardProps) => {
   return (
     <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
       <h2 className="text-2xl font-bold text-sky-800 mb-2">
-        {patient.firstName} {patient.lastName}
+        {patient.firstname} {patient.lastname}
       </h2>
 
       <p className="text-gray-700 mb-1">
@@ -94,8 +94,8 @@ const PatientCard = ({ patient }: PatientCardProps) => {
         <ModalEditGeneric
           initialData={patient as PatientForModal}
           editableFields={[
-            { name: "firstName", label: "Nombre" },
-            { name: "lastName", label: "Apellido" },
+            { name: "firstname", label: "Nombre" },
+            { name: "lastname", label: "Apellido" },
             { name: "birthDate", label: "Fecha de nacimiento" },
             { name: "dni", label: "DNI", type: "number" },
             { name: "phone", label: "Teléfono" },

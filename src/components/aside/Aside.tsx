@@ -2,7 +2,7 @@
 import ButtonPanel from "@/components/homepage/ButtonPanel";
 
 import { useLabSystemContext } from "@/context/LabContext";
-import AsideMenu from "./AsideMenu";
+// import AsideMenu from "./AsideMenu";
 
 export default function Aside() {
   const { role } = useLabSystemContext();

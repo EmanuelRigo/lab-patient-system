@@ -5,12 +5,12 @@ const collection = "lab_staff";
 
 const schema = new Schema<LabStaff>(
   {
-    firstName: {
+    firstname: {
       type: String,
       required: true,
       index: true,
     },
-    lastName: {
+    lastname: {
       type: String,
       required: true,
     },
