@@ -4,7 +4,12 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 type ButtonPanelProps = {
-  role: "role_admin" | "Receptionist" | "LabTechnician" | "Biochemist" | null;
+  role:
+    | "role_admin"
+    | "role_receptionist"
+    | "role_lab_technician"
+    | "role_biochemist"
+    | null;
 };
 
 const ButtonPanel = ({ role }: ButtonPanelProps) => {
@@ -42,7 +47,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "Receptionist" && (
+        {role === "role_receptionist" && (
           <>
             {renderButton("Agregar Paciente", "/lab-dashboard/patients")}
             {renderButton("Citas", "/lab-dashboard/doctors-appointment")}
@@ -53,7 +58,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "LabTechnician" && (
+        {role === "role_lab_technician" && (
           <>
             {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
@@ -61,7 +66,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "Biochemist" && (
+        {role === "role_biochemist" && (
           <>
             {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Estudios médicos", "/medical-studies")}

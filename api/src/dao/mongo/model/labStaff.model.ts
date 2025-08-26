@@ -25,7 +25,12 @@ const schema = new Schema<LabStaff>(
     },
     role: {
       type: String,
-      enum: ["LabTechnician", "Biochemist", "Receptionist", "role_admin"],
+      enum: [
+        "role_lab_technician",
+        "role_biochemist",
+        "role_receptionist",
+        "role_admin",
+      ],
       required: true,
     },
     email: {

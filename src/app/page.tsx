@@ -11,7 +11,7 @@ export default function DashboardButtons() {
       {role && (
         <ButtonPanel
           role={
-            role as "role_admin" | "Receptionist" | "LabTechnician" | "Biochemist"
+            role as "role_admin" | "role_receptionist" | "role_lab_technician" | "role_biochemist"
           }
         />
       )} */}

@@ -6,7 +6,7 @@ const page = () => {
   return (
     <div className="bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
       <div className="h-full flex flex-col gap-4">
-        <RoleWrapper allowedRoles={["LabTechnician"]}>
+        <RoleWrapper allowedRoles={["role_lab_technician"]}>
           <Link
             href="results/add-result"
             className="bg-sky-500 rounded-lg p-4 text-white"

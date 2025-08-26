@@ -11,7 +11,7 @@ const Page = async () => {
   return (
     <div className="bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
       <div className="text-black h-full overflow-y-auto flex flex-col">
-        <RoleWrapper allowedRoles={["Receptionist"]}>
+        <RoleWrapper allowedRoles={["role_receptionist"]}>
           <Link
             href="/lab-dashboard/doctors-appointment/create-appointment"
             className="bg-sky-600 p-2 rounded-lg mb-4 text-white inline-block"

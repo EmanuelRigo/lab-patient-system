@@ -55,7 +55,7 @@ const CardResult = ({ result }: CardResultProps) => {
         <strong>Bioquímico:</strong> {result.IdBiochemist || "No asignado"}
       </p>
 
-      <RoleWrapper allowedRoles={["LabTechnician", "Biochemist"]}>
+      <RoleWrapper allowedRoles={["role_lab_technician", "role_biochemist"]}>
         <button
           onClick={() => setShowModal(true)}
           className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md"

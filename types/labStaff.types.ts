@@ -1,7 +1,7 @@
 export type LabStaffRole =
-  | "Receptionist"
-  | "LabTechnician"
-  | "Biochemist"
+  | "role_receptionist"
+  | "role_lab_technician"
+  | "role_biochemist"
   | "role_admin";
 
 export interface LabStaff {

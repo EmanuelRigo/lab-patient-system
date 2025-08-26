@@ -1,6 +1,6 @@
 export type Role =
-  | "Receptionist"
-  | "LabTechnician"
-  | "Biochemist"
+  | "role_receptionist"
+  | "role_lab_technician"
+  | "role_biochemist"
   | "role_admin"
   | "Public";

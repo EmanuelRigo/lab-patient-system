@@ -54,7 +54,7 @@ const DoctorAppointmentCard = ({ appointment }: DoctorAppointmentCardProps) => {
         <strong>Actualizado:</strong>{" "}
         {new Date(appointment.updatedAt!).toLocaleString()}
       </p>
-      <RoleWrapper allowedRoles={["Receptionist", "LabTechnician"]}>
+      <RoleWrapper allowedRoles={["role_receptionist", "role_lab_technician"]}>
         <button
           onClick={() => setIsModalOpen(true)}
           className="mt-4 w-full inline-block bg-sky-500 text-white px-4 py-2 rounded-md hover:bg-sky-600 transition-colors"

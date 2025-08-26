@@ -16,9 +16,9 @@ export default function Aside() {
           role={
             role as
               | "role_admin"
-              | "Receptionist"
-              | "LabTechnician"
-              | "Biochemist"
+              | "role_receptionist"
+              | "role_lab_technician"
+              | "role_biochemist"
           }
         />
       )}

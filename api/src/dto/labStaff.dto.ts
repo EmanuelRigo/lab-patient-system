@@ -35,7 +35,7 @@ class LabStaffDTO {
     this.username = data.username;
     this.email = data.email;
     this.password = data.password;
-    this.role = data.role ?? "LabTechnician";
+    this.role = data.role ?? "role_lab_technician";
     this.phone = data.phone;
     this.isOnline = data.isOnline ?? false;
   }

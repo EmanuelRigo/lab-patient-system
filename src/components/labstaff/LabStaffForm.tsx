@@ -20,7 +20,7 @@ const LabStaffForm = () => {
     password: "",
     email: "",
     phone: "",
-    role: "LabTechnician",
+    role: "role_lab_technician",
   });
 
   const handleChange = (
@@ -129,9 +129,9 @@ const LabStaffForm = () => {
           Selecciona un rol
         </option>
 
-        <option value="LabTechnician">Técnico de Laboratorio</option>
-        <option value="Biochemist">Bioquimico</option>
-        <option value="Receptionist">Recepcionista</option>
+        <option value="role_lab_technician">Técnico de Laboratorio</option>
+        <option value="role_biochemist">Bioquimico</option>
+        <option value="role_receptionist">Recepcionista</option>
         <option value="role_admin">Administrador</option>
       </select>
 

@@ -36,8 +36,8 @@ const AsideMenu = ({ setSelectedView, isLoginPath, role }: Props) => {
         </button>
       )}
 
-      {/* Análisis: role_admin y LabTechnician */}
-      {(role === "role_admin" || role === "LabTechnician") && (
+      {/* Análisis: role_admin y role_lab_technician */}
+      {(role === "role_admin" || role === "role_lab_technician") && (
         <button
           onClick={() => setSelectedView("analysis")}
           className="flex items-center my-1 space-x-2 hover:outline hover:bg-white ps-5 py-2 w-full rounded-e group"
