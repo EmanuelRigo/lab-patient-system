@@ -7,7 +7,7 @@ const Page = async ({ params }: { params: Promise<{ did: string }> }) => {
 
   if (!dAppointment) {
     return (
-      <div className="text-center text-gray-700 p-6">
+      <div className="text-center text-gray-700 p-6 ">
         <h2 className="text-xl font-semibold text-red-600 mb-2">
           Turno no encontrado
         </h2>
@@ -16,11 +16,7 @@ const Page = async ({ params }: { params: Promise<{ did: string }> }) => {
     );
   }
 
-  return (
-    <div className="text-black h-full overflow-y-auto p-6">
-      <DoctorAppointmentCard appointment={dAppointment} />
-    </div>
-  );
+  return <DoctorAppointmentCard appointment={dAppointment} />;
 };
 
 export default Page;

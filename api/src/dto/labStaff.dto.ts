@@ -7,7 +7,7 @@ const { PERSISTENCE } = envsUtils;
 
 class LabStaffDTO {
   firstname: string;
-  secondName?: string;
+  secondname?: string;
   lastname: string;
   username: string;
   password: string;
@@ -30,7 +30,7 @@ class LabStaffDTO {
       this.updatedAt = data.updatedAt;
     }
     this.firstname = data.firstname;
-    this.secondName = data.secondName;
+    this.secondname = data.secondname;
     this.lastname = data.lastname;
     this.username = data.username;
     this.email = data.email;

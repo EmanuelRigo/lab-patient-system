@@ -32,7 +32,7 @@ const CardResult = ({ result }: CardResultProps) => {
   };
 
   return (
-    <div className="max-w-md mx-auto bg-white border border-gray-300 shadow-md rounded-lg p-6">
+    <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
       <h2 className="text-2xl font-bold text-sky-800 mb-4">
         {result.IdLabTechnician}
       </h2>

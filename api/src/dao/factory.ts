@@ -4,6 +4,7 @@ import envsUtils from "../utils/envs.utils";
 import { testMySQLConnection } from "../utils/mysqlDB.utils";
 
 import PatientDaoSQL from "./mysql/patient.dao";
+import LabStaffDaoSQL from "./mysql/labStaff.dao";
 
 import {
   DoctorsAppointmentDaoMongo,
@@ -37,6 +38,7 @@ switch (PERSISTENCE) {
     // Aquí después irán los DAOs que trabajen con MySQL
     dao = {
       PatientDao: PatientDaoSQL,
+      LabStaffDao: LabStaffDaoSQL,
     };
     break;
 

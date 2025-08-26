@@ -6,11 +6,7 @@ const Page = async ({ params }: { params: Promise<{ studyId: string }> }) => {
   const { studyId } = await params;
   const study = await medicalStudiesApi.getByName(decodeURIComponent(studyId));
 
-  return (
-    <div className="p-6 text-black">
-      <MedicalStudiesCard study={study} />
-    </div>
-  );
+  return <MedicalStudiesCard study={study} />;
 };
 
 export default Page;

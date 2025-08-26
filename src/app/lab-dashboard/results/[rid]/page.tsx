@@ -9,11 +9,7 @@ const Page = async ({ params }: { params: Promise<{ rid: string }> }) => {
     return <div className="text-red-500">Resultado no encontrado</div>;
   }
 
-  return (
-    <div className="text-black h-full overflow-y-auto p-6">
-      <CardResult result={result} />
-    </div>
-  );
+  return <CardResult result={result} />;
 };
 
 export default Page;

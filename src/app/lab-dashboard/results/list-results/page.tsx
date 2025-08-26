@@ -8,7 +8,7 @@ const Page = async () => {
   const results = await resultApi.getAll();
 
   return (
-    <div className="text-black h-full overflow-y-auto flex flex-col">
+    <div className="text-black overflow-y-auto flex flex-col bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
       <GenericList<Result>
         items={results}
         getKey={(p) => p._id!}

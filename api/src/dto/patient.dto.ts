@@ -6,7 +6,7 @@ const { PERSISTENCE } = envsUtils;
 
 class PatientDTO {
   firstname: string;
-  secondName?: string;
+  secondname?: string;
   lastname: string;
   birthDate: Date;
   dni: number;
@@ -19,7 +19,7 @@ class PatientDTO {
 
   constructor(data: Patient) {
     this.firstname = data.firstname;
-    this.secondName = data.secondName;
+    this.secondname = data.secondname;
     this.lastname = data.lastname;
     this.birthDate = new Date(data.birthDate);
     this.dni = data.dni;

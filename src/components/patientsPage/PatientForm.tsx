@@ -6,7 +6,7 @@ import ErrorModal from "../atomics/ErrorModal";
 type PatientFormState = {
   firstname: string;
   lastname: string;
-  secondName: string;
+  secondname: string;
   birthDate: Date;
   dni: string;
   email: string;
@@ -18,7 +18,7 @@ const PatientForm = () => {
   const [form, setForm] = useState<PatientFormState>({
     firstname: "",
     lastname: "",
-    secondName: "",
+    secondname: "",
     birthDate: new Date(),
     dni: "",
     email: "",
@@ -49,7 +49,7 @@ const PatientForm = () => {
       // Limpiar solo si fue exitoso
       setForm({
         firstname: "",
-        secondName: "",
+        secondname: "",
         lastname: "",
         birthDate: new Date(),
         dni: "",
@@ -86,9 +86,9 @@ const PatientForm = () => {
         />{" "}
         <input
           type="text"
-          name="secondName"
+          name="secondname"
           placeholder="Segundo Nombre (opcional)"
-          value={form.secondName}
+          value={form.secondname}
           onChange={handleChange}
           className="w-full border p-2 rounded-md"
         />

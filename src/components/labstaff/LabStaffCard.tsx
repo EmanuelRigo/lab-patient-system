@@ -45,7 +45,7 @@ const LabStaffCard = ({ staff }: LabStaffCardProps) => {
   };
 
   return (
-    <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
+    <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto ">
       <h2 className="text-2xl font-bold text-sky-800 mb-2">
         {staff.firstname}{" "}
       </h2>

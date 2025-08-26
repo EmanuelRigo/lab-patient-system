@@ -10,7 +10,7 @@ const schema = new Schema<Patient>(
       required: true,
       index: true,
     },
-    secondName: {
+    secondname: {
       type: String,
       index: true,
     },

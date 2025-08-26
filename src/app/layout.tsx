@@ -38,10 +38,10 @@ export default function RootLayout({
       >
         <LabSystemProvider>
           <OnlineStatus>
-            <div className="h-full w-full">
+            <div className="h-full w-full relative">
               {" "}
-              <div className="bg-green-500 w-full h-12 items-center">
-                IN PROCESS
+              <div className="bg-green-500 w-full h-12 absolute flex justify-center items-center ">
+                <p className="text-black text-xl">In process</p>
               </div>
               <div className="h-full flex w-full text-black min-w-[480px]">
                 <Aside></Aside>

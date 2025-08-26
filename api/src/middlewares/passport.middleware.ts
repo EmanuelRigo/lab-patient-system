@@ -40,7 +40,7 @@ passport.use(
     },
     async (req, username, password, done) => {
       try {
-        const userExists = await labStaffServices.getByName(username);
+        const userExists = await labStaffServices.getByUsername(username);
 
         if (userExists) {
           const info = {

@@ -20,7 +20,7 @@ const Page = async () => {
               id="_id"
               title="method"
               fields={["amount"]}
-              basePath="lab-dashboard/patients"
+              basePath="lab-dashboard/payments"
             />
           )}
         />

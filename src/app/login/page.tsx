@@ -52,7 +52,7 @@ export default function Page() {
   };
 
   return (
-    <div className="h-full flex ">
+    <div className="flex bg-neutral-200 h-2/3 w-2/3 rounded-s-2xl">
       <div className="h-full w-full flex items-center justify-center">
         <div className=" p-8 w-full max-w-md">
           <h2 className="text-2xl font-bold text-center mb-6 text-sky-600">
