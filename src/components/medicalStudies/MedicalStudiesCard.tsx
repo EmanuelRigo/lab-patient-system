@@ -62,7 +62,7 @@ const MedicalStudiesCard = ({ study }: MedicalStudiesCardProps) => {
       <p className="text-gray-700 mb-4">
         <strong>Descripción:</strong> {study.description}
       </p>
-      <RoleWrapper allowedRoles={["Admin"]}>
+      <RoleWrapper allowedRoles={["role_admin"]}>
         <div className="flex gap-4">
           <button
             onClick={() => setShowModal(true)}

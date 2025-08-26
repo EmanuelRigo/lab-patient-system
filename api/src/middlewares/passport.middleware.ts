@@ -306,9 +306,9 @@ passport.use(
 //   )
 // );
 
-//--ADMIN
+//--role_admin
 passport.use(
-  "admin",
+  "role_admin",
   new JwtStrategy(
     {
       // jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
@@ -318,7 +318,7 @@ passport.use(
     async (data, done) => {
       try {
         const { user_id, role } = data;
-        if (role !== "ADMIN") {
+        if (role !== "role_admin") {
           const info = {
             message: "NOT AUTHORIZED",
             statusCode: 403,

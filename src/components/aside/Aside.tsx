@@ -14,7 +14,11 @@ export default function Aside() {
       {role && (
         <ButtonPanel
           role={
-            role as "Admin" | "Receptionist" | "LabTechnician" | "Biochemist"
+            role as
+              | "role_admin"
+              | "Receptionist"
+              | "LabTechnician"
+              | "Biochemist"
           }
         />
       )}

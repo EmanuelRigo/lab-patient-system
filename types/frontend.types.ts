@@ -2,5 +2,5 @@ export type Role =
   | "Receptionist"
   | "LabTechnician"
   | "Biochemist"
-  | "Admin"
+  | "role_admin"
   | "Public";

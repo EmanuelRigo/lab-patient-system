@@ -23,8 +23,8 @@
 //         <p className="text-white ps-2 group-hover:text-sky-700">Pacientes</p>
 //       </button>
 
-//       {/* Sucursales: solo para Admin */}
-//       {role === "Admin" && (
+//       {/* Sucursales: solo para role_admin */}
+//       {role === "role_admin" && (
 //         <button
 //           onClick={() => setSelectedView("locations")}
 //           className="flex items-center my-1 space-x-2 hover:outline hover:bg-white ps-5 py-2 w-full rounded-e group"
@@ -34,8 +34,8 @@
 //         </button>
 //       )}
 
-//       {/* Análisis: Admin y LabTechnician */}
-//       {(role === "Admin" || role === "LabTechnician") && (
+//       {/* Análisis: role_admin y LabTechnician */}
+//       {(role === "role_admin" || role === "LabTechnician") && (
 //         <button
 //           onClick={() => setSelectedView("analysis")}
 //           className="flex items-center my-1 space-x-2 hover:outline hover:bg-white ps-5 py-2 w-full rounded-e group"

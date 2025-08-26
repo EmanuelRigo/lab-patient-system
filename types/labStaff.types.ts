@@ -2,7 +2,7 @@ export type LabStaffRole =
   | "Receptionist"
   | "LabTechnician"
   | "Biochemist"
-  | "Admin";
+  | "role_admin";
 
 export interface LabStaff {
   firstname: string;
