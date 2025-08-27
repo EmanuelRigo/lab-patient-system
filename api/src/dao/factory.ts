@@ -6,6 +6,7 @@ import { testMySQLConnection } from "../utils/mysqlDB.utils";
 import PatientDaoSQL from "./mysql/patient.dao";
 import LabStaffDaoSQL from "./mysql/labStaff.dao";
 import MedicalStudyDaoSQL from "./mysql/medicalStudies.dao";
+import DoctorAppointmentDaoSQL from "./mysql/doctorsAppointment.dao";
 
 import {
   DoctorsAppointmentDaoMongo,
@@ -41,6 +42,7 @@ switch (PERSISTENCE) {
       PatientDao: PatientDaoSQL,
       LabStaffDao: LabStaffDaoSQL,
       MedicalStudyDao: MedicalStudyDaoSQL,
+      DoctorsAppointmentDao: DoctorAppointmentDaoSQL,
     };
     break;
 

@@ -11,7 +11,7 @@ class DoctorsAppointmentDTO {
   medicalStudyId: string;
   date: string;
   reason: string;
-  status: "scheduled" | "completed" | "cancelled";
+  status: "status_scheduled" | "status_completed" | "status_cancelled";
   _id: string;
   createdAt?: Date;
   updatedAt?: Date;
@@ -23,7 +23,7 @@ class DoctorsAppointmentDTO {
     this.medicalStudyId = data.medicalStudyId;
     this.date = data.date;
     this.reason = data.reason;
-    this.status = data.status || "scheduled";
+    this.status = data.status || "status_scheduled";
     this._id = data._id ?? crypto.randomBytes(12).toString("hex");
     this.createdAt = data.createdAt ?? new Date();
     this.updatedAt = data.updatedAt ?? new Date();

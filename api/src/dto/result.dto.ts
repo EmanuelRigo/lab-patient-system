@@ -5,7 +5,7 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class ResultDTO {
-  status: "pending" | "completed" | "failed";
+  status: "pending" | "status_completed" | "failed";
   IdBiochemist?: string;
   IdLabTechnician: string;
   extractionDate?: Date;

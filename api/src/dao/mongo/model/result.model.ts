@@ -7,7 +7,7 @@ const resultSchema = new Schema<Result>(
   {
     status: {
       type: String,
-      enum: ["pending", "completed", "failed"],
+      enum: ["pending", "status_completed", "failed"],
       default: "pending",
     },
     IdBiochemist: {

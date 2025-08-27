@@ -62,7 +62,7 @@ const ResultForm = () => {
         className="border p-2 rounded-md"
       >
         <option value="pending">Pendiente</option>
-        <option value="completed">Completado</option>
+        <option value="status_completed">Completado</option>
         <option value="failed">Fallido</option>
       </select>
 

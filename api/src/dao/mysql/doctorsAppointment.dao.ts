@@ -1,6 +1,6 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
 
-export default class LabStaffDaoSQL {
+export default class DoctorAppointmentDaoSQL {
   static async create(data: Record<string, any>) {
     const keys = Object.keys(data);
     const values = Object.values(data);

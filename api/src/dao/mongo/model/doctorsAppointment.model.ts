@@ -31,8 +31,8 @@ const doctorsAppointmentSchema = new Schema<DoctorsAppointment>(
     },
     status: {
       type: String,
-      enum: ["scheduled", "completed", "cancelled"],
-      default: "scheduled",
+      enum: ["status_scheduled", "status_completed", "status_cancelled"],
+      default: "status_scheduled",
     },
   },
   { timestamps: true }

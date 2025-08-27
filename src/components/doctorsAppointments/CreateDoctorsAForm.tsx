@@ -17,7 +17,7 @@ interface DoctorsAppointmentFormData {
   medicalStudyId: string;
   date: string;
   reason: string;
-  status: "scheduled" | "completed" | "cancelled";
+  status: "status_scheduled" | "status_completed" | "status_cancelled";
 }
 
 const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
@@ -26,7 +26,7 @@ const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
     medicalStudyId: "",
     date: "",
     reason: "",
-    status: "scheduled",
+    status: "status_scheduled",
   });
 
   const [patient, setPatient] = useState<Patient>();
@@ -81,7 +81,7 @@ const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
         medicalStudyId: "",
         date: "",
         reason: "",
-        status: "scheduled",
+        status: "status_scheduled",
       });
       setPatient(undefined);
     } catch (err) {
@@ -176,9 +176,9 @@ const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
             onChange={handleChange}
             className="w-full p-2 border rounded"
           >
-            <option value="scheduled">Programada</option>
-            <option value="completed">Completada</option>
-            <option value="cancelled">Cancelada</option>
+            <option value="status_scheduled">Programada</option>
+            <option value="status_completed">Completada</option>
+            <option value="status_cancelled">Cancelada</option>
           </select>
         </div>
 

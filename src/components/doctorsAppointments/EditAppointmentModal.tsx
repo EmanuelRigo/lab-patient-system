@@ -6,7 +6,7 @@ import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
 type Appointment = {
   _id: string;
   date: string;
-  status: "scheduled" | "completed" | "cancelled";
+  status: "status_scheduled" | "status_completed" | "status_cancelled";
 };
 
 type Props = {
