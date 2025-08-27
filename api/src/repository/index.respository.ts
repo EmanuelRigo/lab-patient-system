@@ -6,6 +6,11 @@ import PaymentDTO from "../dto/payment.dto";
 import ResultDTO from "../dto/result.dto";
 import TalonDTO from "../dto/talon.dto";
 
+import {
+  toSQL as labStaffToSQL,
+  fromSQL as labStaffFromSQL,
+} from "../mappers/labStaff.mapper";
+
 import dao from "../dao/factory";
 
 const {
@@ -22,58 +27,93 @@ type Constructor<T> = new (data: any) => T;
 
 class Repository<T> {
   private dao: {
-    create: (data: T) => Promise<T>;
-    getAll: () => Promise<T[] | null>;
-    getById: (id: string) => Promise<T | null>;
-    search?: (criteria: Record<string, any>) => Promise<T[]>;
-
-    getByName?: (name: string) => Promise<T | null>;
-    getByUsername?: (username: string) => Promise<T | null>;
-    update: (id: string, data: Partial<T>) => Promise<T | null>;
-    deleteOne: (id: string) => Promise<T>;
+    create: (data: Record<string, any>) => Promise<any>;
+    getAll: () => Promise<any[] | null>;
+    getById: (id: string) => Promise<any | null>;
+    search?: (criteria: Record<string, any>) => Promise<any[]>;
+    getByName?: (name: string) => Promise<any | null>;
+    getByUsername?: (username: string) => Promise<any | null>;
+    update: (id: string, data: Record<string, any>) => Promise<any | null>;
+    deleteOne: (id: string) => Promise<any>;
   };
-  private DTO: Constructor<T>;
 
-  constructor(dao: any, dto: Constructor<T>) {
+  private DTO: Constructor<T>;
+  private toSQL?: (dto: T) => Record<string, any>;
+  private fromSQL?: (row: Record<string, any>) => T;
+
+  constructor(
+    dao: any,
+    dto: Constructor<T>,
+    mapper?: {
+      toSQL?: (dto: T) => Record<string, any>;
+      fromSQL?: (row: Record<string, any>) => T;
+    }
+  ) {
     this.dao = dao;
     this.DTO = dto;
+    this.toSQL = mapper?.toSQL;
+    this.fromSQL = mapper?.fromSQL;
   }
 
   create = async (data: any): Promise<T> => {
-    const formattedData = new this.DTO(data);
-    return await this.dao.create(formattedData);
+    const dto = new this.DTO(data);
+    const payload = this.toSQL
+      ? this.toSQL(dto)
+      : (dto as unknown as Record<string, any>);
+    const result = await this.dao.create(payload);
+    return this.fromSQL ? this.fromSQL(result) : new this.DTO(result);
   };
 
   getAll = async (): Promise<T[] | null> => {
-    return await this.dao.getAll();
+    const rows = await this.dao.getAll();
+    if (!rows) return null;
+    return this.fromSQL
+      ? rows.map(this.fromSQL)
+      : rows.map((r: any) => new this.DTO(r));
   };
 
   getById = async (id: string): Promise<T | null> => {
-    return await this.dao.getById(id);
+    const row = await this.dao.getById(id);
+    return row ? (this.fromSQL ? this.fromSQL(row) : new this.DTO(row)) : null;
   };
 
   getByName = async (name: string): Promise<T | null> => {
     if (!this.dao.getByName) throw new Error("getByName not implemented");
-    return await this.dao.getByName(name);
+    const row = await this.dao.getByName(name);
+    return row ? (this.fromSQL ? this.fromSQL(row) : new this.DTO(row)) : null;
   };
 
   getByUsername = async (username: string): Promise<T | null> => {
     if (!this.dao.getByUsername)
       throw new Error("getByUsername not implemented");
-    return await this.dao.getByUsername(username);
+    const row = await this.dao.getByUsername(username);
+    return row ? (this.fromSQL ? this.fromSQL(row) : new this.DTO(row)) : null;
   };
 
   search = async (criteria: Record<string, any>): Promise<T[]> => {
     if (!this.dao.search) throw new Error("search not implemented");
-    return await this.dao.search(criteria);
+    const rows = await this.dao.search(criteria);
+    return this.fromSQL
+      ? rows.map(this.fromSQL)
+      : rows.map((r: any) => new this.DTO(r));
   };
 
   update = async (id: string, data: Partial<T>): Promise<T | null> => {
-    return await this.dao.update(id, data);
+    const dto = new this.DTO(data);
+    const payload = this.toSQL
+      ? this.toSQL(dto)
+      : (dto as unknown as Record<string, any>);
+    const result = await this.dao.update(id, payload);
+    return result
+      ? this.fromSQL
+        ? this.fromSQL(result)
+        : new this.DTO(result)
+      : null;
   };
 
   deleteOne = async (id: string): Promise<T> => {
-    return await this.dao.deleteOne(id);
+    const result = await this.dao.deleteOne(id);
+    return this.fromSQL ? this.fromSQL(result) : new this.DTO(result);
   };
 }
 
@@ -83,7 +123,10 @@ const DoctorsAppointmentRepository = new Repository(
   DoctorsAppointmentDao,
   DoctorsAppointmentDTO
 );
-const LabStaffRepository = new Repository(LabStaffDao, LabStaffDTO);
+const LabStaffRepository = new Repository(LabStaffDao, LabStaffDTO, {
+  toSQL: labStaffToSQL,
+  fromSQL: labStaffFromSQL,
+});
 const MedicalStudyRepository = new Repository(MedicalStudyDao, MedicalStudyDTO);
 const PatientRepository = new Repository(PatientDao, PatientDTO);
 const PaymentRepository = new Repository(PaymentDao, PaymentDTO);

@@ -34,7 +34,7 @@ const CardResult = ({ result }: CardResultProps) => {
   return (
     <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
       <h2 className="text-2xl font-bold text-sky-800 mb-4">
-        {result.IdLabTechnician}
+        {result.labtechnician_id}
       </h2>
 
       <p className="text-sm text-gray-700">
@@ -42,8 +42,8 @@ const CardResult = ({ result }: CardResultProps) => {
       </p>
       <p className="text-sm text-gray-700">
         <strong>Día de extracción:</strong>{" "}
-        {result.extractionDate
-          ? new Date(result.extractionDate).toDateString()
+        {result.extration_date
+          ? new Date(result.extration_date).toDateString()
           : "No especificada"}
       </p>
 
@@ -52,7 +52,7 @@ const CardResult = ({ result }: CardResultProps) => {
         {result.extractionTime || "No especificada"}
       </p>
       <p className="text-sm text-gray-700">
-        <strong>Bioquímico:</strong> {result.IdBiochemist || "No asignado"}
+        <strong>Bioquímico:</strong> {result.biochemist_id || "No asignado"}
       </p>
 
       <RoleWrapper allowedRoles={["role_lab_technician", "role_biochemist"]}>

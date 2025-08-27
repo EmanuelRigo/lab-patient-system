@@ -9,9 +9,9 @@ const ResultForm = () => {
     Omit<Result, "_id" | "createdAt" | "updatedAt">
   >({
     status: "pending",
-    IdBiochemist: "",
-    IdLabTechnician: "",
-    extractionDate: undefined,
+    biochemist_id: "",
+    labtechnician_id: "",
+    extration_date: undefined,
     extractionTime: "",
   });
 
@@ -21,7 +21,7 @@ const ResultForm = () => {
     const { name, value } = e.target;
 
     // Si es fecha, convertir a Date
-    if (name === "extractionDate") {
+    if (name === "extration_date") {
       setForm((prev) => ({
         ...prev,
         [name]: value ? new Date(value) : undefined,
@@ -42,8 +42,8 @@ const ResultForm = () => {
 
     setForm({
       status: "pending",
-      IdLabTechnician: "",
-      extractionDate: undefined,
+      labtechnician_id: "",
+      extration_date: undefined,
       extractionTime: "",
     });
   };
@@ -68,8 +68,8 @@ const ResultForm = () => {
 
       <input
         type="text"
-        name="IdLabTechnician"
-        value={form.IdLabTechnician}
+        name=" labtechnician_id"
+        value={form.labtechnician_id}
         onChange={handleChange}
         placeholder="ID del Técnico de Laboratorio"
         required
@@ -78,10 +78,10 @@ const ResultForm = () => {
 
       <input
         type="date"
-        name="extractionDate"
+        name="extration_date"
         value={
-          form.extractionDate
-            ? form.extractionDate.toISOString().split("T")[0]
+          form.extration_date
+            ? form.extration_date.toISOString().split("T")[0]
             : ""
         }
         onChange={handleChange}

@@ -1,7 +1,7 @@
 export interface Talon {
   _id: string;
-  DAppointmentId: string[];
-  ReceptionistID?: string;
+  doctorAppointmentId: string[];
+  receptionistId?: string;
   createdAt?: Date;
   updatedAt?: Date;
 }

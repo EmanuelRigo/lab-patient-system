@@ -1,39 +1,39 @@
-import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
+import { DoctorAppointment } from "../../../types/doctorsAppointment.types";
 // import dao from "../dao/factory";
 import { DoctorsAppointmentRepository } from "../repository/index.respository";
 
 // const { doctorsAppointment } = dao;
 
 class DoctorsAppointmentService {
-  async getAll(): Promise<DoctorsAppointment[] | null> {
+  async getAll(): Promise<DoctorAppointment[] | null> {
     return await DoctorsAppointmentRepository.getAll();
   }
 
-  async getById(id: string): Promise<DoctorsAppointment | null> {
+  async getById(id: string): Promise<DoctorAppointment | null> {
     const user = await DoctorsAppointmentRepository.getById(id);
     return user;
   }
 
-  async getByName(username: string): Promise<DoctorsAppointment | null> {
+  async getByName(username: string): Promise<DoctorAppointment | null> {
     const user = await DoctorsAppointmentRepository.getByName(username);
     return user;
   }
 
-  async create(data: DoctorsAppointment): Promise<DoctorsAppointment> {
+  async create(data: DoctorAppointment): Promise<DoctorAppointment> {
     return await DoctorsAppointmentRepository.create(data);
   }
 
   async update(
     id: string,
-    data: Partial<DoctorsAppointment>
-  ): Promise<DoctorsAppointment | null> {
+    data: Partial<DoctorAppointment>
+  ): Promise<DoctorAppointment | null> {
     return await DoctorsAppointmentRepository.update(id, data);
   }
 
   async deleteOne(id: string): Promise<{
     success: boolean;
     message: string;
-    data: DoctorsAppointment;
+    data: DoctorAppointment;
   }> {
     const deletedDoctorsAppointment =
       await DoctorsAppointmentRepository.deleteOne(id);

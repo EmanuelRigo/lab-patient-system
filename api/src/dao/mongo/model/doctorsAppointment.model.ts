@@ -1,9 +1,9 @@
 import { model, Schema } from "mongoose";
-import { DoctorsAppointment } from "../../../../../types/doctorsAppointment.types";
+import { DoctorAppointment } from "../../../../../types/doctorsAppointment.types";
 
 const collection = "doctors_appointments";
 
-const doctorsAppointmentSchema = new Schema<DoctorsAppointment>(
+const doctorsAppointmentSchema = new Schema<DoctorAppointment>(
   {
     isPaid: {
       type: Boolean,
