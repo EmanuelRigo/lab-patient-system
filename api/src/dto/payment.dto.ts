@@ -9,6 +9,8 @@ class PaymentDTO {
   method: "credit_card" | "debit_card" | "cash" | "bank_transfer";
   talonId: string;
   _id: string;
+  patientId: string;
+  receptionistId: string;
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -17,6 +19,8 @@ class PaymentDTO {
     this.method = data.method;
     this.talonId = data.talonId;
     this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.patientId = data.patientId;
+    this.receptionistId = data.receptionistId;
     this.createdAt = data.createdAt ?? new Date();
     this.updatedAt = data.updatedAt ?? new Date();
   }
