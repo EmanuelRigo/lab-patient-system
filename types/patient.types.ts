@@ -1,4 +1,5 @@
 export interface Patient {
+  _id: string;
   firstname: string;
   secondname?: string;
   lastname: string;
@@ -9,5 +10,4 @@ export interface Patient {
   address: string;
   createdAt?: Date;
   updatedAt?: Date;
-  _id: string;
 }

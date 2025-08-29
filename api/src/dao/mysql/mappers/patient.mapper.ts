@@ -1,5 +1,5 @@
-import PatientDTO from "../dto/patient.dto";
-import { Patient } from "../../../types/patient.types";
+import PatientDTO from "../../../dto/patient.dto";
+import { Patient } from "../../../../../types/patient.types";
 
 export function toSQL(dto: PatientDTO): Record<string, any> {
   return {

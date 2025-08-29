@@ -1,33 +1,26 @@
 "use client";
 import ButtonPanel from "@/components/homepage/ButtonPanel";
-
 import { useLabSystemContext } from "@/context/LabContext";
-// import AsideMenu from "./AsideMenu";
 
 export default function Aside() {
   const { role } = useLabSystemContext();
 
   return (
     <div className="h-full flex flex-col items-center justify-center bg-gray-50/90 p-8">
-      aside
       {!role && <p>Cargando rol de usuario...</p>}
       {role && (
-        <ButtonPanel
-          role={
-            role as
-              | "role_admin"
-              | "role_receptionist"
-              | "role_lab_technician"
-              | "role_biochemist"
-          }
-        />
+        <>
+          <ButtonPanel
+            role={
+              role as "admin" | "receptionist" | "lab_technician" | "biochemist"
+            }
+          />
+
+          <button className="bg-sky-500 hover:bg-sky-600 text-neutral-100 p-4 rounded-md w-full mt-8">
+            Cerrar sesion
+          </button>
+        </>
       )}
-      {/* <AsideMenu
-        selectedView={selectedView}
-        setSelectedView={setSelectedView}
-        isLoginPath={pathname === "/login"}
-        role={role}
-      /> */}
     </div>
   );
 }

@@ -132,7 +132,7 @@ const LabStaffForm = () => {
         <option value="role_lab_technician">Técnico de Laboratorio</option>
         <option value="role_biochemist">Bioquimico</option>
         <option value="role_receptionist">Recepcionista</option>
-        <option value="role_admin">Administrador</option>
+        <option value="admin">Administrador</option>
       </select>
 
       <button

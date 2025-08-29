@@ -80,7 +80,8 @@ passport.use(
         }
 
         const user = await labStaffServices.getByUsername(username);
-        console.log("🚀 ~ user:", user);
+        console.log("🚀 ~ user45:", user);
+        console.log("🚀 ~ userrr:", user);
 
         if (!user) {
           const info = {
@@ -306,9 +307,9 @@ passport.use(
 //   )
 // );
 
-//--role_admin
+//--admin
 passport.use(
-  "role_admin",
+  "admin",
   new JwtStrategy(
     {
       // jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
@@ -318,7 +319,7 @@ passport.use(
     async (data, done) => {
       try {
         const { user_id, role } = data;
-        if (role !== "role_admin") {
+        if (role !== "admin") {
           const info = {
             message: "NOT AUTHORIZED",
             statusCode: 403,
@@ -346,6 +347,7 @@ passport.use(
       console.log("🚀 ~ data:", data);
       try {
         const { user_id } = data;
+        console.log("🚀 ~ user_id:", user_id);
         const user = await labStaffServices.getById(user_id);
         console.log("Usuario encontrado:", user);
 

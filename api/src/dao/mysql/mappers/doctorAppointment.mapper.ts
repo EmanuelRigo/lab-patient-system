@@ -1,5 +1,5 @@
-import DoctorsAppointmentDTO from "../dto/doctorsAppointment.dto";
-import { DoctorAppointment } from "../../../types/doctorsAppointment.types";
+import DoctorsAppointmentDTO from "../../../dto/doctorsAppointment.dto";
+import { DoctorAppointment } from "../../../../../types/doctorsAppointment.types";
 
 export function toSQL(dto: DoctorsAppointmentDTO): Record<string, any> {
   return {

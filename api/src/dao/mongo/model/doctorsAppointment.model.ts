@@ -9,10 +9,6 @@ const doctorsAppointmentSchema = new Schema<DoctorAppointment>(
       type: Boolean,
       default: false,
     },
-    paymentId: {
-      type: String,
-      required: false,
-    },
     patientId: {
       type: String,
       required: true,
@@ -22,7 +18,7 @@ const doctorsAppointmentSchema = new Schema<DoctorAppointment>(
       required: true,
     },
     date: {
-      type: String,
+      type: Date,
       required: true,
     },
     reason: {
@@ -31,14 +27,14 @@ const doctorsAppointmentSchema = new Schema<DoctorAppointment>(
     },
     status: {
       type: String,
-      enum: ["status_scheduled", "status_completed", "status_cancelled"],
-      default: "status_scheduled",
+      enum: ["scheduled", "completed", "cancelled"],
+      default: "scheduled",
     },
   },
   { timestamps: true }
 );
 
-const DoctorsAppointmentModel = model<DoctorsAppointment>(
+const DoctorsAppointmentModel = model<DoctorAppointment>(
   collection,
   doctorsAppointmentSchema
 );

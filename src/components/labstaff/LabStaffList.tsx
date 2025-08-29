@@ -10,7 +10,7 @@
 // // type LabStaff = {
 // //   id: string;
 // //   name: string;
-// //   role: "role_admin" | "Secretary" | "role_lab_technician";
+// //   role: "admin" | "Secretary" | "role_lab_technician";
 // // };
 
 // const LabStaffList = () => {

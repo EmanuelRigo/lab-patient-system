@@ -20,22 +20,16 @@ class LabStaffDTO {
   _id: string;
 
   constructor(data: LabStaff) {
-    if (PERSISTENCE !== "MONGO") {
-      this._id = crypto.randomBytes(12).toString("hex");
-      this.createdAt = new Date();
-      this.updatedAt = new Date();
-    } else {
-      this._id = data._id;
-      this.createdAt = data.createdAt;
-      this.updatedAt = data.updatedAt;
-    }
+    this._id = data._id! ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt! ?? new Date();
+    this.updatedAt = data.updatedAt ?? new Date();
     this.firstname = data.firstname;
     this.secondname = data.secondname;
     this.lastname = data.lastname;
     this.username = data.username;
     this.email = data.email;
     this.password = data.password;
-    this.role = data.role ?? "role_lab_technician";
+    this.role = data.role;
     this.phone = data.phone;
     this.isOnline = data.isOnline ?? false;
   }

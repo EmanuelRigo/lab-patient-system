@@ -35,7 +35,7 @@ daoMongo = {
 };
 
 switch (PERSISTENCE) {
-  case "SQL":
+  case "MYSQL":
     testMySQLConnection();
     // Aquí después irán los DAOs que trabajen con MySQL
     dao = {

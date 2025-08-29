@@ -24,6 +24,7 @@ class LabStaffServices {
 
   async getByUsername(username: string): Promise<LabStaff | null> {
     const user = await LabStaffRepository.getByUsername(username);
+    console.log("🚀 ~ LabStaffServices ~ getByUsername ~ user33:", user);
     return user;
   }
 
@@ -32,6 +33,7 @@ class LabStaffServices {
   }
 
   async update(id: string, data: Partial<LabStaff>): Promise<LabStaff | null> {
+    console.log("🚀 ~ LabStaffServices ~ update ~ data:", data);
     return await LabStaffRepository.update(id, data);
   }
 

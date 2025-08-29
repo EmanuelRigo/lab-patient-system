@@ -1,5 +1,5 @@
-import PaymentDTO from "../dto/payment.dto";
-import { Payment } from "../../../types/payment.types";
+import PaymentDTO from "../../../dto/payment.dto";
+import { Payment } from "../../../../../types/payment.types";
 
 export function toSQL(dto: PaymentDTO): Record<string, any> {
   return {

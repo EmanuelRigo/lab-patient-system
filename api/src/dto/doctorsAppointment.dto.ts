@@ -11,10 +11,10 @@ class DoctorsAppointmentDTO {
   resultId?: string;
   patientId: string;
   medicalStudyId: string;
-  date: string;
+  date: Date;
   receptionistId?: string;
   reason?: string;
-  status: "status_scheduled" | "status_completed" | "status_cancelled";
+  status: "scheduled" | "completed" | "cancelled";
   createdAt?: Date;
   updatedAt?: Date;
 
@@ -28,7 +28,7 @@ class DoctorsAppointmentDTO {
     this.date = data.date;
     this.receptionistId = data.receptionistId;
     this.reason = data.reason;
-    this.status = data.status ?? "status_scheduled";
+    this.status = data.status ?? "scheduled";
     this.createdAt = data.createdAt ?? new Date();
     this.updatedAt = data.updatedAt ?? new Date();
   }

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 type ButtonPanelProps = {
   role:
-    | "role_admin"
+    | "admin"
     | "role_receptionist"
     | "role_lab_technician"
     | "role_biochemist"
@@ -35,7 +35,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
       </h2>
 
       <div className="space-y-5">
-        {role === "role_admin" && (
+        {role === "admin" && (
           <>
             {renderButton("Pacientes", "/lab-dashboard/patients")}
             {renderButton("Resultados", "/lab-dashboard/results")}

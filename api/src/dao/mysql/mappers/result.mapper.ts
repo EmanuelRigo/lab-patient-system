@@ -1,5 +1,5 @@
-import ResultDTO from "../dto/result.dto";
-import { Result } from "../../../types/result.types";
+import ResultDTO from "../../../dto/result.dto";
+import { Result } from "../../../../../types/result.types";
 
 export function toSQL(dto: ResultDTO): Record<string, any> {
   return {

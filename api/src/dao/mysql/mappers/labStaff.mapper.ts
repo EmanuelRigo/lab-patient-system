@@ -1,8 +1,8 @@
-import LabStaffDTO from "../dto/labStaff.dto";
-import { LabStaff } from "../../../types/labStaff.types";
+import LabStaffDTO from "../../../dto/labStaff.dto";
+import { LabStaff } from "../../../../../types/labStaff.types";
 
 export function toSQL(dto: LabStaffDTO): Record<string, any> {
-  return {
+  const raw = {
     _id: dto._id,
     firstname: dto.firstname,
     secondname: dto.secondname,
@@ -16,6 +16,10 @@ export function toSQL(dto: LabStaffDTO): Record<string, any> {
     created_at: dto.createdAt,
     updated_at: dto.updatedAt,
   };
+
+  return Object.fromEntries(
+    Object.entries(raw).filter(([_, value]) => value !== undefined)
+  );
 }
 
 // snake_case → camelCase (desde SQL)

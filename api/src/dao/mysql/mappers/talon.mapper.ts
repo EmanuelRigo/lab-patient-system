@@ -1,5 +1,5 @@
-import TalonDTO from "../dto/talon.dto";
-import { Talon } from "../../../types/talon.types";
+import TalonDTO from "../../../dto/talon.dto";
+import { Talon } from "../../../../../types/talon.types";
 
 export function toSQL(dto: TalonDTO): Record<string, any> {
   return {

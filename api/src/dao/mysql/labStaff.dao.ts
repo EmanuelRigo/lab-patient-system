@@ -21,10 +21,12 @@ export default class LabStaffDaoSQL {
   }
 
   static async getById(_id: number) {
+    console.log("🚀 ~ LabStaffDaoSQL ~ getById ~ _id:", _id);
     const [rows] = await MySQLPool.query(
       "SELECT * FROM LabStaff WHERE _id = ?",
       [_id]
     );
+    console.log("🚀 ~ LabStaffDaoSQL ~ getById ~ rows:", rows);
     return (rows as any[])[0] || null;
   }
 

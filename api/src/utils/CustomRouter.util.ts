@@ -11,13 +11,13 @@ import envUtil from "./envs.utils";
 
 // Interface para el payload del JWT
 interface JwtPayload {
-  role: "USER" | "role_admin";
+  role: "USER" | "admin";
   user_id: string;
   iat?: number;
   exp?: number;
 }
 
-type Policy = "PUBLIC" | "USER" | "role_admin";
+type Policy = "PUBLIC" | "USER" | "admin";
 
 class CustomRouter {
   private _router = Router();
@@ -82,7 +82,7 @@ class CustomRouter {
 
         if (
           (policies.includes("USER") && role === "USER") ||
-          (policies.includes("role_admin") && role === "role_admin")
+          (policies.includes("admin") && role === "admin")
         ) {
           const user = await labStaffDao.getById(user_id);
           if (!user) {

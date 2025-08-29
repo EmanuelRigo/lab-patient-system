@@ -4,12 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 type ButtonPanelProps = {
-  role:
-    | "role_admin"
-    | "role_receptionist"
-    | "role_lab_technician"
-    | "role_biochemist"
-    | null;
+  role: "admin" | "receptionist" | "lab_technician" | "biochemist" | null;
 };
 
 const ButtonPanel = ({ role }: ButtonPanelProps) => {
@@ -35,7 +30,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
       </h2>
 
       <div className="space-y-5">
-        {role === "role_admin" && (
+        {role === "admin" && (
           <>
             {renderButton("Pacientes", "/lab-dashboard/patients")}
             {renderButton("Resultados", "/lab-dashboard/results")}
@@ -47,7 +42,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "role_receptionist" && (
+        {role === "receptionist" && (
           <>
             {renderButton("Agregar Paciente", "/lab-dashboard/patients")}
             {renderButton("Citas", "/lab-dashboard/doctors-appointment")}
@@ -58,7 +53,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "role_lab_technician" && (
+        {role === "lab_technician" && (
           <>
             {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Crear Cita", "/lab-dashboard/doctors-appointment")}
@@ -66,7 +61,7 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
           </>
         )}
 
-        {role === "role_biochemist" && (
+        {role === "biochemist" && (
           <>
             {renderButton("Resultados", "/lab-dashboard/results")}
             {renderButton("Estudios médicos", "/medical-studies")}

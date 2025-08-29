@@ -11,7 +11,7 @@ class PatientDTO {
   birthDate: Date;
   dni: number;
   email: string | undefined;
-  phone: string;
+  phone: string | undefined;
   address: string;
   _id: string;
   createdAt?: Date;

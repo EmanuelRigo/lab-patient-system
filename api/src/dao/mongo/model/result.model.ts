@@ -10,19 +10,15 @@ const resultSchema = new Schema<Result>(
       enum: ["pending", "status_completed", "failed"],
       default: "pending",
     },
-    biochemist_id: {
+    biochemistId: {
       type: String,
     },
-    labtechnician_id: {
+    labtechnicianId: {
       type: String,
       required: true,
     },
-    extration_date: {
+    extractionDate: {
       type: Date,
-      required: true,
-    },
-    extractionTime: {
-      type: String,
       required: true,
     },
   },
