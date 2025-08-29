@@ -4,7 +4,7 @@ import React from "react";
 import { useRouter } from "next/navigation";
 
 type ButtonPanelProps = {
-  role: "admin" | "receptionist" | "lab_technician" | "biochemist" | null;
+  role: "admin" | "receptionist" | "labTechnician" | "biochemist" | null;
 };
 
 const ButtonPanel = ({ role }: ButtonPanelProps) => {
