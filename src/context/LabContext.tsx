@@ -8,9 +8,7 @@ import React, {
 } from "react";
 import { MedicalStudy } from "../../types/medicalStudy.types";
 import { LabStaff } from "../../types/labStaff.types";
-
 import { Role } from "../../types/frontend.types";
-
 import { jwtDecode } from "jwt-decode";
 
 interface LabSystemContextProps {
@@ -20,6 +18,7 @@ interface LabSystemContextProps {
   setUserLabData: React.Dispatch<React.SetStateAction<LabStaff | null>>;
   role: Role;
   setRole: React.Dispatch<React.SetStateAction<Role>>;
+  isRoleReady: boolean;
 }
 
 export const labSystemContext = createContext<
@@ -29,7 +28,9 @@ export const labSystemContext = createContext<
 export const useLabSystemContext = () => {
   const contextValue = useContext(labSystemContext);
   if (!contextValue) {
-    throw new Error("useLabSystemContext debe usarse dentro de MovieProvider");
+    throw new Error(
+      "useLabSystemContext debe usarse dentro de LabSystemProvider"
+    );
   }
   return contextValue;
 };
@@ -48,8 +49,12 @@ type UserInfoToken = {
 const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [medicalStudyList, setMedicalStudyList] = useState<MedicalStudy[]>([]);
   const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
-  const [role, setRole] = useState<Role>("Public");
-  // const [token, setToken] = useState<string | null>(null);
+  const [role, setRole] = useState<Role>("public");
+  const [isRoleReady, setIsRoleReady] = useState(false);
+
+  useEffect(() => {
+    console.log("🔄 Role ha cambiado:", role);
+  }, [role]);
 
   useEffect(() => {
     const getCookie = (name: string) => {
@@ -58,23 +63,19 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
       return cookie?.split("=")[1];
     };
 
-    // const token = getCookie("token");
     const infoUserToken = getCookie("infoUserToken");
-
-    // setToken(token || null);
 
     if (infoUserToken) {
       try {
         const decoded = jwtDecode<UserInfoToken>(infoUserToken);
-        console.log("📦 Decoded infoUserToken:", decoded);
         setRole(decoded.role);
-        console.log("🚀 ~ useEffect ~ role:", decoded.role);
-
-        console.log(role);
-        // console.log("🚀 ~ LabSystemProvider ~ role:", role);
+        setIsRoleReady(true);
       } catch (error) {
         console.error("❌ Error decoding infoUserToken:", error);
+        setIsRoleReady(true); // incluso si falla, marcamos como listo
       }
+    } else {
+      setIsRoleReady(true); // no hay token, pero ya podemos renderizar
     }
   }, []);
 
@@ -85,6 +86,7 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     setUserLabData,
     role,
     setRole,
+    isRoleReady,
   };
 
   return (

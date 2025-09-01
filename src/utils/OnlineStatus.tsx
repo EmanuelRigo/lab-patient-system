@@ -26,8 +26,14 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
         }
 
         const data = await response.json();
+        console.log("🚀 ~ fetchOnlineStatus ~ data:", data);
 
-        if (data.response.isOnline !== true) {
+        if (data.response.isOnline !== 1) {
+          console.log(
+            "🚀 ~ fetchOnlineStatus ~ isOnline:",
+            data.response.isOnline
+          );
+          console.log("aqui");
           router.push("/login");
           return;
         }

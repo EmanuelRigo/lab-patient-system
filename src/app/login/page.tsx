@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLabSystemContext } from "@/context/LabContext";
 
 import sessionApi from "@/services/session.api";
 
@@ -10,6 +11,8 @@ export default function Page() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { role, setRole } = useLabSystemContext();
 
   function getCookie(name: string) {
     const cookies = document.cookie.split("; ");
@@ -38,6 +41,14 @@ export default function Page() {
 
       if (response.ok) {
         console.log("Inicio de sesión exitoso");
+        console.log("🚀 ~ handleLogin ~ response:", response);
+        const infoUserToken = getCookie("infoUserToken");
+        if (infoUserToken) {
+          const decoded = JSON.parse(atob(infoUserToken.split(".")[1]));
+          setRole(decoded.role);
+        }
+        console.log("asdf", role);
+
         setError(""); // Limpiamos el error en caso de éxito
         router.push("/");
         // window.location.href = "/";
