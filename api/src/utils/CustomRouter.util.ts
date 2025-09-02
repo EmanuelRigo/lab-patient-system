@@ -6,18 +6,18 @@ import {
   RequestHandler,
 } from "express";
 import jwt from "jsonwebtoken";
-import labStaffDao from "../dao/mongo/labStaff.dao";
 import envUtil from "./envs.utils";
+import labStaffServices from "../services/labStaff.services";
 
 // Interface para el payload del JWT
 interface JwtPayload {
   role: "USER" | "admin";
-  user_id: string;
+  userId: string;
   iat?: number;
   exp?: number;
 }
 
-type Policy = "PUBLIC" | "USER" | "admin";
+type Policy = "public" | "receptionist" | "labTechnician" | "admin";
 
 class CustomRouter {
   private _router = Router();
@@ -58,7 +58,7 @@ class CustomRouter {
   policies = (policies: Policy[]): RequestHandler => {
     return async (req: Request, res: Response, next: NextFunction) => {
       try {
-        if (policies.includes("PUBLIC")) return next();
+        if (policies.includes("public")) return next();
 
         const token = req?.cookies?.token;
         if (!token) {
@@ -72,19 +72,16 @@ class CustomRouter {
           typeof decoded !== "object" ||
           decoded === null ||
           !("role" in decoded) ||
-          !("user_id" in decoded)
+          !("userId" in decoded)
         ) {
           res.json401();
           return;
         }
 
-        const { role, user_id } = decoded as JwtPayload;
+        const { role, userId } = decoded as JwtPayload;
 
-        if (
-          (policies.includes("USER") && role === "USER") ||
-          (policies.includes("admin") && role === "admin")
-        ) {
-          const user = await labStaffDao.getById(user_id);
+        if (policies.includes("admin") && role === "admin") {
+          const user = await labStaffServices.getById(userId);
           if (!user) {
             res.json401();
             return;

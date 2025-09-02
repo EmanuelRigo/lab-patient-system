@@ -10,8 +10,8 @@ class CookiesRouter extends CustomRouter {
   }
 
   private init() {
-    // this.create("/create", ["PUBLIC"], asyncHandler(this.createCookie));
-    this.read("/read", ["PUBLIC"], asyncHandler(this.readCookies));
+    // this.create("/create", ["public"], asyncHandler(this.createCookie));
+    this.read("/read", ["public"], asyncHandler(this.readCookies));
   }
 
   //   private createCookie = (req: Request, res: Response, next: NextFunction) => {

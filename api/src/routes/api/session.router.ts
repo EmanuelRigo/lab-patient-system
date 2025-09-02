@@ -11,14 +11,14 @@ class SessionRouter extends CustomRouter {
   }
 
   init = () => {
-    this.read("/", ["PUBLIC"], (req, res) => {
+    this.read("/", ["public"], (req, res) => {
       res.send("¡Bienvenido a las sesiones de la API de MovieList!");
     });
 
     //REGISTER
     this.create(
       "/register",
-      ["PUBLIC"],
+      ["admin"],
       authMiddleware("register"),
       asyncHandler(register)
     );
@@ -26,7 +26,7 @@ class SessionRouter extends CustomRouter {
     //LOGIN
     this.create(
       "/login",
-      ["PUBLIC"],
+      ["public"],
       authMiddleware("login"),
       asyncHandler(login)
     );
@@ -34,15 +34,15 @@ class SessionRouter extends CustomRouter {
     //SIGNOUT
     this.create(
       "/signout",
-      ["PUBLIC"],
+      ["public"],
       authMiddleware("signout"),
       asyncHandler(signout)
     );
 
     //UPDATE
     this.update(
-      "/update",
-      ["PUBLIC"],
+      "/update/",
+      ["public"],
       authMiddleware("update"),
       asyncHandler(update)
     );
@@ -50,7 +50,7 @@ class SessionRouter extends CustomRouter {
     //UPDATE-PASSWORD
     this.update(
       "/update-password",
-      ["PUBLIC"],
+      ["public"],
       authMiddleware("updatePassword"),
       asyncHandler(update)
     );
@@ -58,7 +58,7 @@ class SessionRouter extends CustomRouter {
     //ONLINE
     this.create(
       "/online",
-      ["PUBLIC"],
+      ["public"],
       authMiddleware("online"),
       asyncHandler(onlineToken)
     );
@@ -66,7 +66,7 @@ class SessionRouter extends CustomRouter {
     //DELETE
     // this.destroy(
     //   "/delete",
-    //   ["PUBLIC"],
+    //   ["public"],
     //   authMiddleware("deleteAccount"),
     //   asyncHandler(deleteAccount)
     // );

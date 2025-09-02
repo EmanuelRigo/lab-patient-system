@@ -143,10 +143,15 @@ class Repository<T> {
     const payload = this.toSQL
       ? this.toSQL(updateData as T) // si hay mapper SQL
       : (updateData as Record<string, any>);
+    console.log("🚀 ~ Repository ~ payload:", payload);
 
-    const result = await this.dao.update(id, payload);
+    let result = await this.dao.update(id, payload);
+    console.log("🚀 ~ Repository ~ result (raw):", result);
 
-    return result ? (this.fromSQL ? this.fromSQL(result) : result) : null;
+    // aplicar transformación aquí
+    result = result && this.fromSQL ? this.fromSQL(result) : result;
+
+    return result ?? null;
   };
 
   deleteOne = async (id: string): Promise<T> => {

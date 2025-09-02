@@ -14,11 +14,11 @@ class DoctorsAppointmentRouter extends CustomRouter {
   }
 
   init = () => {
-    this.read("/", ["PUBLIC"], asyncHandler(controller.getAll));
-    this.read("/:id", ["PUBLIC"], asyncHandler(controller.getById));
-    this.create("/", ["PUBLIC"], asyncHandler(controller.create));
-    this.update("/:id", ["PUBLIC"], asyncHandler(controller.update));
-    this.destroy("/:id", ["PUBLIC"], asyncHandler(controller.deleteOne));
+    this.read("/", ["public"], asyncHandler(controller.getAll));
+    this.read("/:id", ["public"], asyncHandler(controller.getById));
+    this.create("/", ["public"], asyncHandler(controller.create));
+    this.update("/:id", ["public"], asyncHandler(controller.update));
+    this.destroy("/:id", ["public"], asyncHandler(controller.deleteOne));
   };
 }
 

@@ -81,7 +81,6 @@ passport.use(
 
         const user = await labStaffServices.getByUsername(username);
         console.log("🚀 ~ user45:", user);
-        console.log("🚀 ~ userrr:", user);
 
         if (!user) {
           const info = {
@@ -112,7 +111,7 @@ passport.use(
         const data = {
           firstname: user.firstname,
           username: user.username,
-          user_id: user._id,
+          userId: user._id,
           role: user.role,
           isOnline: true,
         };
@@ -124,7 +123,7 @@ passport.use(
         const onlineUser = createTokenUtil({
           firstname: user.firstname,
           username: user.username,
-          user_id: user._id,
+          userId: user._id,
           role: user.role,
           isOnline: true,
         });
@@ -157,9 +156,9 @@ passport.use(
     },
     async (data, done) => {
       try {
-        const { user_id } = data;
-        await labStaffServices.update(user_id, { isOnline: false });
-        return done(null, { user_id: null });
+        const { userId } = data;
+        await labStaffServices.update(userId, { isOnline: false });
+        return done(null, { userId: null });
       } catch (error) {
         const info = {
           message: "Error in signout process",
@@ -185,8 +184,8 @@ passport.use(
       console.log("📦 ~ req.body:", req.body);
 
       try {
-        const { user_id } = data;
-        const user = await labStaffServices.getById(user_id);
+        const { userId } = data;
+        const user = await labStaffServices.getById(userId);
 
         if (!user) {
           return done(null, false, {
@@ -195,7 +194,7 @@ passport.use(
           });
         }
 
-        const updatedUser = await labStaffServices.update(user_id, req.body);
+        const updatedUser = await labStaffServices.update(userId, req.body);
         console.log("🚀 ~ updatedUser:", updatedUser);
 
         return done(null, updatedUser);
@@ -221,8 +220,8 @@ passport.use(
     async (req, data, done) => {
       console.log("🚀 ~ req:", req.body);
       try {
-        const { user_id } = data;
-        const user = await labStaffServices.getById(user_id);
+        const { userId } = data;
+        const user = await labStaffServices.getById(userId);
 
         if (!user) {
           return done(null, false, {
@@ -246,7 +245,7 @@ passport.use(
         const hashedPassword = createHashUtil(newPassword);
 
         // 3. Actualizar usuario
-        const updatedUser = await labStaffServices.update(user_id, {
+        const updatedUser = await labStaffServices.update(userId, {
           password: hashedPassword,
         });
 
@@ -275,8 +274,8 @@ passport.use(
 //       console.log("-reqbody", req.body);
 
 //       try {
-//         const { user_id } = data;
-//         const user = await labStaffServices.getById(user_id);
+//         const { userId } = data;
+//         const user = await labStaffServices.getById(userId);
 //         console.log("🚀 ~ user:", user);
 //         if (!user) {
 //           const info = {
@@ -295,10 +294,10 @@ passport.use(
 //           return done(null, false, info);
 //         }
 
-//         const deletedUser = await labStaffServices.deleteOne(user_id);
+//         const deletedUser = await labStaffServices.deleteOne(userId);
 //         console.log("🚀 ~ deletedUser:", deletedUser);
 
-//         // await labStaffServices.delete(user_id);
+//         // await labStaffServices.delete(userId);
 //         return done(null, { message: "User deleted successfully" });
 //       } catch (error) {
 //         return done(error);
@@ -308,32 +307,32 @@ passport.use(
 // );
 
 //--admin
-passport.use(
-  "admin",
-  new JwtStrategy(
-    {
-      // jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: String(envsUtils.SECRET_KEY),
-    },
-    async (data, done) => {
-      try {
-        const { user_id, role } = data;
-        if (role !== "admin") {
-          const info = {
-            message: "NOT AUTHORIZED",
-            statusCode: 403,
-          };
-          return done(null, false, info);
-        }
-        const user = await labStaffServices.getById(user_id);
-        return done(null, user);
-      } catch (error) {
-        return done(error);
-      }
-    }
-  )
-);
+// passport.use(
+//   "admin",
+//   new JwtStrategy(
+//     {
+//       // jwtFromRequest: ExtractJwt.fromExtractors([(req) => req?.cookies?.token]),
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       secretOrKey: String(envsUtils.SECRET_KEY),
+//     },
+//     async (data, done) => {
+//       try {
+//         const { userId, role } = data;
+//         if (role !== "admin") {
+//           const info = {
+//             message: "NOT AUTHORIZED",
+//             statusCode: 403,
+//           };
+//           return done(null, false, info);
+//         }
+//         const user = await labStaffServices.getById(userId);
+//         return done(null, user);
+//       } catch (error) {
+//         return done(error);
+//       }
+//     }
+//   )
+// );
 
 //--
 passport.use(
@@ -346,9 +345,9 @@ passport.use(
     async (data, done) => {
       console.log("🚀 ~ data:", data);
       try {
-        const { user_id } = data;
-        console.log("🚀 ~ user_id:", user_id);
-        const user = await labStaffServices.getById(user_id);
+        const { userId } = data;
+        console.log("🚀 ~ userId:", userId);
+        const user = await labStaffServices.getById(userId);
         console.log("Usuario encontrado:", user);
 
         if (!user) {
@@ -371,7 +370,7 @@ passport.use(
         const userData = {
           firstname: user.firstname,
           username: user.username,
-          user_id: user._id,
+          userId: user._id,
           role: user.role,
           isOnline: user.isOnline,
           email: user.email,

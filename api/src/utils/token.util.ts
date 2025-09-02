@@ -6,7 +6,7 @@ const { SECRET_KEY, SECRET_KEY_FRONTEND } = envsUtils;
 type JwtPayloadData = {
   firstname: string;
   username: string;
-  user_id: string;
+  userId: string;
   role: string;
   isOnline: boolean;
 };

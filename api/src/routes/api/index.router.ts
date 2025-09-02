@@ -33,25 +33,25 @@ class IndexRouter extends CustomRouter {
   init = () => {
     this.use(
       "/doctorAppointment",
-      ["PUBLIC"],
+      ["public"],
       asyncHandler(doctorsAppointmentRouter)
     );
 
-    this.use("/labStaff", ["PUBLIC"], asyncHandler(labStaffRouter));
+    this.use("/labStaff", ["public"], asyncHandler(labStaffRouter));
 
-    this.use("/medicalStudy", ["PUBLIC"], asyncHandler(medicalStudyRouter));
+    this.use("/medicalStudy", ["public"], asyncHandler(medicalStudyRouter));
 
-    this.use("/patient", ["PUBLIC"], asyncHandler(patientsApiRouter));
+    this.use("/patient", ["public"], asyncHandler(patientsApiRouter));
 
-    this.use("/payment", ["PUBLIC"], asyncHandler(paymentRouter));
+    this.use("/payment", ["public"], asyncHandler(paymentRouter));
 
-    this.use("/result", ["PUBLIC"], asyncHandler(resultRouter));
+    this.use("/result", ["public"], asyncHandler(resultRouter));
 
-    this.use("/talon", ["PUBLIC"], asyncHandler(talonRouter));
+    this.use("/talon", ["public"], asyncHandler(talonRouter));
 
-    this.use("/session", ["PUBLIC"], sessionRouter);
+    this.use("/session", ["public"], sessionRouter);
 
-    this.use("/cookies", ["PUBLIC"], asyncHandler(cookiesRouter));
+    this.use("/cookies", ["public"], asyncHandler(cookiesRouter));
   };
 }
 

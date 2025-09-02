@@ -9,6 +9,10 @@ class MedicalStudiesServices {
     return await MedicalStudyRepository.getAll();
   }
 
+  async getById(id: string): Promise<MedicalStudy | null> {
+    return await MedicalStudyRepository.getById(id);
+  }
+
   async getByName(username: string): Promise<MedicalStudy | null> {
     const user = await MedicalStudyRepository.getByName(username);
     return user;

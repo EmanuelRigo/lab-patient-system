@@ -83,6 +83,7 @@ class Controller<T> {
   };
 
   update = async (req: Request, res: Response): Promise<Response> => {
+    console.log("🚀🚀🚀🚀 ~ Controller ~ req:", req.body);
     const message = "Updated!";
     const { id } = req.params;
     const data = req.body;

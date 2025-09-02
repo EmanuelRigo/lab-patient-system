@@ -14,16 +14,16 @@ class TalonRouter extends CustomRouter {
   }
 
   init = () => {
-    this.create("/", ["PUBLIC"], asyncHandler(controller.create));
+    this.create("/", ["public"], asyncHandler(controller.create));
     this.create(
       "/create-with-payment",
-      ["PUBLIC"],
+      ["public"],
       asyncHandler(controller.createWithPayment)
     );
-    this.read("/", ["PUBLIC"], asyncHandler(controller.getAll));
-    this.read("/:id", ["PUBLIC"], asyncHandler(controller.getById));
-    this.update("/:id", ["PUBLIC"], asyncHandler(controller.update));
-    this.destroy("/:id", ["PUBLIC"], asyncHandler(controller.deleteOne));
+    this.read("/", ["public"], asyncHandler(controller.getAll));
+    this.read("/:id", ["public"], asyncHandler(controller.getById));
+    this.update("/:id", ["public"], asyncHandler(controller.update));
+    this.destroy("/:id", ["public"], asyncHandler(controller.deleteOne));
   };
 }
 
