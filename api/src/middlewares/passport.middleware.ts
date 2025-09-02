@@ -25,36 +25,73 @@ import {
 
 import LabStaffDTO from "../dto/labStaff.dto";
 import labStaffServices from "../services/labStaff.services";
+import LabStaffRepository from "../repository/labStaff.repository";
 
 import { LabStaff } from "../../../types/labStaff.types";
 
 const { BASE_URL } = envsUtils;
 
 //--REGISTER
+// passport.use(
+//   "register",
+//   new LocalStrategy(
+//     {
+//       passReqToCallback: true,
+//       usernameField: "username",
+//     },
+//     async (req, username, password, done) => {
+//       try {
+//         const userExists = await labStaffServices.getByUsername(username);
+
+//         if (userExists) {
+//           const info = {
+//             message: "UserName already exists",
+//             statusCode: 400,
+//           };
+//           return done(null, false, info);
+//         }
+//         req.body.password = createHashUtil(password);
+//         const data = new LabStaffDTO(req.body);
+//         const user = await labStaffServices.create(data);
+//         return done(null, user);
+//       } catch (error) {
+//         return done(error);
+//       }
+//     }
+//   )
+// );
+
 passport.use(
   "register",
   new LocalStrategy(
     {
-      passReqToCallback: true,
       usernameField: "username",
+      passReqToCallback: true,
     },
     async (req, username, password, done) => {
       try {
-        const userExists = await labStaffServices.getByUsername(username);
+        const { firstname, secondname, lastname, email, role, phone } =
+          req.body;
 
-        if (userExists) {
-          const info = {
-            message: "UserName already exists",
-            statusCode: 400,
-          };
-          return done(null, false, info);
-        }
-        req.body.password = createHashUtil(password);
-        const data = new LabStaffDTO(req.body);
-        const user = await labStaffServices.create(data);
+        // 1. Creamos el DTO sin hashear password
+        const newUser = new LabStaffDTO({
+          _id: "", // o "" si tu constructor lo acepta
+          firstname,
+          secondname,
+          lastname,
+          username,
+          email,
+          password,
+          role,
+          phone,
+        });
+
+        // 2. Repository se encarga de hashear
+        const user = await LabStaffRepository.create(newUser);
+
         return done(null, user);
-      } catch (error) {
-        return done(error);
+      } catch (err) {
+        return done(err);
       }
     }
   )
@@ -91,6 +128,9 @@ passport.use(
         }
 
         const verify = verifyHashUtil(password, user.password);
+        console.log("🚀 ~ password:", password);
+        console.log("🚀 ~ user:", user.password);
+        console.log("🚀 ~ verify:", verify);
         if (!verify) {
           const info = {
             message: "INVALID CREDENTIALS2",

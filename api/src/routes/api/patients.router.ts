@@ -14,15 +14,27 @@ class PatientRouter extends CustomRouter {
   }
 
   init = () => {
-    this.create("/", ["public"], asyncHandler(controller.create));
-    this.read("/", ["public"], asyncHandler(controller.getAll));
+    this.create("/", ["receptionist"], asyncHandler(controller.create));
+    this.read("/", ["receptionist", "admin"], asyncHandler(controller.getAll));
 
     // ⚠️ Esta línea debe estar antes de /:id
-    this.read("/search", ["public"], asyncHandler(controller.search));
+    this.read(
+      "/search",
+      ["receptionist", "admin"],
+      asyncHandler(controller.search)
+    );
 
-    this.read("/:id", ["public"], asyncHandler(controller.getById));
-    this.update("/:id", ["public"], asyncHandler(controller.update));
-    this.destroy("/:id", ["public"], asyncHandler(controller.deleteOne));
+    this.read(
+      "/:id",
+      ["receptionist", "admin"],
+      asyncHandler(controller.getById)
+    );
+    this.update(
+      "/:id",
+      ["receptionist", "admin"],
+      asyncHandler(controller.update)
+    );
+    this.destroy("/:id", ["admin"], asyncHandler(controller.deleteOne));
   };
 }
 
