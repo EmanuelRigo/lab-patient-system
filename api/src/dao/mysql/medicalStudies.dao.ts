@@ -1,4 +1,5 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 export default class MedicalStudyDaoSQL {
   static async create(data: Record<string, any>) {
@@ -57,7 +58,21 @@ export default class MedicalStudyDaoSQL {
     const setClause = keys.map((key) => `${key} = ?`).join(", ");
     const query = `UPDATE MedicalStudy SET ${setClause} WHERE _id = ?`;
 
-    const [result] = await MySQLPool.query(query, [...values, _id]);
-    return result;
+    // UPDATE → devuelve ResultSetHeader
+    const [updateResult] = await MySQLPool.query<ResultSetHeader>(query, [
+      ...values,
+      _id,
+    ]);
+
+    if (updateResult.affectedRows > 0) {
+      // SELECT → devuelve RowDataPacket[]
+      const [rows] = await MySQLPool.query<RowDataPacket[]>(
+        "SELECT * FROM MedicalStudy WHERE _id = ?",
+        [_id]
+      );
+      return rows[0] as RowDataPacket; // ✅ ahora TS sabe que rows[0] existe
+    }
+
+    return null;
   }
 }

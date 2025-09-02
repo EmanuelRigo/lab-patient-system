@@ -2,7 +2,7 @@ import DoctorsAppointmentDTO from "../../../dto/doctorsAppointment.dto";
 import { DoctorAppointment } from "../../../../../types/doctorsAppointment.types";
 
 export function toSQL(dto: DoctorsAppointmentDTO): Record<string, any> {
-  return {
+  const raw = {
     _id: dto._id,
     is_paid: dto.isPaid,
     talon_id: dto.talonId,
@@ -16,6 +16,10 @@ export function toSQL(dto: DoctorsAppointmentDTO): Record<string, any> {
     created_at: dto.createdAt,
     updated_at: dto.updatedAt,
   };
+
+  return Object.fromEntries(
+    Object.entries(raw).filter(([_, value]) => value !== undefined)
+  );
 }
 
 export function fromSQL(row: Record<string, any>): DoctorsAppointmentDTO {

@@ -8,6 +8,8 @@ import PaymentDTO from "../dto/payment.dto";
 import ResultDTO from "../dto/result.dto";
 import TalonDTO from "../dto/talon.dto";
 
+import { createHashUtil } from "../utils/hash.util";
+
 import dao from "../dao/factory";
 
 import {
@@ -90,6 +92,10 @@ class Repository<T> {
 
   // Escritura: usa DTO y toSQL
   create = async (data: any): Promise<T> => {
+    // Si se está creando la contraseña, hashearla
+    if ("password" in data && typeof data.password === "string") {
+      data.password = createHashUtil(data.password);
+    }
     const dto = new this.DTO(data);
     const payload = this.toSQL
       ? this.toSQL(dto)
@@ -134,6 +140,10 @@ class Repository<T> {
 
   // Escritura: usa DTO y toSQL
   update = async (id: string, data: Partial<T>): Promise<T | null> => {
+    // Si se está actualizando la contraseña, hashearla
+    if ("password" in data && typeof data.password === "string") {
+      data.password = createHashUtil(data.password);
+    }
     // forzamos updatedAt en cada update
     const updateData = {
       ...data,

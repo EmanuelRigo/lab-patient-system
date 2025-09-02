@@ -11,10 +11,10 @@ class MedicalStudyDTO {
   duration?: number;
   createdAt?: Date;
   updatedAt?: Date;
-  _id: string; // ← ya no es opcional
+  _id: string;
 
   constructor(data: MedicalStudy) {
-    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this._id = data._id ? data._id : crypto.randomBytes(12).toString("hex");
     this.createdAt = data.createdAt ?? new Date();
     this.updatedAt = data.updatedAt ?? new Date();
     this.name = data.name;

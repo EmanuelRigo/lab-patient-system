@@ -2,7 +2,7 @@ import PaymentDTO from "../../../dto/payment.dto";
 import { Payment } from "../../../../../types/payment.types";
 
 export function toSQL(dto: PaymentDTO): Record<string, any> {
-  return {
+  const raw = {
     _id: dto._id,
     amount: dto.amount,
     method: dto.method,
@@ -12,6 +12,10 @@ export function toSQL(dto: PaymentDTO): Record<string, any> {
     created_at: dto.createdAt,
     updated_at: dto.updatedAt,
   };
+
+  return Object.fromEntries(
+    Object.entries(raw).filter(([_, value]) => value !== undefined)
+  );
 }
 
 export function fromSQL(row: Record<string, any>): PaymentDTO {

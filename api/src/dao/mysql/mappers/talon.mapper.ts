@@ -2,12 +2,16 @@ import TalonDTO from "../../../dto/talon.dto";
 import { Talon } from "../../../../../types/talon.types";
 
 export function toSQL(dto: TalonDTO): Record<string, any> {
-  return {
+  const raw = {
     _id: dto._id,
     receptionist_id: dto.receptionistId,
     created_at: dto.createdAt,
     updated_at: dto.updatedAt,
   };
+
+  return Object.fromEntries(
+    Object.entries(raw).filter(([_, value]) => value !== undefined)
+  );
 }
 
 export function fromSQL(row: Record<string, any>): TalonDTO {
