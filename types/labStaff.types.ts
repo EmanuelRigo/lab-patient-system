@@ -4,8 +4,9 @@ export type LabStaffRole =
   | "labTechnician"
   | "biochemist";
 
+// types/labStaff.types.ts
 export interface LabStaff {
-  _id: string;
+  _id?: string; // <-- opcional
   firstname: string;
   secondname?: string;
   lastname: string;

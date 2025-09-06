@@ -11,7 +11,7 @@ import labStaffServices from "../services/labStaff.services";
 
 // Interface para el payload del JWT
 interface JwtPayload {
-  role: "USER" | "admin";
+  role: "receptionist" | "admin" | "labTechnician" | "biochemist";
   userId: string;
   iat?: number;
   exp?: number;
@@ -80,12 +80,34 @@ class CustomRouter {
 
         const { role, userId } = decoded as JwtPayload;
 
-        if (policies.includes("admin") && role === "admin") {
-          const user = await labStaffServices.getById(userId);
+        // 🔹 Si el rol del usuario está dentro de las policies permitidas
+        if (policies.includes(role as Policy)) {
+          // opcional: validación de existencia de usuario según el rol
+          let user: any = null;
+
+          switch (role) {
+            case "admin":
+              user = await labStaffServices.getById(userId);
+              break;
+            case "receptionist":
+              user = await labStaffServices.getById(userId);
+              break;
+            case "labTechnician":
+              user = await labStaffServices.getById(userId);
+              break;
+            case "biochemist":
+              user = await labStaffServices.getById(userId);
+              break;
+            default:
+              res.json403();
+              return;
+          }
+
           if (!user) {
             res.json401();
             return;
           }
+
           (req as any).user = user;
           return next();
         }

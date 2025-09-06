@@ -6,6 +6,7 @@ import crypto from "crypto";
 const { PERSISTENCE } = envsUtils;
 
 class LabStaffDTO {
+  _id?: string;
   firstname: string;
   secondname?: string;
   lastname: string;
@@ -17,11 +18,10 @@ class LabStaffDTO {
   isOnline?: boolean = false;
   createdAt?: Date;
   updatedAt?: Date;
-  _id: string;
 
   constructor(data: LabStaff) {
-    this._id = data._id! ?? crypto.randomBytes(12).toString("hex");
-    this.createdAt = data.createdAt! ?? new Date();
+    this._id = data._id ?? crypto.randomBytes(12).toString("hex");
+    this.createdAt = data.createdAt ?? new Date();
     this.updatedAt = data.updatedAt ?? new Date();
     this.firstname = data.firstname;
     this.secondname = data.secondname;

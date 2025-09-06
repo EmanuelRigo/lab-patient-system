@@ -75,7 +75,6 @@ passport.use(
 
         // 1. Creamos el DTO sin hashear password
         const newUser = new LabStaffDTO({
-          _id: "", // o "" si tu constructor lo acepta
           firstname,
           secondname,
           lastname,
@@ -87,7 +86,7 @@ passport.use(
         });
 
         // 2. Repository se encarga de hashear
-        const user = await LabStaffRepository.create(newUser);
+        const user = await labStaffServices.create(newUser);
 
         return done(null, user);
       } catch (err) {

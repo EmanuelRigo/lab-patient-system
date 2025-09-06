@@ -21,9 +21,10 @@ export default class PatientDaoSQL {
   }
 
   static async getById(id: number) {
-    const [rows] = await MySQLPool.query("SELECT * FROM Patient WHERE id = ?", [
-      id,
-    ]);
+    const [rows] = await MySQLPool.query(
+      "SELECT * FROM Patient WHERE _id = ?",
+      [id]
+    );
     return (rows as any[])[0] || null;
   }
 
