@@ -1,4 +1,20 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
+
+export interface DoctorAppointment extends RowDataPacket {
+  _id: string;
+  isPaid: boolean;
+  talonId?: string;
+  resultId?: string;
+  patientId: string;
+  medicalStudyId: string;
+  date: Date;
+  receptionistId?: string;
+  reason?: string;
+  status: "scheduled" | "completed" | "cancelled";
+  createdAt?: Date;
+  updatedAt?: Date;
+}
 
 export default class DoctorAppointmentDaoSQL {
   static async create(data: Record<string, any>) {
@@ -44,7 +60,20 @@ export default class DoctorAppointmentDaoSQL {
     return result;
   }
 
-  static async update(_id: number, data: Record<string, any>) {
+  // static async update(_id: number, data: Record<string, any>) {
+  //   const keys = Object.keys(data);
+  //   const values = Object.values(data);
+
+  //   if (keys.length === 0) return null;
+
+  //   const setClause = keys.map((key) => `${key} = ?`).join(", ");
+  //   const query = `UPDATE DoctorAppointment SET ${setClause} WHERE _id = ?`;
+
+  //   const [result] = await MySQLPool.query(query, [...values, _id]);
+  //   return result;
+  // }
+
+  static async update(_id: string, data: Record<string, any>) {
     const keys = Object.keys(data);
     const values = Object.values(data);
 
@@ -53,7 +82,21 @@ export default class DoctorAppointmentDaoSQL {
     const setClause = keys.map((key) => `${key} = ?`).join(", ");
     const query = `UPDATE DoctorAppointment SET ${setClause} WHERE _id = ?`;
 
-    const [result] = await MySQLPool.query(query, [...values, _id]);
-    return result;
+    // UPDATE → devuelve ResultSetHeader
+    const [updateResult] = await MySQLPool.query<ResultSetHeader>(query, [
+      ...values,
+      _id,
+    ]);
+
+    if (updateResult.affectedRows > 0) {
+      // SELECT → devuelve RowDataPacket[]
+      const [rows] = await MySQLPool.query<RowDataPacket[]>(
+        "SELECT * FROM DoctorAppointment WHERE _id = ?",
+        [_id]
+      );
+      return rows[0] as RowDataPacket; // ✅ ahora TS sabe que rows[0] existe
+    }
+
+    return null;
   }
 }

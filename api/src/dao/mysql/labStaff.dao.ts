@@ -61,50 +61,30 @@ export default class LabStaffDaoSQL {
     return result;
   }
 
-  static async update(
-    _id: number,
-    data: Partial<LabStaff>
-  ): Promise<Partial<LabStaff> | null> {
-    const keys = Object.keys(data) as (keyof LabStaff)[];
+  static async update(_id: string, data: Record<string, any>) {
+    const keys = Object.keys(data);
     const values = Object.values(data);
 
     if (keys.length === 0) return null;
 
-    // 1. Traemos los datos actuales antes de actualizar
-    const [currentRows] = await MySQLPool.query<LabStaff[]>(
-      "SELECT * FROM LabStaff WHERE _id = ?",
-      [_id]
-    );
-    const current = currentRows[0];
-    if (!current) return null; // no existe el registro
-
-    // 2. Ejecutamos el UPDATE
-    const setClause = keys.map((key) => `${String(key)} = ?`).join(", ");
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
     const query = `UPDATE LabStaff SET ${setClause} WHERE _id = ?`;
 
-    const [result] = await MySQLPool.query<ResultSetHeader>(query, [
+    // UPDATE → devuelve ResultSetHeader
+    const [updateResult] = await MySQLPool.query<ResultSetHeader>(query, [
       ...values,
       _id,
     ]);
 
-    const { affectedRows, changedRows } = result;
-
-    if (affectedRows === 0) {
-      return null; // no existía ningún registro con ese id
+    if (updateResult.affectedRows > 0) {
+      // SELECT → devuelve RowDataPacket[]
+      const [rows] = await MySQLPool.query<RowDataPacket[]>(
+        "SELECT * FROM LabStaff WHERE _id = ?",
+        [_id]
+      );
+      return rows[0] as RowDataPacket; // ✅ ahora TS sabe que rows[0] existe
     }
 
-    if (changedRows === 0) {
-      return {}; // existía, pero los datos eran idénticos
-    }
-
-    // 3. Solo devolver los campos modificados
-    const changedData: Partial<LabStaff> = {};
-    for (const key of keys) {
-      if (current[key] !== data[key]) {
-        changedData[key] = data[key]!;
-      }
-    }
-
-    return changedData;
+    return null;
   }
 }
