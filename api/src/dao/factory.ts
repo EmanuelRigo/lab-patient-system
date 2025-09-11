@@ -7,6 +7,9 @@ import PatientDaoSQL from "./mysql/patient.dao";
 import LabStaffDaoSQL from "./mysql/labStaff.dao";
 import MedicalStudyDaoSQL from "./mysql/medicalStudies.dao";
 import DoctorAppointmentDaoSQL from "./mysql/doctorsAppointment.dao";
+import TalonDaoSQL from "./mysql/talon.dao";
+import PaymentDaoSQL from "./mysql/payment.dao";
+import ResultDaoSQL from "./mysql/result.dao";
 
 import {
   DoctorsAppointmentDaoMongo,
@@ -43,6 +46,9 @@ switch (PERSISTENCE) {
       LabStaffDao: LabStaffDaoSQL,
       MedicalStudyDao: MedicalStudyDaoSQL,
       DoctorsAppointmentDao: DoctorAppointmentDaoSQL,
+      TalonDao: TalonDaoSQL,
+      PaymentDao: PaymentDaoSQL,
+      ResultDao: ResultDaoSQL,
     };
     break;
 
