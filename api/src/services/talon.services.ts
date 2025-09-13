@@ -2,6 +2,8 @@ import { Talon } from "../../../types/talon.types";
 import { TalonRepository } from "../repository/index.respository";
 import paymentService from "./payment.services";
 import { Payment } from "../../../types/payment.types";
+import doctorsAppointmentService from "./doctorsAppointment.services";
+import { DoctorAppointment } from "../../../types/doctorsAppointment.types";
 
 class TalonService {
   async getAll(): Promise<Talon[] | null> {
@@ -47,6 +49,27 @@ class TalonService {
     });
 
     return { talon, payment };
+  }
+
+  // 🚀 Nueva lógica: actualizar el total de un talon a partir de appointments
+  async updateTotalAmount(id: string, doctorAppointmentIds: string[]) {
+    // 1. Buscar los appointments (con el precio del MedicalStudy)
+    const appointments = await doctorsAppointmentService.getByIds(
+      doctorAppointmentIds
+    );
+
+    // 2. Calcular el total
+    const total = appointments.reduce(
+      (sum: number, app: DoctorAppointment) => sum + app.medicalStudyId.price,
+      0
+    );
+
+    // 3. Guardar el total en el Talon
+    const updatedTalon = await TalonRepository.update(id, {
+      total_amount: total,
+    });
+
+    return updatedTalon;
   }
 }
 

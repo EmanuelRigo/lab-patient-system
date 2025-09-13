@@ -12,3 +12,9 @@ export interface DoctorAppointment {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface DoctorAppointmentWithStudy extends DoctorAppointment {
+  medicalStudy: {
+    price: number;
+  };
+}

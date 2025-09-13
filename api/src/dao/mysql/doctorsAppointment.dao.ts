@@ -1,5 +1,6 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
+// import { DoctorAppointmentWithStudy } from "../../../../types/doctorsAppointment.types";
 
 export interface DoctorAppointment extends RowDataPacket {
   _id: string;
@@ -8,6 +9,23 @@ export interface DoctorAppointment extends RowDataPacket {
   resultId?: string;
   patientId: string;
   medicalStudyId: string;
+  date: Date;
+  receptionistId?: string;
+  reason?: string;
+  status: "scheduled" | "completed" | "cancelled";
+  createdAt?: Date;
+  updatedAt?: Date;
+}
+
+export interface DoctorAppointmentWithStudy extends RowDataPacket {
+  _id: string;
+  isPaid: boolean;
+  talonId?: string;
+  resultId?: string;
+  patientId: string;
+  medicalStudy: {
+    price: number;
+  };
   date: Date;
   receptionistId?: string;
   reason?: string;
@@ -42,6 +60,39 @@ export default class DoctorAppointmentDaoSQL {
       [_id]
     );
     return (rows as any[])[0] || null;
+  }
+
+  static async getByIdsWithPrice(
+    ids: string[]
+  ): Promise<DoctorAppointmentWithStudy[]> {
+    if (ids.length === 0) return [];
+
+    const placeholders = ids.map(() => "?").join(", ");
+    const query = `
+    SELECT 
+      da._id,
+      da.isPaid,
+      da.talonId,
+      da.resultId,
+      da.patientId,
+      da.medicalStudyId,
+      da.date,
+      da.receptionistId,
+      da.reason,
+      da.status,
+      da.createdAt,
+      da.updatedAt,
+      ms.price
+    FROM DoctorAppointment da
+    JOIN MedicalStudy ms ON da.medicalStudyId = ms._id
+    WHERE da._id IN (${placeholders})
+  `;
+
+    const [rows] = await MySQLPool.query<DoctorAppointmentWithStudy[]>(
+      query,
+      ids
+    );
+    return rows;
   }
 
   static async getByUsername(name: string) {

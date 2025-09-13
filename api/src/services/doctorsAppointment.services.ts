@@ -1,6 +1,7 @@
 import { DoctorAppointment } from "../../../types/doctorsAppointment.types";
 // import dao from "../dao/factory";
-import { DoctorsAppointmentRepository } from "../repository/index.respository";
+// import { DoctorsAppointmentRepository } from "../repository/index.respository";
+import DoctorsAppointmentRepository from "../repository/doctorAppointment.repository";
 
 // const { doctorsAppointment } = dao;
 
@@ -17,6 +18,13 @@ class DoctorsAppointmentService {
   async getByName(username: string): Promise<DoctorAppointment | null> {
     const user = await DoctorsAppointmentRepository.getByName(username);
     return user;
+  }
+
+  async getByIdsWithPrice(ids: string[]): Promise<DoctorAppointment[]> {
+    const appointments = await DoctorsAppointmentRepository.getByIdsWithPrice(
+      ids
+    );
+    return appointments;
   }
 
   async create(data: DoctorAppointment): Promise<DoctorAppointment> {
