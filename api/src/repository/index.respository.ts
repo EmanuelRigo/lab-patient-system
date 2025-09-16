@@ -5,6 +5,7 @@ import LabStaffDTO from "../dto/labStaff.dto";
 import MedicalStudyDTO from "../dto/medicalStudy.dto";
 import PatientDTO from "../dto/patient.dto";
 import PaymentDTO from "../dto/payment.dto";
+import PaymentMethodDTO from "../dto/paymentMethod.dto"; // 👈 agregado
 import ResultDTO from "../dto/result.dto";
 import TalonDTO from "../dto/talon.dto";
 
@@ -38,6 +39,11 @@ import {
 } from "../dao/mysql/mappers/payment.mapper";
 
 import {
+  toSQL as paymentMethodToSQL, // 👈 agregado
+  fromSQL as paymentMethodFromSQL, // 👈 agregado
+} from "../dao/mysql/mappers/paymentMethod.mapper";
+
+import {
   toSQL as resultToSQL,
   fromSQL as resultFromSQL,
 } from "../dao/mysql/mappers/result.mapper";
@@ -68,11 +74,9 @@ type DaoShape = {
 
 // Activación de mappers según persistencia
 const { PERSISTENCE } = envsUtils;
-
 const isMySQL = String(PERSISTENCE).toLowerCase() === "mysql";
 console.log("🚀 ~ isMySQL:", isMySQL);
 
-// Helper: devuelve el mapper solo si estamos en MySQL
 const maybeMapper = <T>(mapper: Mapper<T> | undefined): Mapper<T> | undefined =>
   isMySQL ? mapper : undefined;
 
@@ -90,9 +94,7 @@ class Repository<T> {
     this.fromSQL = mapper?.fromSQL;
   }
 
-  // Escritura: usa DTO y toSQL
   create = async (data: any): Promise<T> => {
-    // Si se está creando la contraseña, hashearla
     if ("password" in data && typeof data.password === "string") {
       data.password = createHashUtil(data.password);
     }
@@ -104,7 +106,6 @@ class Repository<T> {
     return this.fromSQL ? this.fromSQL(result) : result;
   };
 
-  // Lectura: no usa DTO
   getAll = async (): Promise<T[] | null> => {
     const rows = await this.dao.getAll();
     if (!rows) return null;
@@ -125,10 +126,7 @@ class Repository<T> {
   getByUsername = async (username: string): Promise<T | null> => {
     if (!this.dao.getByUsername)
       throw new Error("getByUsername not implemented");
-
     const row = await this.dao.getByUsername(username);
-    console.log("🚀 ~ Repository ~ row:", row);
-
     return row ? (this.fromSQL ? this.fromSQL(row) : row) : null;
   };
 
@@ -138,29 +136,20 @@ class Repository<T> {
     return this.fromSQL ? rows.map(this.fromSQL) : rows;
   };
 
-  // Escritura: usa DTO y toSQL
   update = async (id: string, data: Partial<T>): Promise<T | null> => {
-    // Si se está actualizando la contraseña, hashearla
     if ("password" in data && typeof data.password === "string") {
       data.password = createHashUtil(data.password);
     }
-    // forzamos updatedAt en cada update
     const updateData = {
       ...data,
       updatedAt: new Date(),
     };
 
     const payload = this.toSQL
-      ? this.toSQL(updateData as T) // si hay mapper SQL
+      ? this.toSQL(updateData as T)
       : (updateData as Record<string, any>);
-    console.log("🚀 ~ Repository ~ payload:", payload);
-
     let result = await this.dao.update(id, payload);
-    console.log("🚀 ~ Repository ~ result (raw):", result);
-
-    // aplicar transformación aquí
     result = result && this.fromSQL ? this.fromSQL(result) : result;
-
     return result ?? null;
   };
 
@@ -179,13 +168,12 @@ const {
   MedicalStudyDao,
   PatientDao,
   PaymentDao,
+  PaymentMethodDao, // 👈 agregado
   ResultDao,
   TalonDao,
 } = dao;
 
 // ===================== Instancias de repos =====================
-// Nota: en Mongo, maybeMapper(...) devolverá undefined y el repo funcionará sin mapper.
-
 const DoctorsAppointmentRepository = new Repository(
   DoctorsAppointmentDao,
   DoctorsAppointmentDTO,
@@ -231,6 +219,15 @@ const PaymentRepository = new Repository(
   })
 );
 
+const PaymentMethodRepository = new Repository( // 👈 agregado
+  PaymentMethodDao,
+  PaymentMethodDTO,
+  maybeMapper({
+    toSQL: paymentMethodToSQL,
+    fromSQL: paymentMethodFromSQL,
+  })
+);
+
 const ResultRepository = new Repository(
   ResultDao,
   ResultDTO,
@@ -255,6 +252,7 @@ export {
   MedicalStudyRepository,
   PatientRepository,
   PaymentRepository,
+  PaymentMethodRepository, // 👈 agregado
   ResultRepository,
   TalonRepository,
 };

@@ -10,6 +10,7 @@ import DoctorAppointmentDaoSQL from "./mysql/doctorsAppointment.dao";
 import TalonDaoSQL from "./mysql/talon.dao";
 import PaymentDaoSQL from "./mysql/payment.dao";
 import ResultDaoSQL from "./mysql/result.dao";
+import PaymentMethodDaoSQL from "./mysql/paymentMethod.dao"; // 👈 nuevo
 
 import {
   DoctorsAppointmentDaoMongo,
@@ -19,6 +20,8 @@ import {
   PaymentDaoMongo,
   ResultDaoMongo,
   TalonDaoMongo,
+  // 👇 si más adelante agregás el DAO de Mongo para PaymentMethod
+  // PaymentMethodDaoMongo,
 } from "./mongo/index.dao";
 
 const { PERSISTENCE } = envsUtils;
@@ -35,6 +38,7 @@ daoMongo = {
   PaymentDaoMongo,
   ResultDaoMongo,
   TalonDaoMongo,
+  // PaymentMethodDaoMongo, // 👈 lo dejamos comentado para el futuro
 };
 
 switch (PERSISTENCE) {
@@ -49,6 +53,7 @@ switch (PERSISTENCE) {
       TalonDao: TalonDaoSQL,
       PaymentDao: PaymentDaoSQL,
       ResultDao: ResultDaoSQL,
+      PaymentMethodDao: PaymentMethodDaoSQL, // 👈 agregado
     };
     break;
 
@@ -62,11 +67,8 @@ switch (PERSISTENCE) {
     const PaymentDao = daoMongo.PaymentDaoMongo;
     const ResultDao = daoMongo.ResultDaoMongo;
     const TalonDao = daoMongo.TalonDaoMongo;
-    //const labStaffDao = require("./mongo/labStaff.dao").default;
-    //const medicalStudyDao = require("./mongo/medicalStudy.dao").default;
-    //const patientDao = require("./mongo/patient.dao").default;
+    // const PaymentMethodDao = daoMongo.PaymentMethodDaoMongo; // 👈 cuando lo implementes
 
-    // require("./mongo/doctorsAppointment.dao").default;
     dao = {
       DoctorsAppointmentDao: DoctorsAppointmentDao,
       LabStaffDao: LabStaffDao,
@@ -75,6 +77,7 @@ switch (PERSISTENCE) {
       PaymentDao: PaymentDao,
       ResultDao: ResultDao,
       TalonDao: TalonDao,
+      // PaymentMethodDao: PaymentMethodDao, // 👈 cuando lo implementes en Mongo
     };
     break;
 }

@@ -1,23 +1,33 @@
-import { model, Schema, Types } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 import { Payment } from "../../../../../types/payment.types";
 
 const collection = "payments";
 
 const paymentSchema = new Schema<Payment>(
   {
-    amount: {
-      type: Number,
+    _id: {
+      type: String, // varchar(24) en MySQL → string en Mongo
       required: true,
     },
-    talonId: Types.ObjectId,
-
-    method: {
-      type: String,
-      enum: ["credit_card", "debit_card", "cash", "bank_transfer"],
+    amount: {
+      type: Number, // decimal(10,2) → Decimal128 para precisión financiera
       required: true,
+    },
+    paymentMethodId: {
+      type: String, // varchar(24), puede ser un ObjectId si lo preferís
+      ref: "paymentMethods", // si tenés una colección relacionada
+    },
+    talonId: {
+      type: String, // también varchar(24), opcional
     },
   },
-  { timestamps: true }
+  {
+    timestamps: {
+      createdAt: "created_at",
+      updatedAt: "updated_at",
+    },
+    _id: false, // si querés usar el _id manual como string
+  }
 );
 
 const PaymentModel = model<Payment>(collection, paymentSchema);

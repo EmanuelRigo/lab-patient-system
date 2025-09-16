@@ -6,6 +6,7 @@ import labStaffRouter from "./labStaff.router";
 import medicalStudyRouter from "./medicalStudy.router";
 import patientsApiRouter from "./patients.router";
 import paymentRouter from "./payment.router";
+import paymentMethodRouter from "./paymentMethod.router";
 import resultRouter from "./result.router";
 import talonRouter from "./talon.router";
 
@@ -44,6 +45,8 @@ class IndexRouter extends CustomRouter {
     this.use("/patient", ["public"], asyncHandler(patientsApiRouter));
 
     this.use("/payment", ["public"], asyncHandler(paymentRouter));
+
+    this.use("/paymentMethod", ["public"], asyncHandler(paymentMethodRouter));
 
     this.use("/result", ["public"], asyncHandler(resultRouter));
 
