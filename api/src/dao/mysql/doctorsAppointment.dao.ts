@@ -65,34 +65,46 @@ export default class DoctorAppointmentDaoSQL {
   static async getByIdsWithPrice(
     ids: string[]
   ): Promise<DoctorAppointmentWithStudy[]> {
-    if (ids.length === 0) return [];
+    if (!ids || ids.length === 0) return [];
 
     const placeholders = ids.map(() => "?").join(", ");
     const query = `
     SELECT 
-      da._id,
-      da.isPaid,
-      da.talonId,
-      da.resultId,
-      da.patientId,
-      da.medicalStudyId,
-      da.date,
-      da.receptionistId,
-      da.reason,
-      da.status,
-      da.createdAt,
-      da.updatedAt,
-      ms.price
+      da._id               AS _id,
+      da.is_paid           AS isPaid,
+      da.talon_id          AS talonId,
+      da.result_id         AS resultId,
+      da.patient_id        AS patientId,
+      da.medical_study_id  AS medicalStudyId,
+      da.date              AS date,
+      da.receptionist_id   AS receptionistId,
+      da.reason            AS reason,
+      da.status            AS status,
+      da.created_at        AS createdAt,
+      da.updated_at        AS updatedAt,
+      ms.price             AS study_price
     FROM DoctorAppointment da
-    JOIN MedicalStudy ms ON da.medicalStudyId = ms._id
-    WHERE da._id IN (${placeholders})
+    JOIN MedicalStudy ms ON da.medical_study_id = ms._id
+    WHERE da._id IN (${placeholders});
   `;
 
-    const [rows] = await MySQLPool.query<DoctorAppointmentWithStudy[]>(
-      query,
-      ids
-    );
-    return rows;
+    const [rows] = await MySQLPool.query<RowDataPacket[]>(query, ids);
+
+    // Mapear al shape esperado por TypeScript: medicalStudy: { price }
+    return (rows as any[]).map((r) => ({
+      _id: r._id,
+      isPaid: !!r.isPaid,
+      talonId: r.talonId,
+      resultId: r.resultId,
+      patientId: r.patientId,
+      medicalStudy: { price: Number(r.study_price ?? 0) },
+      date: r.date,
+      receptionistId: r.receptionistId,
+      reason: r.reason,
+      status: r.status,
+      createdAt: r.createdAt,
+      updatedAt: r.updatedAt,
+    })) as DoctorAppointmentWithStudy[];
   }
 
   static async getByUsername(name: string) {

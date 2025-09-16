@@ -25,16 +25,24 @@ class DoctorsAppointmentRepository extends Repository<DoctorsAppointmentDTO> {
     );
   }
 
-  // 👇 Nuevo método custom
+  // ✅ Nuevo método custom
   async getByIdsWithPrice(ids: string[]) {
-    if (!this.search) throw new Error("search not implemented");
-    const rows = await this.search({ ids });
+    // Usamos directamente el método del DAO
+    const rows = await DoctorsAppointmentDao.getByIdsWithPrice(ids);
 
-    // acá podrías mapear y calcular el precio si no viene ya desde SQL
-    return rows.map((appt: any) => ({
+    console.log("🚀 ~ DoctorsAppointmentRepository ~ rows:", rows);
+
+    // Mapear o calcular precios adicionales si hiciera falta
+    const rowsWithTotal = rows.map((appt: any) => ({
       ...appt,
-      totalPrice: appt.basePrice + (appt.extraFees ?? 0),
+      totalPrice: appt.medicalStudy?.price ?? 0, // ✅ usamos el join con MedicalStudy
     }));
+
+    console.log(
+      "🚀 ~ DoctorsAppointmentRepository ~ rowsWithTotal:",
+      rowsWithTotal
+    );
+    return rowsWithTotal;
   }
 }
 

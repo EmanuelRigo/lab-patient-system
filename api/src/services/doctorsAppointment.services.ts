@@ -1,4 +1,5 @@
 import { DoctorAppointment } from "../../../types/doctorsAppointment.types";
+import { DoctorAppointmentWithStudy } from "../../../types/doctorsAppointment.types";
 // import dao from "../dao/factory";
 // import { DoctorsAppointmentRepository } from "../repository/index.respository";
 import DoctorsAppointmentRepository from "../repository/doctorAppointment.repository";
@@ -20,9 +21,19 @@ class DoctorsAppointmentService {
     return user;
   }
 
-  async getByIdsWithPrice(ids: string[]): Promise<DoctorAppointment[]> {
+  async getByIdsWithPrice(
+    ids: string[]
+  ): Promise<DoctorAppointmentWithStudy[]> {
+    console.log(
+      "🚀 ~ DoctorsAppointmentService ~ getByIdsWithPrice ~ ids:",
+      ids
+    );
     const appointments = await DoctorsAppointmentRepository.getByIdsWithPrice(
       ids
+    );
+    console.log(
+      "🚀 ~ DoctorsAppointmentService ~ getByIdsWithPrice ~ appointments:",
+      appointments
     );
     return appointments;
   }

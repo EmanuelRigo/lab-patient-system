@@ -18,7 +18,7 @@ class SessionRouter extends CustomRouter {
     //REGISTER
     this.create(
       "/register",
-      ["admin"],
+      ["public"],
       authMiddleware("register"),
       asyncHandler(register)
     );

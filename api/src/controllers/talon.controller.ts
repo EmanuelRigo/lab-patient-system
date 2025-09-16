@@ -19,7 +19,29 @@ class TalonController extends Controller<Talon> {
       res.json500("An error occurred while creating talon and payment");
     }
   };
+
+  updateWithAppointments = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { appointmentIds } = req.body;
+    console.log("🚀 ~ TalonController ~ appointmentIds:", appointmentIds);
+
+    try {
+      const result = await talonService.updateWithAppointments(
+        id,
+        appointmentIds
+      );
+      console.log("🚀 ~ TalonController ~ result:", result);
+      if (result) {
+        res.json201(result, "Talon updated with appointments successfully");
+      } else {
+        res.json404();
+      }
+    } catch (error) {
+      res.json500("An error occurred while updating talon with appointments");
+    }
+  };
 }
+
 const controller = new TalonController();
 export default controller;
 //   async createWithPayment(req: Request, res: Response) {

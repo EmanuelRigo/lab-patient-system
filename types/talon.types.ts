@@ -3,7 +3,7 @@ export interface Talon {
   receptionistId?: string;
   paymentId?: string;
   isPaid?: boolean;
-  total_amount?: number;
+  totalAmount?: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
