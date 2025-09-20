@@ -6,7 +6,6 @@ export interface DoctorAppointment extends RowDataPacket {
   _id: string;
   isPaid: boolean;
   talonId?: string;
-  resultId?: string;
   patientId: string;
   medicalStudyId: string;
   date: Date;
@@ -21,7 +20,6 @@ export interface DoctorAppointmentWithStudy extends RowDataPacket {
   _id: string;
   isPaid: boolean;
   talonId?: string;
-  resultId?: string;
   patientId: string;
   medicalStudy: {
     price: number;
@@ -73,7 +71,6 @@ export default class DoctorAppointmentDaoSQL {
       da._id               AS _id,
       da.is_paid           AS isPaid,
       da.talon_id          AS talonId,
-      da.result_id         AS resultId,
       da.patient_id        AS patientId,
       da.medical_study_id  AS medicalStudyId,
       da.date              AS date,
@@ -95,7 +92,6 @@ export default class DoctorAppointmentDaoSQL {
       _id: r._id,
       isPaid: !!r.isPaid,
       talonId: r.talonId,
-      resultId: r.resultId,
       patientId: r.patientId,
       medicalStudy: { price: Number(r.study_price ?? 0) },
       date: r.date,

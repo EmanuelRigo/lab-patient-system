@@ -1,8 +1,11 @@
 export interface Result {
   _id: string;
-  status: "pending" | "completed" | "failed";
-  labtechnicianId: string;
+  medicalStudyId: string;
+  doctorAppointmentId: string;
+  labtechnicianId?: string;
   biochemistId?: string;
+  status: "pending" | "completed" | "failed";
+  result?: string;
   description?: string;
   extractionDate?: Date;
   createdAt?: Date;

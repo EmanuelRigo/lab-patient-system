@@ -55,6 +55,11 @@ class TalonService {
     id: string,
     appointmentIds: string[]
   ): Promise<Talon | null> {
+    console.log(
+      "🚀 ~ TalonService ~ updateWithAppointments ~ appointmentIds:",
+      appointmentIds
+    );
+    console.log("🚀 ~ TalonService ~ updateWithAppointments ~ id:", id);
     // 1. Traemos los appointments con su precio
     const appointments = await doctorsAppointmentService.getByIdsWithPrice(
       appointmentIds

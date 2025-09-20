@@ -1,6 +1,7 @@
 import TalonDTO from "../../../dto/talon.dto";
-import { Talon } from "../../../../../types/talon.types";
+import { TalonView } from "../../../../../types/talon.types";
 
+// --- Mapper para tabla Talon ---
 export function toSQL(dto: TalonDTO): Record<string, any> {
   const raw = {
     _id: dto._id,
@@ -18,15 +19,21 @@ export function toSQL(dto: TalonDTO): Record<string, any> {
 }
 
 export function fromSQL(row: Record<string, any>): TalonDTO {
-  const talon: Talon = {
-    _id: row._id,
-    receptionistId: row.receptionist_id,
-    paymentId: row.payment_id,
-    isPaid: row.is_paid,
-    totalAmount: row.total_amount,
-    createdAt: row.created_at,
-    updatedAt: row.updated_at,
-  };
+  return new TalonDTO(row);
+}
 
-  return new TalonDTO(talon);
+// --- Mapper para vista Talon con receptionist y patient ---
+export function fromSQLToView(row: Record<string, any>): TalonView {
+  return {
+    _id: row.talon_id,
+    isPaid: !!row.is_paid, // 👈 booleano
+    totalAmount: Number(row.total_amount), // 👈 a number
+    createdAt: new Date(row.talon_created_at),
+    updatedAt: new Date(row.talon_updated_at),
+    receptionistFirstName: row.receptionist_firstname,
+    receptionistLastName: row.receptionist_lastname,
+    patientFirstName: row.patient_firstname,
+    patientLastName: row.patient_lastname,
+    patientphoneNumber: row.patient_phone,
+  };
 }

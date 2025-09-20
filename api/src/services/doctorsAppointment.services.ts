@@ -24,15 +24,11 @@ class DoctorsAppointmentService {
   async getByIdsWithPrice(
     ids: string[]
   ): Promise<DoctorAppointmentWithStudy[]> {
-    console.log(
-      "🚀 ~ DoctorsAppointmentService ~ getByIdsWithPrice ~ ids:",
-      ids
-    );
     const appointments = await DoctorsAppointmentRepository.getByIdsWithPrice(
       ids
     );
     console.log(
-      "🚀 ~ DoctorsAppointmentService ~ getByIdsWithPrice ~ appointments:",
+      "🚀 ~ DoctorsAppointmentService!!! ~ getByIdsWithPrice ~ appointments:",
       appointments
     );
     return appointments;

@@ -8,7 +8,6 @@ class DoctorsAppointmentDTO {
   _id: string;
   isPaid: boolean = false;
   talonId?: string;
-  resultId?: string;
   patientId: string;
   medicalStudyId: string;
   date: Date;
@@ -22,7 +21,6 @@ class DoctorsAppointmentDTO {
     this._id = data._id ?? crypto.randomBytes(12).toString("hex");
     this.isPaid = data.isPaid ?? false;
     this.talonId = data.talonId;
-    this.resultId = data.resultId;
     this.patientId = data.patientId;
     this.medicalStudyId = data.medicalStudyId;
     this.date = data.date;

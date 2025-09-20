@@ -27,6 +27,10 @@ class DoctorsAppointmentRepository extends Repository<DoctorsAppointmentDTO> {
 
   // ✅ Nuevo método custom
   async getByIdsWithPrice(ids: string[]) {
+    console.log(
+      "🚀 ~ DoctorsAppointmentRepository ~ getByIdsWithPrice ~ ids:",
+      ids
+    );
     // Usamos directamente el método del DAO
     const rows = await DoctorsAppointmentDao.getByIdsWithPrice(ids);
 

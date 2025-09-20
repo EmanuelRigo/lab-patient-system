@@ -34,28 +34,33 @@ const CardResult = ({ result }: CardResultProps) => {
   return (
     <div className="border border-gray-300 rounded-lg p-6 bg-white w-full max-w-xl mx-auto">
       <h2 className="text-2xl font-bold text-sky-800 mb-4">
-        {result.labtechnician_id}
+        ID de Estudio: {result.medicalStudyId}
       </h2>
 
+      <p className="text-sm text-gray-700">
+        <strong>ID de Cita:</strong> {result.doctorAppointmentId}
+      </p>
+      <p className="text-sm text-gray-700">
+        <strong>Técnico de laboratorio:</strong>{" "}
+        {result.labtechnicianId || "No asignado"}
+      </p>
       <p className="text-sm text-gray-700">
         <strong>Estatus:</strong> {result.status}
       </p>
       <p className="text-sm text-gray-700">
+        <strong>Resultado:</strong> {result.result || "No especificado"}
+      </p>
+      <p className="text-sm text-gray-700">
         <strong>Día de extracción:</strong>{" "}
-        {result.extration_date
-          ? new Date(result.extration_date).toDateString()
+        {result.extractionDate
+          ? new Date(result.extractionDate).toDateString()
           : "No especificada"}
       </p>
-
       <p className="text-sm text-gray-700">
-        <strong>Hora de extracción:</strong>{" "}
-        {result.extractionTime || "No especificada"}
-      </p>
-      <p className="text-sm text-gray-700">
-        <strong>Bioquímico:</strong> {result.biochemist_id || "No asignado"}
+        <strong>Bioquímico:</strong> {result.biochemistId || "No asignado"}
       </p>
 
-      <RoleWrapper allowedRoles={["role_lab_technician", "role_biochemist"]}>
+      <RoleWrapper allowedRoles={["labTechnician", "biochemist"]}>
         <button
           onClick={() => setShowModal(true)}
           className="inline-flex items-center gap-2 bg-sky-600 hover:bg-sky-700 text-white px-4 py-2 rounded-md"
@@ -67,7 +72,10 @@ const CardResult = ({ result }: CardResultProps) => {
         {showModal && (
           <ModalEditGeneric
             initialData={result as ResultForModal}
-            editableFields={[{ name: "status", label: "Estado" }]}
+            editableFields={[
+              { name: "status", label: "Estado" },
+              { name: "result", label: "Resultado" },
+            ]}
             onClose={() => setShowModal(false)}
             onUpdate={onUpdate}
           />

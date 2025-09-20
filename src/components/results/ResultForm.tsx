@@ -8,11 +8,14 @@ const ResultForm = () => {
   const [form, setForm] = useState<
     Omit<Result, "_id" | "createdAt" | "updatedAt">
   >({
+    medicalStudyId: "",
+    doctorAppointmentId: "",
     status: "pending",
-    biochemist_id: "",
-    labtechnician_id: "",
-    extration_date: undefined,
-    extractionTime: "",
+    biochemistId: "",
+    labtechnicianId: "",
+    extractionDate: undefined,
+    result: "",
+    description: "",
   });
 
   const handleChange = (
@@ -21,7 +24,7 @@ const ResultForm = () => {
     const { name, value } = e.target;
 
     // Si es fecha, convertir a Date
-    if (name === "extration_date") {
+    if (name === "extractionDate") {
       setForm((prev) => ({
         ...prev,
         [name]: value ? new Date(value) : undefined,
@@ -41,10 +44,13 @@ const ResultForm = () => {
     await resultApi.create(form);
 
     setForm({
+      medicalStudyId: "",
+      doctorAppointmentId: "",
       status: "pending",
-      labtechnician_id: "",
-      extration_date: undefined,
-      extractionTime: "",
+      labtechnicianId: "",
+      extractionDate: undefined,
+      result: "",
+      description: "",
     });
   };
 
@@ -55,6 +61,26 @@ const ResultForm = () => {
     >
       <h2 className="text-xl font-semibold text-sky-700">Agregar Resultado</h2>
 
+      <input
+        type="text"
+        name="medical_study_id"
+        value={form.medicalStudyId}
+        onChange={handleChange}
+        placeholder="ID de Estudio Médico"
+        required
+        className="border p-2 rounded-md"
+      />
+
+      <input
+        type="text"
+        name="doctorAppointmentId"
+        value={form.doctorAppointmentId}
+        onChange={handleChange}
+        placeholder="ID de Cita Médica"
+        required
+        className="border p-2 rounded-md"
+      />
+
       <select
         name="status"
         value={form.status}
@@ -62,36 +88,54 @@ const ResultForm = () => {
         className="border p-2 rounded-md"
       >
         <option value="pending">Pendiente</option>
-        <option value="status_completed">Completado</option>
+        <option value="completed">Completado</option>
         <option value="failed">Fallido</option>
       </select>
 
       <input
         type="text"
-        name=" labtechnician_id"
-        value={form.labtechnician_id}
+        name="labtechnicianId"
+        value={form.labtechnicianId}
         onChange={handleChange}
         placeholder="ID del Técnico de Laboratorio"
-        required
+        className="border p-2 rounded-md"
+      />
+
+      <input
+        type="text"
+        name="biochemistId"
+        value={form.biochemistId}
+        onChange={handleChange}
+        placeholder="ID del Bioquímico"
+        className="border p-2 rounded-md"
+      />
+
+      <input
+        type="text"
+        name="result"
+        value={form.result}
+        onChange={handleChange}
+        placeholder="Resultado"
+        className="border p-2 rounded-md"
+      />
+
+      <input
+        type="text"
+        name="description"
+        value={form.description}
+        onChange={handleChange}
+        placeholder="Descripción"
         className="border p-2 rounded-md"
       />
 
       <input
         type="date"
-        name="extration_date"
+        name="extractionDate"
         value={
-          form.extration_date
-            ? form.extration_date.toISOString().split("T")[0]
+          form.extractionDate
+            ? form.extractionDate.toISOString().split("T")[0]
             : ""
         }
-        onChange={handleChange}
-        className="border p-2 rounded-md"
-      />
-
-      <input
-        type="time"
-        name="extractionTime"
-        value={form.extractionTime}
         onChange={handleChange}
         className="border p-2 rounded-md"
       />

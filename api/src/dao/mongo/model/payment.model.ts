@@ -23,8 +23,8 @@ const paymentSchema = new Schema<Payment>(
   },
   {
     timestamps: {
-      createdAt: "created_at",
-      updatedAt: "updated_at",
+      createdAt: "createdAt",
+      updatedAt: "updatedAt",
     },
     _id: false, // si querés usar el _id manual como string
   }

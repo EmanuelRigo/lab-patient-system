@@ -17,7 +17,7 @@ const Page = async () => {
         Card={({ data }) => (
           <GenericCard
             item={data}
-            title=" labtechnician_id"
+            title=" labtechnicianId"
             id="_id"
             fields={["extractionTime", "extration_date"]}
             basePath="lab-dashboard/results/"

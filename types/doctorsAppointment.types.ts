@@ -2,7 +2,6 @@ export interface DoctorAppointment {
   _id: string;
   isPaid: boolean;
   talonId?: string;
-  resultId?: string;
   patientId: string;
   medicalStudyId: string;
   date: Date;

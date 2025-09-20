@@ -16,7 +16,10 @@ export default class TalonDaoSQL {
   }
 
   static async getAll() {
-    const [rows] = await MySQLPool.query("SELECT * FROM Talon");
+    const [rows] = await MySQLPool.query(
+      "SELECT * FROM TalonWithReceptionistAndPatient"
+    );
+    console.log("🚀 ~ TalonDaoSQL ~ getAll ~ rows:", rows);
     return rows;
   }
 
