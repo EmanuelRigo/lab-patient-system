@@ -382,12 +382,9 @@ passport.use(
       secretOrKey: String(envsUtils.SECRET_KEY),
     },
     async (data, done) => {
-      console.log("🚀 ~ data:", data);
       try {
         const { userId } = data;
-        console.log("🚀 ~ userId:", userId);
         const user = await labStaffServices.getById(userId);
-        console.log("Usuario encontrado:", user);
 
         if (!user) {
           const info = {
@@ -415,7 +412,6 @@ passport.use(
           email: user.email,
         };
 
-        console.log("Usuario en línea:", userData);
         return done(null, userData);
       } catch (error) {
         const info = {

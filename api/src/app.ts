@@ -16,12 +16,6 @@ const app = express();
 //   res.send("pong 🏓");
 // });
 
-// app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
-app.use(cookieParser());
-
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -42,6 +36,12 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
   })
 );
+
+// app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan("dev"));
+app.use(cookieParser());
 
 // MongoSingleton.getInstance();
 

@@ -1,12 +1,16 @@
 import Link from "next/link";
-// import { getAllPatient } from "@/services/patients.api";
-import GenericList from "@/components/generics/GenericList";
-import GenericCard from "@/components/generics/GenericCard";
 import { Patient } from "../../../../types/patient.types";
 import patientsApi from "@/services/patients.api";
 
+// 👇 función auxiliar para traer pacientes
+async function getPatients(): Promise<Patient[]> {
+  return await patientsApi.getAll();
+}
+
 const Page = async () => {
-  const patients = await patientsApi.getAll();
+  const patients = await getPatients(); // 👈 se espera acá
+
+  console.log("🚀 ~ patients:", patients);
 
   return (
     <div className="bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
@@ -17,21 +21,12 @@ const Page = async () => {
         Agregar paciente
       </Link>
 
-      <GenericList<Patient>
-        items={patients}
-        getKey={(p) => p._id!}
-        emptyMessage="No hay pacientes registrados."
-        className="scrollbar-hidden overflow-y-auto"
-        Card={({ data }) => (
-          <GenericCard
-            item={data}
-            title="firstname"
-            id="_id"
-            fields={["birthDate", "phone", "address"]}
-            basePath="lab-dashboard/patients/"
-          />
-        )}
-      />
+      <Link
+        href="/lab-dashboard/patients/all-patients"
+        className="bg-neutral-200  w-full text-center p-2 rounded-lg mb-4 text-neutral-900 border-2 border-sky-400 inline-block"
+      >
+        Ver pacientes
+      </Link>
     </div>
   );
 };

@@ -62,9 +62,11 @@ class CustomRouter {
 
         const token = req?.cookies?.token;
         if (!token) {
+          console.log("🚀 ~ CustomRouter ~ token:", token);
           res.json401();
           return;
         }
+        console.log("🚀 ~SI CustomRouter ~ token:", token);
 
         const decoded = jwt.verify(token, envUtil.SECRET_KEY) as unknown;
 

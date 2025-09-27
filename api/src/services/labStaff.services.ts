@@ -4,7 +4,6 @@ import { LabStaff } from "../../../types/labStaff.types";
 // import LabStaffDTO from "../dto/labStaff.dto";
 // import labStaffRepository from "../repository/labStaff.repository";
 import { LabStaffRepository } from "../repository/index.respository";
-console.log("🚀 ~ LabStaffRepository:", LabStaffRepository);
 
 // const { labStaffRepository } = dao;
 
