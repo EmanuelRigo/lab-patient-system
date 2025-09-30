@@ -34,7 +34,7 @@ export default function Aside() {
 
   console.log("🚀 ~ Aside ~ role:", role);
   return (
-    <div className="h-full flex flex-col items-center justify-center bg-gray-50/90 p-8">
+    <div className="h-full flex flex-col items-center justify-center bg-neutral-100/50  pe-8 py-8">
       <div key={role} className="w-full">
         {role == "public" ? (
           <p>Bienvenido, por favor inicie sesion</p>
@@ -46,7 +46,7 @@ export default function Aside() {
             </p>
             <button
               onClick={handleLogout}
-              className="bg-sky-500 hover:bg-sky-600 text-neutral-100 p-4 rounded-md w-full mt-8"
+              className="border-e-2 border-y-2 border-sky-500 hover:bg-sky-500 text-sky-500 hover:text-neutral-100 p-4 rounded-e-md w-full mt-8 transition-colors duration-300"
             >
               Cerrar sesión
             </button>

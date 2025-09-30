@@ -30,11 +30,11 @@ export default function RootLayout({
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-dvh w-full flex`}
-        style={{
-          backgroundImage: "url('/images/image4.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
+        // style={{
+        //   backgroundImage: "url('/images/image4.jpg')",
+        //   backgroundSize: "cover",
+        //   backgroundPosition: "center",
+        // }}
       >
         <LabSystemProvider>
           <OnlineStatus>

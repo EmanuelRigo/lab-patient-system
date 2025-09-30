@@ -60,6 +60,9 @@ class CustomRouter {
       try {
         if (policies.includes("public")) return next();
 
+        // 👇 Log todas las cookies que llegan
+        console.log("🍪 Todas las cookies:", req.cookies);
+
         const token = req?.cookies?.token;
         if (!token) {
           console.log("🚀 ~ CustomRouter ~ token:", token);
@@ -82,21 +85,13 @@ class CustomRouter {
 
         const { role, userId } = decoded as JwtPayload;
 
-        // 🔹 Si el rol del usuario está dentro de las policies permitidas
         if (policies.includes(role as Policy)) {
-          // opcional: validación de existencia de usuario según el rol
           let user: any = null;
 
           switch (role) {
             case "admin":
-              user = await labStaffServices.getById(userId);
-              break;
             case "receptionist":
-              user = await labStaffServices.getById(userId);
-              break;
             case "labTechnician":
-              user = await labStaffServices.getById(userId);
-              break;
             case "biochemist":
               user = await labStaffServices.getById(userId);
               break;
