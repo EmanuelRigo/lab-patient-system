@@ -7,7 +7,7 @@ import GetPatients from "@/components/patientsPage/GetPatients";
 
 const page = async () => {
   return (
-    <div className="h-2/3 w-2/3 max-w-[600px] rounded-s-xl p-4 animate-slide  overflow-y-auto scrollbar-hidden flex flex-col border-2 border-neutral-300">
+    <div className="h-2/3 w-3/4 mx-auto  rounded-xl p-4 animate-slide  flex flex-col border-2 border-neutral-200">
       <h1 className="text-2xl font-bold mb-4 text-neutral-800">Pacientes</h1>
       <GetPatients />
     </div>

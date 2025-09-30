@@ -5,7 +5,7 @@ import { PlusCircle, Users } from "lucide-react";
 
 const Page = async () => {
   return (
-    <Card className="w-2/3 h-2/3 mx-auto rounded-xl shadow-lg bg-sky-900/80 text-neutral-100 animate-slide">
+    <Card className="w-2/3 h-2/3 mx-auto rounded-xl  bg-sky-900/80 text-neutral-100 animate-slide">
       <CardHeader>
         <CardTitle className="text-center text-xl font-semibold text-white">
           Pacientes
