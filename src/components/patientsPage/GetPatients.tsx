@@ -48,7 +48,7 @@ const GetPatients = () => {
 
   return (
     // 1. Contenedor principal: Ocupa toda la altura (h-full) y usa flexbox.
-    <div className="h-full relative flex flex-col items-center justify-start pt-32 mx-auto overflow-hidden pb-8">
+    <div className="h-full relative flex flex-col items-center justify-start pt-32 mx-auto overflow-hidden pb-8 opacity-0  animate-fade-in">
       {/* 2. Título (Fijo) */}
       <div className="w-full flex flex-col items-center pt-10 mb-16 z-10">
         <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36">
@@ -142,7 +142,7 @@ const GetPatients = () => {
                 render: (p) => (
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <button className="rounded-md py-3 hover:bg-sky-200/50 transition">
+                      <button className="rounded-md py-1 px-3 transition cursor-pointer hover:bg-neutral-100/80">
                         <MoreHorizontal className="w-5 h-5 text-gray-600" />
                       </button>
                     </DropdownMenuTrigger>

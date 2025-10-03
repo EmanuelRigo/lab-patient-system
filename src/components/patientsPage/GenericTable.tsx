@@ -53,7 +53,7 @@ const GenericTable = <T,>({
                 return (
                   <td
                     key={idx}
-                    className={`px-4 ${isFirst ? "rounded-l-lg" : ""} ${
+                    className={`px-4 py-2 ${isFirst ? "rounded-l-lg" : ""} ${
                       isLast ? "rounded-r-lg" : ""
                     }`}
                   >

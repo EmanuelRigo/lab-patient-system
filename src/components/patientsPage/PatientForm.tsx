@@ -89,7 +89,7 @@ const PatientForm = () => {
       </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-3xl mx-auto bg-sky-100 rounded-xl shadow-lg p-8 flex flex-col gap-8"
+        className="w-full max-w-3xl mx-auto bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-8"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Columna 1 */}
