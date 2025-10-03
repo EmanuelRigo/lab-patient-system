@@ -10,6 +10,7 @@ import {
   TestTube,
   Building2,
 } from "lucide-react";
+import { FaHospitalAlt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
 const LinkPanel = () => {
@@ -27,27 +28,27 @@ const LinkPanel = () => {
   };
 
   return (
-    <div className="relative flex flex-col items-center justify-start h-2/3 w-2/3 mx-auto bg-sky-200 overflow-hidden">
+    <div className="relative flex flex-col items-center justify-start h-2/3 w-2/3 mx-auto bg-sky-200 overflow-hidden rounded-4xl">
       {/* Círculo de fondo ABSOLUTE */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2/3 w-[150%] h-[170%] bg-indigo-800 rounded-full z-0"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-2/3 w-[150%] h-[170%] bg-sky-900/80 rounded-full z-0"></div>
 
       {/* Header con icono + lineas */}
       <div className="w-full flex flex-col items-center pt-10 pb-6 relative z-10">
         <div className="flex items-center justify-center w-full px-6">
           {/* Línea izquierda */}
-          <span className="flex-grow border-t border-2 border-sky-300"></span>
+          <span className="flex-grow border-t border-2 border-sky-100/70"></span>
 
           {/* Icono con círculo */}
-          <div className="bg-sky-100 p-4 rounded-full mx-4 shadow-md">
-            <Building2 className="w-10 h-10 text-sky-800" />
+          <div className="p-4 ">
+            <FaHospitalAlt className="w-10 h-10 text-sky-100/70" />
           </div>
 
           {/* Línea derecha */}
-          <span className="flex-grow border-t border-2 border-sky-300"></span>
+          <span className="flex-grow border-t border-2 border-sky-100/70"></span>
         </div>
 
         {/* Título */}
-        <h1 className="text-3xl md:text-4xl font-bold text-sky-900 mt-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 mt-4">
           {routeTitles[lastSegment] || lastSegment}
         </h1>
       </div>
