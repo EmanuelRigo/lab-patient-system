@@ -67,42 +67,37 @@ const PatientForm = () => {
         phone: "",
         address: "",
       });
-      // Opcional: Mostrar un mensaje de éxito o redirigir
     } catch (error) {
       if (error instanceof Error) {
-        console.error("Error al crear el paciente:", error.message);
         setError(error.message);
       } else {
-        console.error("Error desconocido:", error);
         setError("Ocurrió un error inesperado.");
       }
     }
   };
 
   return (
-    <>
+    <div
+      className=" h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
+  opacity-0  animate-fade-in"
+    >
+      <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
+        {/* Título */}
+        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36 ">
+          Agregar Nuevo Paciente
+        </h1>
+      </div>
       <form
         onSubmit={handleSubmit}
-        className="w-full flex flex-col" // Añadido padding, fondo y sombra para el "card"
+        className="w-full max-w-3xl mx-auto bg-sky-100 rounded-xl shadow-lg p-8 flex flex-col gap-8"
       >
-        <h2 className="text-3xl font-bold text-sky-700 mb-8 text-center">
-          {" "}
-          {/* Centramos el título */}
-          Agregar Paciente
-        </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-6">
-          {" "}
-          {/* Aumentamos gap-y para más espacio vertical */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
           {/* Columna 1 */}
-          <div className="space-y-6 flex flex-col">
-            {" "}
-            {/* Aumentamos space-y para más espacio entre elementos de columna */}
-            {/* Nombre */}
-            <div className="space-y-1">
+          <div className="space-y-6">
+            <div>
               <Label
                 htmlFor="firstname"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <User className="w-4 h-4 text-sky-600" />
                 Nombre
@@ -114,11 +109,13 @@ const PatientForm = () => {
                 onChange={handleChange}
                 placeholder="Ingresa el nombre"
                 required
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
-            {/* Segundo Nombre */}
-            <div className="space-y-1">
-              <Label htmlFor="secondname" className="text-gray-700">
+
+            <div>
+              <Label htmlFor="secondname" className="text-gray-700 mb-2">
+                <User className="w-4 h-4 text-sky-600" />
                 Segundo Nombre (opcional)
               </Label>
               <Input
@@ -127,13 +124,14 @@ const PatientForm = () => {
                 value={form.secondname}
                 onChange={handleChange}
                 placeholder="Ingresa el segundo nombre"
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
-            {/* Apellido */}
-            <div className="space-y-1">
+
+            <div>
               <Label
                 htmlFor="lastname"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <User className="w-4 h-4 text-sky-600" />
                 Apellido
@@ -145,13 +143,14 @@ const PatientForm = () => {
                 onChange={handleChange}
                 placeholder="Ingresa el apellido"
                 required
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
-            {/* Teléfono */}
-            <div className="space-y-1">
+
+            <div>
               <Label
                 htmlFor="phone"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <Phone className="w-4 h-4 text-sky-600" />
                 Teléfono
@@ -164,18 +163,17 @@ const PatientForm = () => {
                 onChange={handleChange}
                 placeholder="Ingresa el teléfono"
                 required
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
           </div>
+
           {/* Columna 2 */}
-          <div className="space-y-6 flex flex-col">
-            {" "}
-            {/* Aumentamos space-y para más espacio entre elementos de columna */}
-            {/* Fecha de nacimiento */}
-            <div className="space-y-1">
+          <div className="space-y-6">
+            <div>
               <Label
                 htmlFor="birthDate"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <Calendar className="w-4 h-4 text-sky-600" />
                 Fecha de nacimiento
@@ -192,13 +190,14 @@ const PatientForm = () => {
                   }))
                 }
                 required
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
-            {/* DNI */}
-            <div className="space-y-1">
+
+            <div>
               <Label
                 htmlFor="dni"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <Fingerprint className="w-4 h-4 text-sky-600" />
                 DNI
@@ -211,13 +210,14 @@ const PatientForm = () => {
                 onChange={handleChange}
                 placeholder="Ingresa el DNI"
                 required
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
-            {/* Email */}
-            <div className="space-y-1">
+
+            <div>
               <Label
                 htmlFor="email"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <Mail className="w-4 h-4 text-sky-600" />
                 Correo electrónico (opcional)
@@ -229,15 +229,14 @@ const PatientForm = () => {
                 value={form.email}
                 onChange={handleChange}
                 placeholder="correo@ejemplo.com"
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
-            {/* Dirección - Ahora en la segunda columna, pero adaptado para minimalismo si es largo*/}
-            <div className="space-y-1">
-              {" "}
-              {/* Eliminamos md:col-span-2 aquí */}
+
+            <div>
               <Label
                 htmlFor="address"
-                className="flex items-center gap-2 text-gray-700"
+                className="flex items-center gap-2 text-gray-700 mb-2"
               >
                 <MapPin className="w-4 h-4 text-sky-600" />
                 Dirección
@@ -249,29 +248,26 @@ const PatientForm = () => {
                 onChange={handleChange}
                 placeholder="Ingresa la dirección completa"
                 required
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
               />
             </div>
           </div>
         </div>
 
-        {/* Botón Agregar - Estilo Minimalista y alineado con el flujo de la segunda columna */}
-        <div className="mt-8 flex justify-center md:col-span-2">
-          {" "}
-          {/* Para centrarlo si es necesario en una sola columna en móviles */}
+        {/* Botón */}
+        <div className="mt-6 flex justify-center">
           <Button
             type="submit"
-            // Estilo más minimalista: color sólido pero no tan "cuadrado", sin la gran "h-fit"
-            className="w-full md:w-1/2 p-3 rounded-lg bg-sky-600 hover:bg-sky-700 text-white flex items-center justify-center gap-2 text-lg font-semibold transition-all duration-300 "
+            className="w-full md:w-1/2 py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-6 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
           >
-            <PlusCircle className="w-7 h-7" />
-            {/* Icono más pequeño para un look minimalista */}
+            <PlusCircle className="w-10 h-10" />
             Agregar Paciente
           </Button>
         </div>
       </form>
 
       {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-    </>
+    </div>
   );
 };
 

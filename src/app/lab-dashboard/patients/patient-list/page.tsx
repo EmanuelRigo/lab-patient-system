@@ -6,12 +6,7 @@ import GenericCard from "@/components/generics/GenericCard";
 import GetPatients from "@/components/patientsPage/GetPatients";
 
 const page = async () => {
-  return (
-    <div className="h-2/3 w-3/4 mx-auto  rounded-xl p-4 animate-slide  flex flex-col border-2 border-neutral-200">
-      <h1 className="text-2xl font-bold mb-4 text-neutral-800">Pacientes</h1>
-      <GetPatients />
-    </div>
-  );
+  return <GetPatients />;
 };
 
 export default page;

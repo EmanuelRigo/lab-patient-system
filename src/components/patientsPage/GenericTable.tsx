@@ -22,7 +22,7 @@ const GenericTable = <T,>({
 }: GenericTableProps<T>) => {
   return (
     <table className={`w-full ${className}`}>
-      <thead className="sticky top-0 bg-white z-10">
+      <thead className="sticky top-0 bg-neutral-100 z-10">
         <tr>
           {columns.map((col, idx) => (
             <th

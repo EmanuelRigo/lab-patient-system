@@ -2,8 +2,6 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
   User,
   Calendar,
@@ -30,23 +28,20 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
     path: string,
     Icon: React.ElementType
   ) => (
-    <Button
-      variant="ghost"
-      className="w-full justify-start text-base font-medium gap-2 hover:bg-sky-100"
+    <div
       onClick={() => handleNavigation(path)}
+      className="flex items-center gap-4 p-3 bg-sky-200 text-sky-900 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-transform cursor-pointer"
     >
-      <Icon className="w-5 h-5 text-sky-600" />
-      {label}
-    </Button>
+      {/* Ícono con círculo como en ActionCard */}
+      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-sky-300/70">
+        <Icon className="w-6 h-6 text-sky-50" />
+      </div>
+      <span className="text-base font-semibold">{label}</span>
+    </div>
   );
 
   return (
-    <aside className="w-64 p-4 bg-white border rounded-e-xl shadow-sm flex flex-col gap-2">
-      <h2 className="text-xl font-bold text-gray-800 mb-2">
-        Menú de navegación
-      </h2>
-      <Separator />
-
+    <aside className="w-64 p-4 bg-neutral-50 rounded-e-xl shadow-lg flex flex-col gap-4 mb-6">
       {role === "admin" && (
         <>
           {renderButton("Pacientes", "/lab-dashboard/patients", User)}
