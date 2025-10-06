@@ -77,7 +77,7 @@ const LinkPanel = () => {
                 icon={PlusCircle}
                 title="Agregar Nueva Cita"
                 description="Crea una nueva cita médica."
-                href="/lab-dashboard/doctors-appointment/add-appointment"
+                href="/lab-dashboard/doctors-appointment/create-appointment"
               />
             )}
             {(role === "receptionist" || role === "admin") && (

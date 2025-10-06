@@ -19,15 +19,9 @@ const Page = () => {
   };
 
   return (
-    <div className="p-6 space-y-8">
+    <>
       <CreateDoctorsAForm onCreated={handleAddAppointment} />
-
-      <CreatedAppointmentsList
-        appointments={appointments}
-        checkedAppointments={checkedAppointments}
-        toggleChecked={toggleChecked}
-      />
-    </div>
+    </>
   );
 };
 

@@ -62,7 +62,7 @@ export default function RootLayout({
                       {/* Línea derecha */}
                       <span className="flex-grow border-t border-2 border-sky-100/70"></span>
                     </div>
-                    <div className="mx-auto h-full overflow-hidden  w-2/3">
+                    <div className="mx-auto h-full overflow-hidden  w-4/5">
                       {children}
                     </div>
                   </div>

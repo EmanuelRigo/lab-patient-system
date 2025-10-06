@@ -1,196 +1,110 @@
 "use client";
 
-import { useState, useCallback, useEffect } from "react";
-import GenericSearchInput from "../generics/GenericSearchInput";
-import { Patient } from "../../../types/patient.types";
-import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
-import medicalStudiesApi from "@/services/medicalStudies.api";
-import { MedicalStudy } from "../../../types/medicalStudy.types";
-import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
+import {
+  Calendar,
+  ClipboardList,
+  User,
+  Stethoscope,
+  FileText,
+  CheckCircle,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-interface CreateDoctorsAFormProps {
-  onCreated?: (appointment: DoctorsAppointment) => void;
-}
+import TalonForm from "../talon/TalonForm";
 
-interface DoctorsAppointmentFormData {
-  patientId: string;
-  medicalStudyId: string;
-  date: string;
-  reason: string;
-  status: "status_scheduled" | "status_completed" | "status_cancelled";
-}
-
-const CreateDoctorsAForm = ({ onCreated }: CreateDoctorsAFormProps) => {
-  const [form, setForm] = useState<DoctorsAppointmentFormData>({
-    patientId: "",
-    medicalStudyId: "",
-    date: "",
-    reason: "",
-    status: "status_scheduled",
-  });
-
-  const [patient, setPatient] = useState<Patient>();
-  const [medicalStudies, setMedicalStudies] = useState<MedicalStudy[]>([]);
-
-  useEffect(() => {
-    const fetchStudies = async () => {
-      try {
-        const response = await medicalStudiesApi.getAll();
-        setMedicalStudies(response);
-      } catch (error) {
-        console.error("Error al cargar estudios médicos:", error);
-      }
-    };
-
-    fetchStudies();
-  }, []);
-
-  const fetchPatients = useCallback(
-    async (query: string): Promise<Patient[]> => {
-      const url = `http://localhost:8080/api/patient/search?firstname=${encodeURIComponent(
-        query
-      )}`;
-      const res = await fetch(url);
-
-      if (!res.ok) {
-        console.error("Error al obtener pacientes:", res.statusText);
-        return [];
-      }
-
-      const data = await res.json();
-      return data.response || [];
-    },
-    []
-  );
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setForm((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const created = await doctorsAppointmentApi.create(form);
-      if (onCreated) onCreated(created);
-      // reset form si querés
-      setForm({
-        patientId: "",
-        medicalStudyId: "",
-        date: "",
-        reason: "",
-        status: "status_scheduled",
-      });
-      setPatient(undefined);
-    } catch (err) {
-      console.error("Error al crear el turno", err);
-    }
-  };
-
-  console.log("🚀 ~ CreateDoctorsAForm ~ medicalStudies:", medicalStudies);
+export default function TurnoForm() {
   return (
-    <div className="p-6 bg-white rounded shadow space-y-4 max-w-md mx-auto">
-      <GenericSearchInput<Patient>
-        onSearch={fetchPatients}
-        onSelect={(patient: Patient) => {
-          setPatient(patient);
-          setForm((prev) => ({
-            ...prev,
-            patientId: patient._id,
-          }));
-        }}
-        renderItem={(patient: Patient) => (
-          <span>
-            {patient.dni} - {patient.firstname} {patient.lastname}
-          </span>
-        )}
-        placeholder="Buscar paciente..."
-      />
+    <div
+      className="h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl 
+      opacity-0 animate-fade-in "
+    >
+      {/* Encabezado */}
+      <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36">
+          Crear Nuevo Turno Médico
+        </h1>
+      </div>
 
-      {patient && (
-        <div className="bg-gray-50 border rounded p-3 text-sm text-gray-700">
-          <p>
-            <strong>DNI:</strong> {patient.dni}
-          </p>
-          <p>
-            <strong>Nombre:</strong> {patient.firstname}
-          </p>
-          <p>
-            <strong>Apellido:</strong> {patient.lastname}
-          </p>
-        </div>
-      )}
+      {/* Formulario principal */}
+      <div className=" w-full flex gap-6 justify-center">
+        <form className="w-4/6 bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-8">
+          {/* Paciente */}
+          <div>
+            <Label className="flex items-center gap-2 text-gray-700 mb-2">
+              <User className="w-4 h-4 text-sky-600" />
+              Paciente
+            </Label>
+            <Input
+              type="text"
+              placeholder="Buscar paciente..."
+              className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
+            />
+          </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* ✅ Select dinámico */}
-        <div>
-          <label className="block font-semibold mb-1">Estudio médico:</label>
-          <select
-            name="medicalStudyId"
-            value={form.medicalStudyId}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          >
-            <option value="">Selecciona un estudio</option>
-            {Array.isArray(medicalStudies) &&
-              medicalStudies.map((study) => (
-                <option key={study._id} value={study._id}>
-                  {study.name} ({study.duration} min)
-                </option>
-              ))}
-          </select>
-        </div>
+          {/* Estudio y Fecha */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+            <div>
+              <Label className="flex items-center gap-2 text-gray-700 mb-2">
+                <Stethoscope className="w-4 h-4 text-sky-600" />
+                Estudio médico
+              </Label>
+              <select className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
+                <option>Selecciona un estudio</option>
+                <option>Radiografía</option>
+                <option>Análisis de sangre</option>
+                <option>Ecografía</option>
+              </select>
+            </div>
 
-        <div>
-          <label className="block font-semibold mb-1">Fecha y hora:</label>
-          <input
-            type="datetime-local"
-            name="date"
-            value={form.date}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+            <div>
+              <Label className="flex items-center gap-2 text-gray-700 mb-2">
+                <Calendar className="w-4 h-4 text-sky-600" />
+                Fecha y hora
+              </Label>
+              <Input
+                type="datetime-local"
+                className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
+              />
+            </div>
+          </div>
 
-        <div>
-          <label className="block font-semibold mb-1">Motivo:</label>
-          <input
-            type="text"
-            name="reason"
-            value={form.reason}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-            required
-          />
-        </div>
+          {/* Motivo */}
+          <div>
+            <Label className="flex items-center gap-2 text-gray-700 mb-2">
+              <FileText className="w-4 h-4 text-sky-600" />
+              Motivo
+            </Label>
+            <Input
+              type="text"
+              placeholder="Motivo del turno..."
+              className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
+            />
+          </div>
 
-        <div>
-          <label className="block font-semibold mb-1">Estado:</label>
-          <select
-            name="status"
-            value={form.status}
-            onChange={handleChange}
-            className="w-full p-2 border rounded"
-          >
-            <option value="status_scheduled">Programada</option>
-            <option value="status_completed">Completada</option>
-            <option value="status_cancelled">Cancelada</option>
-          </select>
-        </div>
+          {/* Estado y Botón */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6 items-end">
+            <div>
+              <Label className="flex items-center gap-2 text-gray-700 mb-2">
+                <CheckCircle className="w-4 h-4 text-sky-600" />
+                Estado
+              </Label>
+              <select className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500">
+                <option>Programada</option>
+                <option>Completada</option>
+                <option>Cancelada</option>
+              </select>
+            </div>
 
-        <button
-          type="submit"
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded"
-        >
-          Crear cita
-        </button>
-      </form>
+            <Button className="w-full py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-6 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg">
+              <ClipboardList className="w-8 h-8" />
+              Crear Turno
+            </Button>
+          </div>
+        </form>
+        <TalonForm></TalonForm>
+      </div>
     </div>
   );
-};
-
-export default CreateDoctorsAForm;
+}
