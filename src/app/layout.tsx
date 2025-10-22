@@ -6,6 +6,7 @@ import "./globals.css";
 import LabSystemProvider from "@/context/LabContext";
 import OnlineStatus from "@/utils/OnlineStatus";
 import { FaHospitalAlt } from "react-icons/fa";
+import { Toast } from "@/components/atomics/Toast";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,14 +40,19 @@ export default function RootLayout({
       >
         <LabSystemProvider>
           <OnlineStatus>
-            <div className="h-full w-full relative overflow-hidden">
-              {" "}
+            <div className="h-full w-full relative overflow-hidden flex">
+              <Toast
+                message="Paciente agregado con éxito!"
+                color="green"
+                visible={false}
+              ></Toast>{" "}
               <div className="bg-green-500 w-full h-12 absolute flex justify-center items-center hidden">
                 <p className="text-black text-xl">In process</p>
               </div>
               <div className="h-full flex w-full text-black min-w-[480px]">
+                {" "}
                 <Aside></Aside>
-                <div className="relative w-full h-full">
+                <div className="relative flex-1 h-full ">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-3/4 2xl:-translate-y-12/14 w-[200%] h-[250%] 2xl:h-[400%] bg-sky-900/80 rounded-full -z-10"></div>
 
                   <div className="text-black h-full overflow-y-auto flex-col w-full flex justify-center items-end  overflow-hidden  relative">

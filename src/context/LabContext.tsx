@@ -19,6 +19,10 @@ interface LabSystemContextProps {
   role: Role;
   setRole: React.Dispatch<React.SetStateAction<Role>>;
   isRoleReady: boolean;
+  setShowToast: React.Dispatch<React.SetStateAction<boolean>>;
+  showToast: boolean;
+  setMessageToast: React.Dispatch<React.SetStateAction<string>>;
+  mesaggeToast?: string;
 }
 
 export const labSystemContext = createContext<
@@ -51,6 +55,8 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
   const [role, setRole] = useState<Role>("public");
   const [isRoleReady, setIsRoleReady] = useState(false);
+  const [showToast, setShowToast] = useState(false);
+  const [mesaggeToast, setMessageToast] = useState("");
 
   useEffect(() => {
     console.log("🔄 Role ha cambiado:", role);
@@ -87,6 +93,10 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     role,
     setRole,
     isRoleReady,
+    showToast,
+    setShowToast,
+    mesaggeToast,
+    setMessageToast,
   };
 
   return (

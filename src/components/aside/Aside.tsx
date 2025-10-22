@@ -1,19 +1,19 @@
 "use client";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import ButtonPanel from "@/components/homepage/ButtonPanel";
 import { useLabSystemContext } from "@/context/LabContext";
-import { useRouter } from "next/navigation";
 import sessionApi from "@/services/session.api";
 
 export default function Aside() {
   const { role, setRole } = useLabSystemContext();
   const router = useRouter();
+  const pathname = usePathname();
   const [displayedRole, setDisplayedRole] = useState(
     "Cargando rol de usuario..."
   );
 
   useEffect(() => {
-    console.log("🔄 Role ha cambiado:", role);
     setDisplayedRole(`El rol actual es: ${role}`);
   }, [role]);
 
@@ -21,7 +21,6 @@ export default function Aside() {
     try {
       const response = await sessionApi.logout();
       if (response.ok) {
-        console.log("Cierre de sesión exitoso");
         setRole("public");
         router.push("/login");
       } else {
@@ -32,16 +31,18 @@ export default function Aside() {
     }
   };
 
-  console.log("🚀 ~ Aside ~ role:", role);
+  // 🚫 Mover la condición DESPUÉS de los hooks
+  if (pathname === "/login" || pathname === "/") return null;
+
   return (
-    <div className="h-full ">
-      <div key={role} className="w-full  h-full flex flex-col justify-center">
-        {role == "public" ? (
-          <p>Bienvenido, por favor inicie sesion</p>
+    <div className="h-full aside-slide ">
+      <div key={role} className="w-full h-full flex flex-col justify-center">
+        {role === "public" ? (
+          <p>Bienvenido, por favor inicie sesión</p>
         ) : (
           <>
             <ButtonPanel role={role} />
-            {/* Indicador de rol */}
+
             <div className="mb-16 text-center">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-medium shadow-sm border-2 border-sky-300">
                 <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
@@ -49,7 +50,6 @@ export default function Aside() {
               </span>
             </div>
 
-            {/* Botón de cerrar sesión */}
             <button
               onClick={handleLogout}
               className="mt-8 w-full px-6 py-3 rounded-e-lg bg-sky-900/80 hover:bg-sky-600 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"

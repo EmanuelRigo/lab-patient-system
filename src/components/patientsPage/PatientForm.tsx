@@ -6,6 +6,9 @@ import ErrorModal from "../atomics/ErrorModal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Toast } from "../atomics/Toast";
+import { useRouter } from "next/navigation";
+import { useLabSystemContext } from "@/context/LabContext";
 import {
   User,
   Calendar,
@@ -39,6 +42,10 @@ const PatientForm = () => {
     address: "",
   });
 
+  const { setShowToast, setMessageToast } = useLabSystemContext();
+
+  const router = useRouter();
+
   const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,6 +74,10 @@ const PatientForm = () => {
         phone: "",
         address: "",
       });
+      setShowToast(true);
+      setMessageToast("Paciente agregado con éxito");
+      setTimeout(() => setShowToast(false), 3000);
+      router.push("/lab-dashboard/patients");
     } catch (error: any) {
       let userMessage = "Ocurrió un error inesperado.";
 
@@ -93,6 +104,11 @@ const PatientForm = () => {
 
   return (
     <>
+      {/* <Toast
+        message="Paciente agregado con éxito"
+        color="green"
+        visible={showToast}
+      /> */}
       <div
         className=" h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
   opacity-0  animate-fade-in"

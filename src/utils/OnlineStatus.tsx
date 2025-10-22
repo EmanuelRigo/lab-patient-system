@@ -22,7 +22,7 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
             const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
             document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}; secure; samesite=strict`;
           }
-          router.push("/");
+          router.push("/lab-dashboard/patients");
         }
 
         const data = await response.json();

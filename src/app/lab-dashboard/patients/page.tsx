@@ -5,7 +5,11 @@ const Page = async () => {
   metadata.title = "Patients - Lab Dashboard";
   metadata.description = "Patients page for Lab Dashboard";
 
-  return <LinkPanel />;
+  return (
+    <>
+      <LinkPanel />
+    </>
+  );
 };
 
 export default Page;

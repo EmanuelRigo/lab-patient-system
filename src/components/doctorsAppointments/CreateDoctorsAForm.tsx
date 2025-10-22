@@ -97,9 +97,9 @@ export default function TurnoForm() {
               </select>
             </div>
 
-            <Button className="w-full py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-6 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg">
+            <Button className="w-full py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-3 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg">
               <ClipboardList className="w-8 h-8" />
-              Crear Turno
+              Crear y agregar Turno
             </Button>
           </div>
         </form>

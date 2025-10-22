@@ -3,15 +3,17 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useLabSystemContext } from "@/context/LabContext";
-
 import sessionApi from "@/services/session.api";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
+import { User, Lock, LogIn } from "lucide-react";
 
-export default function Page() {
+export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
   const { role, setRole } = useLabSystemContext();
 
   function getCookie(name: string) {
@@ -24,94 +26,100 @@ export default function Page() {
     const token = getCookie("onlineUser");
     if (token) {
       console.log("onlineUser");
-      //router.push("/");
+      // router.push("/");
     }
   }, [router]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-
     try {
-      const credentials = {
-        username,
-        password,
-      };
+      const credentials = { username, password };
       const response = await sessionApi.login(credentials);
-      console.log("🚀🚀🚀  ~ handleLogin ~ response:", response);
 
       if (response.ok) {
         console.log("Inicio de sesión exitoso");
-        console.log("🚀 ~ handleLogin ~ response:", response);
         const infoUserToken = getCookie("infoUserToken");
         if (infoUserToken) {
           const decoded = JSON.parse(atob(infoUserToken.split(".")[1]));
           setRole(decoded.role);
         }
-        console.log("asdf", role);
-
-        setError(""); // Limpiamos el error en caso de éxito
-        router.push("/");
-        // window.location.href = "/";
+        setError("");
+        router.push("/lab-dashboard/patients");
       } else {
-        console.error("Error en el inicio de sesión");
-        setError("Email o contraseña incorrecta."); // Actualizamos el estado con el error
+        setError("Usuario o contraseña incorrectos.");
       }
     } catch (error) {
       console.error("Error en el inicio de sesión:", error);
-      setError("Error en el inicio de sesión. Por favor, intente nuevamente.");
+      setError("No se pudo conectar. Intenta nuevamente.");
     }
   };
 
   return (
-    <div className="flex bg-neutral-200 h-2/3 w-2/3 rounded-s-2xl">
-      <div className="h-full w-full flex items-center justify-center">
-        <div className=" p-8 w-full max-w-md">
-          <h2 className="text-2xl font-bold text-center mb-6 text-sky-600">
-            Login
-          </h2>
+    <div
+      className="h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
+      opacity-0 animate-fade-in"
+    >
+      {/* Encabezado */}
+      <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
+        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36">
+          Iniciar Sesión
+        </h1>
+      </div>
 
-          <form onSubmit={handleLogin} className="space-y-4">
-            <div>
-              <label className="block text-sky-700 font-medium mb-1">
-                Usuario
-              </label>
-              <input
-                type="text"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 text-neutral-800"
-                required
-              />
+      {/* Contenedor principal */}
+      <div className="w-full flex justify-center">
+        <form
+          onSubmit={handleLogin}
+          className="w-4/6 bg-neutral-100 rounded-xl shadow-lg p-10 flex flex-col gap-8"
+        >
+          {/* Usuario */}
+          <div>
+            <Label className="flex items-center gap-2 text-gray-700 mb-2">
+              <User className="w-5 h-5 text-sky-600" />
+              Usuario
+            </Label>
+            <Input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              placeholder="Ingresa tu usuario..."
+              required
+              className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
+            />
+          </div>
+
+          {/* Contraseña */}
+          <div>
+            <Label className="flex items-center gap-2 text-gray-700 mb-2">
+              <Lock className="w-5 h-5 text-sky-600" />
+              Contraseña
+            </Label>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              required
+              className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
+            />
+          </div>
+
+          {/* Botón */}
+          <Button
+            type="submit"
+            className="w-full py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-3 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            <LogIn className="w-6 h-6" />
+            Iniciar Sesión
+          </Button>
+
+          {/* Error */}
+          {error && (
+            <div className="text-red-600 text-sm font-medium text-center mt-2">
+              {error}
             </div>
-
-            <div>
-              <label className="block text-sky-700 font-medium mb-1">
-                Contraseña
-              </label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-4 py-2 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 text-neutral-800"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-sky-600 hover:bg-sky-700 text-white font-semibold py-2 rounded-md transition duration-200"
-            >
-              Iniciar sesión
-            </button>
-
-            {/* ⚠️ Mostrar error si existe */}
-            {error && (
-              <div className="text-red-600 text-sm font-medium mt-2 text-center">
-                {error}
-              </div>
-            )}
-          </form>
-        </div>
+          )}
+        </form>
       </div>
     </div>
   );
