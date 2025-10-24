@@ -37,7 +37,7 @@ const LinkPanel = () => {
       {/* Header con icono + lineas */}
       <div className="w-full flex flex-col items-center pt-10 mb-6 z-10">
         {/* Título */}
-        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36">
+        <h1 className="font-bold text-2xl  text-sky-100/80 mb-10 mt-2">
           {routeTitles[lastSegment] || lastSegment}
         </h1>
       </div>

@@ -140,6 +140,27 @@ const MOCK_APPOINTMENTS: Appointment[] = [
     procedure: "Análisis de Sangre",
     status: "Completada",
   },
+  {
+    id: "a001",
+    time: "08:30",
+    patientName: "Sofía Martínez",
+    procedure: "Tomografía Computarizada",
+    status: "Programada",
+  },
+  {
+    id: "a002",
+    time: "09:45",
+    patientName: "Juan Pérez",
+    procedure: "Consulta General",
+    status: "En curso",
+  },
+  {
+    id: "a003",
+    time: "11:00",
+    patientName: "Elena Rodríguez",
+    procedure: "Análisis de Sangre",
+    status: "Completada",
+  },
   // { id: 'a004', time: '12:30', patientName: 'Roberto Gómez', procedure: 'Radiografía', status: 'Programada', },
 ];
 
@@ -167,7 +188,7 @@ const AppointmentItem: React.FC<{ appointment: Appointment }> = ({
   };
 
   return (
-    <div className="flex justify-between items-center p-3 mb-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-sky-50">
+    <div className="w-full flex justify-between items-center p-3 mb-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-sky-50">
       <div className="flex flex-col flex-grow">
         {/* Hora */}
         <div className="flex items-center text-sm font-semibold text-sky-700 mb-1">
@@ -205,18 +226,17 @@ const DailyAppointments: React.FC<DailyAppointmentsProps> = () => {
   const appointments = MOCK_APPOINTMENTS; // Usamos los datos hardcodeados
 
   return (
-    <div className="w-full h-full p-6 bg-white rounded-xl border border-sky-100 shadow-xl flex flex-col justify-between max-w-sm">
+    <div className="w-2/7 h-full p-6 bg-white rounded-xl border border-sky-100 shadow-xl flex flex-col justify-between z-20">
       {/* Sección Superior: Título y Descripción */}
-      <div>
+      <div className="h-full flex flex-col">
         <h3 className="font-extrabold text-2xl text-gray-800 mb-2">
           Citas de Hoy
         </h3>
         <p className="text-sm font-medium text-sky-600 pb-3 mb-4 border-b border-sky-200">
           Vista rápida de las citas programadas para el día.
         </p>
-
         {/* Contenedor de la Lista de Citas */}
-        <div className="h-auto max-h-90  overflow-y-auto pr-2 scrollbar-hidden">
+        <div className="grow-2 overflow-y-auto pr-2 scrollbar-hidden">
           {appointments.length > 0 ? (
             appointments.map((appointment) => (
               <AppointmentItem key={appointment.id} appointment={appointment} />
@@ -228,18 +248,18 @@ const DailyAppointments: React.FC<DailyAppointmentsProps> = () => {
               </p>
             </div>
           )}
+        </div>{" "}
+        <div className="mt-4 pt-3 border-t border-sky-100">
+          <Link
+            className="text-sm text-sky-700 hover:text-sky-900 font-medium transition-colors"
+            href={"/lab-dashboard/doctors-appointment/appointment-list"}
+          >
+            Ver todas las citas →
+          </Link>
         </div>
       </div>
 
       {/* Sección Inferior: Enlace a la Lista Completa */}
-      <div className="mt-4 pt-3 border-t border-sky-100">
-        <Link
-          className="text-sm text-sky-700 hover:text-sky-900 font-medium transition-colors"
-          href={"/lab-dashboard/doctors-appointment/appointment-list"}
-        >
-          Ver todas las citas →
-        </Link>
-      </div>
     </div>
   );
 };

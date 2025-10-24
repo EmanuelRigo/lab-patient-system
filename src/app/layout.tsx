@@ -45,7 +45,8 @@ export default function RootLayout({
                 message="Paciente agregado con éxito!"
                 color="green"
                 visible={false}
-              ></Toast>{" "}
+              ></Toast>
+              {/* process */}
               <div className="bg-green-500 w-full h-12 absolute flex justify-center items-center hidden">
                 <p className="text-black text-xl">In process</p>
               </div>
@@ -55,20 +56,17 @@ export default function RootLayout({
                 <div className="relative flex-1 h-full ">
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-3/4 2xl:-translate-y-12/14 w-[200%] h-[250%] 2xl:h-[400%] bg-sky-900/80 rounded-full -z-10"></div>
 
-                  <div className="text-black h-full overflow-y-auto flex-col w-full flex justify-center items-end  overflow-hidden  relative">
-                    <div className="flex items-center justify-center w-full px-6 absolute top-16">
-                      {/* Línea izquierda */}
-                      <span className="flex-grow border-t border-2 border-sky-100/70"></span>
-
-                      {/* Icono con círculo */}
+                  <div className="text-black  h-full overflow-y-auto flex-col w-full flex justify-evenly items-end  overflow-hidden  relative ">
+                    {/* banner */}
+                    <div className="xl:absolute flex items-center justify-center w-full px-6 top-0  xl:top-0 2xl:top-20">
+                      <span className="flex-grow border-t border-2  border-sky-100/70"></span>
                       <div className="p-4 ">
-                        <FaHospitalAlt className="w-10 h-10 text-sky-100/70" />
+                        <FaHospitalAlt className="w-10 h-10  text-sky-100/70" />
                       </div>
-
-                      {/* Línea derecha */}
-                      <span className="flex-grow border-t border-2 border-sky-100/70"></span>
+                      <span className="flex-grow border-t border-2  border-sky-100/70"></span>
                     </div>
-                    <div className="mx-auto h-full overflow-hidden  w-4/5">
+                    <div className="mx-auto overflow-hidden w-full  2xl:w-4/5 h-full ">
+                      {/* children */}
                       {children}
                     </div>
                   </div>

@@ -8,7 +8,7 @@ export default function DashboardButtons() {
   const { role } = useLabSystemContext();
 
   return (
-    <div className="h-full w-full flex items-center justify-center">
+    <div className="h-full w-screen 2xl:w-full flex flex-col  items-center justify-center bg-green-900">
       {/* {!role && <p>Cargando rol de usuario...</p>}
       {role && (
         <ButtonPanel
@@ -17,12 +17,13 @@ export default function DashboardButtons() {
           }
         />
       )} */}
-      <div className="h-2/3 w-full rounded-xl bg-white p-4 flex gap-6 ">
+      <div className="w-full h-screen 2xl:h-3/4 rounded-xl  bg-white p-4 flex gap-6 ">
+        {/* CardPanel */}
         <div className="w-5/7 flex flex-col">
+          <h2 className="font-bold text-2xl  text-sky-900/80 mb-10 mt-2">
+            ¡Bienvenido al sistema del laboratorio Mayra!
+          </h2>
           <div className=" p-4 rounded-md mb-8">
-            <h2 className="font-bold text-2xl text-sky-900/80">
-              ¡Bienvenido al sistema del laboratorio Mayra!
-            </h2>
             <p className="text-sky-900/80 mt-2">
               Aquí puedes gestionar pacientes, estudios médicos y personal del
               laboratorio de manera eficiente.

@@ -48,16 +48,21 @@ const GetPatients = () => {
 
   return (
     // 1. Contenedor principal: Ocupa toda la altura (h-full) y usa flexbox.
-    <div className="h-full relative flex flex-col items-center justify-start pt-32 mx-auto overflow-hidden pb-8 opacity-0  animate-fade-in">
+    <div
+      className=" h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
+  opacity-0  animate-fade-in"
+    >
       {/* 2. Título (Fijo) */}
-      <div className="w-full flex flex-col items-center pt-10 mb-16 z-10">
-        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36">
+
+      <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
+        {/* Título */}
+        <h1 className="text-2xl 2xl:text-4xl font-bold text-sky-100/70 absolute top-16  2xl:top-40">
           Listado de Pacientes
         </h1>
       </div>
 
       {/* 3. Contenedor de la Tarjeta Principal (Tabla y Controles) */}
-      <div className="w-full max-w-6xl mx-auto bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-6  z-20 flex-grow min-h-0 max-h-2/3">
+      <div className="2xl:w-3/4 mx-auto bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-6  z-20 flex-grow max-h-3/4 2xl:max-h-2/4">
         {/* 4. Barra de Controles: Se ajusta para seguir el orden de la imagen (Búsqueda + Botones) */}
         <div className="flex flex-col sm:flex-row gap-4 sm:items-center">
           {/* Búsqueda */}

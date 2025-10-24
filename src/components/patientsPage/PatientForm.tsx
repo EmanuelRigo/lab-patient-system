@@ -115,17 +115,17 @@ const PatientForm = () => {
       >
         <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
           {/* Título */}
-          <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36 ">
+          <h1 className="text-2xl 2xl:text-4xl font-bold text-sky-100/70 absolute top-16  2xl:top-40">
             Agregar Nuevo Paciente
           </h1>
         </div>
         <form
           onSubmit={handleSubmit}
-          className="w-full max-w-3xl mx-auto bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-8"
+          className="w-full max-w-3xl mx-auto bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-6"
         >
           <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
             {/* Columna 1 */}
-            <div className="space-y-6">
+            <div className=" space-y-4 2xl:space-y-6">
               <div>
                 <Label
                   htmlFor="firstname"
@@ -201,7 +201,7 @@ const PatientForm = () => {
             </div>
 
             {/* Columna 2 */}
-            <div className="space-y-6">
+            <div className="space-y-4 2xl:space-y-6">
               <div>
                 <Label
                   htmlFor="birthDate"
@@ -287,7 +287,7 @@ const PatientForm = () => {
           </div>
 
           {/* Botón */}
-          <div className="mt-6 flex justify-center">
+          <div className="flex justify-center">
             <Button
               type="submit"
               className="w-full md:w-1/2 py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-6 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"

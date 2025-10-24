@@ -30,13 +30,12 @@ const ButtonPanel = ({ role }: ButtonPanelProps) => {
   ) => (
     <div
       onClick={() => handleNavigation(path)}
-      className="flex items-center gap-4 p-3 bg-sky-200 text-sky-900 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-transform cursor-pointer"
+      className="flex items-center gap-4 p-2 2xl:p-3 sm:p-2 bg-sky-200 text-sky-900 rounded-lg shadow-md hover:shadow-lg hover:scale-105 transition-transform cursor-pointer"
     >
-      {/* Ícono con círculo como en ActionCard */}
-      <div className="flex items-center justify-center h-12 w-12 rounded-full bg-sky-300/70">
-        <Icon className="w-6 h-6 text-sky-50" />
+      <div className="flex items-center justify-center h-12 w-12 sm:h-10 sm:w-10 rounded-full bg-sky-300/70">
+        <Icon className="w-6 h-6 sm:w-5 sm:h-5 text-sky-50" />
       </div>
-      <span className="text-base font-semibold">{label}</span>
+      <span className="text-base sm:text-sm font-semibold">{label}</span>
     </div>
   );
 

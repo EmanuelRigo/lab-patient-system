@@ -56,14 +56,14 @@ export default function LoginPage() {
 
   return (
     <div
-      className="h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
+      className="h-full w-full  relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
       opacity-0 animate-fade-in"
     >
       {/* Encabezado */}
       <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
-        <h1 className="text-3xl md:text-4xl font-bold text-sky-100/70 absolute top-36">
-          Iniciar Sesión
-        </h1>
+        <h2 className="font-bold text-2xl  text-sky-100/80 mb-10 mt-2">
+          Por favor, inicia sesión para continuar
+        </h2>
       </div>
 
       {/* Contenedor principal */}
