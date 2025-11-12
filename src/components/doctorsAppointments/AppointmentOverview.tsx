@@ -12,26 +12,39 @@ import {
 } from "lucide-react";
 
 // --- Componentes Mock para simular ShadCN/UI ---
-// Usamos mocks para asegurar la compatibilidad con el entorno.
-const Input = (props: any) => (
-  <input {...props} className={"p-2 border rounded-lg " + props.className} />
+const Input = ({
+  className = "",
+  ...props
+}: React.InputHTMLAttributes<HTMLInputElement>) => (
+  <input {...props} className={`p-2 border rounded-lg ${className}`} />
 );
-const Label = (props: any) => (
-  <label
-    {...props}
-    className={"text-gray-700 font-medium " + props.className}
-  />
+
+const Label = ({
+  className = "",
+  ...props
+}: React.LabelHTMLAttributes<HTMLLabelElement>) => (
+  <label {...props} className={`text-gray-700 font-medium ${className}`} />
 );
-const Button = (props: any) => (
-  <button
-    {...props}
-    className={"text-white rounded-lg p-2 " + props.className}
-  />
+
+const Button = ({
+  className = "",
+  ...props
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
+  <button {...props} className={`text-white rounded-lg p-2 ${className}`} />
 );
 // -----------------------------------------------
 
-// --- DATOS HARDCODEADOS DE CITAS (Actualizados con detalles de estudio y hora) ---
-const hardcodedAppointments = [
+// --- DATOS HARDCODEADOS DE CITAS ---
+type Appointment = {
+  id: number;
+  patientName: string;
+  time: string;
+  study: string;
+  status: string;
+  statusColor: string;
+};
+
+const hardcodedAppointments: Appointment[] = [
   {
     id: 1,
     patientName: "Ana Pérez",
@@ -81,18 +94,14 @@ export default function AppointmentOverview() {
   const [selectedStatus, setSelectedStatus] = useState("");
 
   return (
-    // Contenedor ÚNICO principal: Flex para dos columnas, fondo gris claro y sombra.
-    // **Distribución clave:** flex gap-8 items-start
-
-    <div className="w-full  bg-neutral-100 rounded-xl shadow-lg p-8 flex gap-8 items-start">
-      {/* Columna de Filtros (Izquierda): Ancho fijo, separación visual con borde derecho */}
-      {/* **Distribución clave:** w-full max-w-sm border-r pr-6 border-gray-200 */}
+    <div className="w-full bg-neutral-100 rounded-xl shadow-lg p-8 flex gap-8 items-start">
+      {/* Columna de Filtros */}
       <div className="flex flex-col gap-6 w-full max-w-sm border-r pr-6 border-gray-200">
         <h2 className="text-xl font-bold text-sky-800 border-b pb-2">
           Filtros de Citas
         </h2>
 
-        {/* 1. Paciente / Búsqueda */}
+        {/* 1. Paciente */}
         <div>
           <Label className="flex items-center gap-2 text-gray-700 mb-2">
             <User className="w-4 h-4 text-sky-600" />
@@ -105,12 +114,14 @@ export default function AppointmentOverview() {
               placeholder="Buscar paciente..."
               className="w-full rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500 pl-10 bg-white"
               value={patientSearch}
-              onChange={(e: any) => setPatientSearch(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPatientSearch(e.target.value)
+              }
             />
           </div>
         </div>
 
-        {/* 2. Estudio Médico */}
+        {/* 2. Estudio */}
         <div>
           <Label className="flex items-center gap-2 text-gray-700 mb-2">
             <Stethoscope className="w-4 h-4 text-sky-600" />
@@ -119,7 +130,9 @@ export default function AppointmentOverview() {
           <select
             className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
             value={selectedStudy}
-            onChange={(e) => setSelectedStudy(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setSelectedStudy(e.target.value)
+            }
           >
             <option value="">Todos los estudios</option>
             <option value="Radiografía">Radiografía</option>
@@ -136,10 +149,12 @@ export default function AppointmentOverview() {
             Fecha y hora
           </Label>
           <Input
-            type="datetime-local" // Usamos datetime-local para incluir hora
+            type="datetime-local"
             className="w-full rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500 bg-white"
             value={selectedDate}
-            onChange={(e: any) => setSelectedDate(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSelectedDate(e.target.value)
+            }
           />
         </div>
 
@@ -152,7 +167,9 @@ export default function AppointmentOverview() {
           <select
             className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
             value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+              setSelectedStatus(e.target.value)
+            }
           >
             <option value="">Todos los estados</option>
             <option value="Programada">Programada</option>
@@ -162,23 +179,20 @@ export default function AppointmentOverview() {
           </select>
         </div>
 
-        {/* Botón de Acción Principal (Buscar Citas) */}
+        {/* Botón */}
         <Button className="w-full py-3 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-2 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg mt-4">
           <ClipboardList className="w-6 h-6" />
           Buscar Citas
         </Button>
       </div>
 
-      {/* Columna de Lista de Citas (Derecha): Ocupa el espacio restante */}
-      {/* **Distribución clave:** flex-grow para tomar el espacio sobrante */}
+      {/* Columna Derecha */}
       <div className="flex flex-col gap-4 flex-grow">
         <h2 className="text-xl font-bold text-sky-800 mb-2 border-b pb-2">
           Resultados de Citas
         </h2>
 
         <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
-          {" "}
-          {/* Scroll para lista larga */}
           {hardcodedAppointments.map((appointment) => (
             <div
               key={appointment.id}

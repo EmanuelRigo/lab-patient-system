@@ -19,12 +19,14 @@ import {
   ArrowBigUp,
   UserPlus,
 } from "lucide-react";
+import PatientModal from "./PatientModal";
 
 const GetPatients = () => {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [search, setSearch] = useState("");
   const [sortAsc, setSortAsc] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
+  const [selectedPatient, setSelectedPatient] = useState<Patient | null>(null); // 👈
 
   useEffect(() => {
     const fetchPatients = async () => {
@@ -115,7 +117,7 @@ const GetPatients = () => {
         </div>
 
         {/* 5. Contenedor de la Tabla: Scroll solo en la tabla */}
-        <div className="flex-grow overflow-y-auto">
+        <div className="grow overflow-y-auto">
           <GenericTable<Patient>
             items={filteredPatients}
             getKey={(p) => p._id!}
@@ -128,19 +130,10 @@ const GetPatients = () => {
                     p.lastname
                   }`,
               },
-              // Se elimina el DNI de las columnas
-              // {
-              //   label: "DNI",
-              //   render: (p) => p.dni,
-              // },
               {
                 label: "Fecha de Nacimiento",
                 render: (p) =>
                   new Date(p.birthDate).toLocaleDateString("es-AR"),
-              },
-              {
-                label: "Teléfono",
-                render: (p) => p.phone,
               },
               {
                 label: "",
@@ -156,16 +149,22 @@ const GetPatients = () => {
                       className="bg-white shadow-lg rounded-md p-1"
                     >
                       <DropdownMenuItem
-                        onClick={() => console.log("Ver", p._id)}
+                        onClick={() => setSelectedPatient(p)} // 👈 abre modal
                         className="cursor-pointer hover:bg-sky-50 transition rounded-sm p-2 text-sm"
                       >
                         Ver datos
                       </DropdownMenuItem>
                       <DropdownMenuItem
-                        onClick={() => console.log("Editar", p._id)}
+                        onClick={() => console.log("Ver resultados", p._id)}
                         className="cursor-pointer hover:bg-sky-50 transition rounded-sm p-2 text-sm"
                       >
-                        Editar
+                        Ver resultados
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => console.log("Ver citas", p._id)}
+                        className="cursor-pointer hover:bg-sky-50 transition rounded-sm p-2 text-sm"
+                      >
+                        Ver citas
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
@@ -173,6 +172,14 @@ const GetPatients = () => {
               },
             ]}
           />
+
+          {/* 👇 Modal */}
+          {selectedPatient && (
+            <PatientModal
+              patient={selectedPatient}
+              onClose={() => setSelectedPatient(null)}
+            />
+          )}
         </div>
       </div>
 

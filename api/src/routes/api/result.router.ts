@@ -17,6 +17,11 @@ class ResultRouter extends CustomRouter {
     this.create("/", ["public"], asyncHandler(controller.create));
     this.read("/", ["public"], asyncHandler(controller.getAll));
     this.read("/:id", ["public"], asyncHandler(controller.getById));
+    this.read(
+      "/patient/:id",
+      ["public"],
+      asyncHandler(controller.getAllByPatientId)
+    );
     this.update("/:id", ["public"], asyncHandler(controller.update));
     this.destroy("/:id", ["public"], asyncHandler(controller.deleteOne));
   };

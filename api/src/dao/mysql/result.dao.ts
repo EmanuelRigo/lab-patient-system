@@ -20,6 +20,14 @@ export default class ResultDaoSQL {
     return rows;
   }
 
+  static async getAllPatientId(_id: string) {
+    const [rows] = await MySQLPool.query(
+      "SELECT appointment_date, result_value, result_description, study_name FROM vw_patient_results WHERE patient_id = ?",
+      [_id]
+    );
+    return rows as any[];
+  }
+
   static async getById(_id: string) {
     const [rows] = await MySQLPool.query("SELECT * FROM Result WHERE _id = ?", [
       _id,

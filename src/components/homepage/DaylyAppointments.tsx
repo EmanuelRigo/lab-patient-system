@@ -1,7 +1,7 @@
 import React from "react";
 // En tu entorno real:
 // import Link from "next/link";
-import { Clock, User, Stethoscope } from "lucide-react";
+// import { Clock, User, Stethoscope } from "lucide-react";
 // Asumo que tienes iconos como Clock, User y Stethoscope
 
 // --- DEFINICIÓN DE TIPOS TSX ---
@@ -14,7 +14,7 @@ interface Appointment {
 }
 
 // Interfaz de Props para el componente principal
-interface DailyAppointmentsProps {}
+// interface DailyAppointmentsProps {}
 
 // --- Mocks para simular dependencias de Next.js y Lucide ---
 // Mock de Link
@@ -222,7 +222,7 @@ const AppointmentItem: React.FC<{ appointment: Appointment }> = ({
 /**
  * Componente principal para mostrar las citas del día.
  */
-const DailyAppointments: React.FC<DailyAppointmentsProps> = () => {
+const DailyAppointments: React.FC = () => {
   const appointments = MOCK_APPOINTMENTS; // Usamos los datos hardcodeados
 
   return (

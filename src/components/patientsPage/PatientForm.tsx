@@ -6,7 +6,6 @@ import ErrorModal from "../atomics/ErrorModal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { Toast } from "../atomics/Toast";
 import { useRouter } from "next/navigation";
 import { useLabSystemContext } from "@/context/LabContext";
 import {
@@ -78,7 +77,7 @@ const PatientForm = () => {
       setMessageToast("Paciente agregado con éxito");
       setTimeout(() => setShowToast(false), 3000);
       router.push("/lab-dashboard/patients");
-    } catch (error: any) {
+    } catch (error: unknown) {
       let userMessage = "Ocurrió un error inesperado.";
 
       if (error instanceof Error) {

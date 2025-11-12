@@ -22,6 +22,7 @@ export default function DashboardButtons() {
         <div className="w-5/7 flex flex-col">
           <h2 className="font-bold text-2xl  text-sky-900/80 mb-10 mt-2">
             ¡Bienvenido al sistema del laboratorio Mayra!
+            {role}
           </h2>
           <div className=" p-4 rounded-md mb-8">
             <p className="text-sky-900/80 mt-2">

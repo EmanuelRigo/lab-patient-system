@@ -1,6 +1,5 @@
 "use client";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import ButtonPanel from "@/components/homepage/ButtonPanel";
 import { useLabSystemContext } from "@/context/LabContext";
 import sessionApi from "@/services/session.api";
@@ -11,13 +10,6 @@ export default function Aside() {
   const { role, setRole } = useLabSystemContext();
   const router = useRouter();
   const pathname = usePathname();
-  const [displayedRole, setDisplayedRole] = useState(
-    "Cargando rol de usuario..."
-  );
-
-  useEffect(() => {
-    setDisplayedRole(`El rol actual es: ${role}`);
-  }, [role]);
 
   const handleLogout = async () => {
     try {

@@ -11,3 +11,10 @@ export interface Result {
   createdAt?: Date;
   updatedAt?: Date;
 }
+
+export interface ResultWithData {
+  appointmentDate: Date;
+  medicalStudyName: string;
+  resultValue: string;
+  resultDescription: string;
+}

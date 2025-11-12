@@ -1,7 +1,13 @@
-import { Result } from "../../../types/result.types";
-import { ResultRepository } from "../repository/index.respository";
+import { Result, ResultWithData } from "../../../types/result.types";
+
+// import { ResultRepository } from "../repository/index.respository";
+import ResultRepository from "../repository/result.repository";
 
 class ResultService {
+  async getAllByPatientId(id: string): Promise<ResultWithData[] | null> {
+    return await ResultRepository.getAllByPatientId(id);
+  }
+
   async getAll(): Promise<Result[] | null> {
     return await ResultRepository.getAll();
   }

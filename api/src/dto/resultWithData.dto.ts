@@ -1,4 +1,4 @@
-import { Result, ResultWithData } from "../../../types/result.types";
+import { ResultWithData } from "../../../types/result.types";
 import envsUtils from "../utils/envs.utils";
 import crypto from "crypto";
 
@@ -17,13 +17,7 @@ class ResultDTO {
   createdAt?: Date;
   updatedAt?: Date;
 
-  //-- views
-  appointmentDate?: Date;
-  medicalStudyName?: string;
-  resultValue?: string;
-  resultDescription?: string;
-
-  constructor(data: Result & Partial<ResultWithData>) {
+  constructor(data: ResultWithData) {
     this._id = data._id ?? crypto.randomBytes(12).toString("hex");
     this.medicalStudyId = data.medicalStudyId;
     this.doctorAppointmentId = data.doctorAppointmentId;
@@ -35,11 +29,6 @@ class ResultDTO {
     this.extractionDate = data.extractionDate;
     this.createdAt = data.createdAt ?? new Date();
     this.updatedAt = data.updatedAt ?? new Date();
-
-    this.appointmentDate = data.appointmentDate;
-    this.medicalStudyName = data.medicalStudyName;
-    this.resultValue = data.resultValue;
-    this.resultDescription = data.resultDescription;
   }
 }
 

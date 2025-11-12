@@ -8,9 +8,7 @@ import {
   FileText,
   DollarSign,
   TestTube,
-  Building2,
 } from "lucide-react";
-import { FaHospitalAlt } from "react-icons/fa";
 import { usePathname } from "next/navigation";
 
 const LinkPanel = () => {

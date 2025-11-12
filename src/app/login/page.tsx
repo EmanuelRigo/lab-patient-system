@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { role, setRole } = useLabSystemContext();
+  const { setRole } = useLabSystemContext();
 
   function getCookie(name: string) {
     const cookies = document.cookie.split("; ");

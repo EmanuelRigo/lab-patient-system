@@ -19,7 +19,7 @@ const TalonForm = () => {
 
   // Usamos 'any' en 'id' para evitar errores de TypeScript si no defines tipos, aunque
   // lo ideal es tipar la función.
-  const handleCheckboxChange = (id: any) => {
+  const handleCheckboxChange = (id: string) => {
     setStudies(
       studies.map((study) =>
         study.id === id ? { ...study, selected: !study.selected } : study

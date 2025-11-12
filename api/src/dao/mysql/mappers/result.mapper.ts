@@ -23,7 +23,7 @@ export function toSQL(dto: ResultDTO): Record<string, any> {
 }
 
 export function fromSQL(row: Record<string, any>): ResultDTO {
-  const result: Result = {
+  return new ResultDTO({
     _id: row._id,
     medicalStudyId: row.medical_study_id,
     doctorAppointmentId: row.doctor_appointment_id,
@@ -35,7 +35,10 @@ export function fromSQL(row: Record<string, any>): ResultDTO {
     extractionDate: row.extraction_date,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
-  };
 
-  return new ResultDTO(result);
+    appointmentDate: row.appointment_date,
+    medicalStudyName: row.study_name,
+    resultValue: row.result_value,
+    resultDescription: row.result_description,
+  });
 }

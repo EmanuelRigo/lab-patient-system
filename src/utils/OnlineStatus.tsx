@@ -44,7 +44,7 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
     };
 
     fetchOnlineStatus();
-  }, []);
+  }, [router]);
 
   return <>{children}</>;
 };
