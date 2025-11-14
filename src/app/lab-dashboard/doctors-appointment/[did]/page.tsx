@@ -1,5 +1,5 @@
 import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
-import DoctorAppointmentCard from "@/components/doctorsAppointments/DoctorAppointmentCard";
+// import DoctorAppointmentCard from "@/components/doctorsAppointments/DoctorAppointmentCard";
 
 const Page = async ({ params }: { params: Promise<{ did: string }> }) => {
   const { did } = await params;
@@ -15,8 +15,8 @@ const Page = async ({ params }: { params: Promise<{ did: string }> }) => {
       </div>
     );
   }
-
-  return <DoctorAppointmentCard appointment={dAppointment} />;
+  return <div>hola</div>;
+  // return <DoctorAppointmentCard appointment={dAppointment} />;
 };
 
 export default Page;

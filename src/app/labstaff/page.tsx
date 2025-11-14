@@ -1,10 +1,10 @@
 import Link from "next/link";
-import labStaffApi from "@/services/labStaff.api";
-import GenericList from "@/components/generics/GenericList";
-import GenericCard from "@/components/generics/GenericCard";
-import { LabStaff } from "../../../types/labStaff.types";
+// import labStaffApi from "@/services/labStaff.api";
+// import GenericList from "@/components/generics/GenericList";
+// import GenericCard from "@/components/generics/GenericCard";
+// import { LabStaff } from "../../../types/labStaff.types";
 const Page = async () => {
-  const labStaff = await labStaffApi.getAll();
+  // const labStaff = await labStaffApi.getAll();
 
   return (
     <div className="bg-sky-800/80 h-2/3 w-2/3 rounded-s-xl p-4 animate-slide">
@@ -16,7 +16,7 @@ const Page = async () => {
           Agregar personal
         </Link>
 
-        <GenericList<LabStaff>
+        {/* <GenericList<LabStaff>
           items={labStaff}
           getKey={(p) => p._id!}
           emptyMessage="No hay pacientes registrados."
@@ -30,7 +30,7 @@ const Page = async () => {
               basePath="labstaff/"
             />
           )}
-        />
+        /> */}
       </div>
     </div>
   );

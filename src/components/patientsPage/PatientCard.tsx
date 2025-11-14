@@ -8,36 +8,33 @@ import {
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
+import { Patient } from "../../../types/patient.types";
 
 interface PatientCardProps {
-  firstname: string;
-  lastname: string;
-  birthDate: Date;
+  patient: Patient;
   onEdit: () => void;
   onView: () => void;
 }
 
 export default function PatientCard({
-  firstname,
-  lastname,
-  birthDate,
+  patient,
   onEdit,
   onView,
 }: PatientCardProps) {
+  const { firstname, lastname, birthDate } = patient;
+
   return (
     <Card className="w-full">
       <CardContent className="flex items-center justify-between px-6">
-        {/* Nombre y apellido */}
         <div className="flex flex-col w-2/3">
           <span className="text-sm font-medium text-gray-900">
             {firstname} {lastname}
           </span>
           <span className="text-sm text-muted-foreground">
-            {new Date(birthDate).toLocaleDateString()}
+            {birthDate ? new Date(birthDate).toLocaleDateString() : "Sin fecha"}
           </span>
         </div>
 
-        {/* Menú de opciones */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="p-2 rounded-md hover:bg-muted">

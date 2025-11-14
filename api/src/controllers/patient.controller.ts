@@ -8,22 +8,17 @@ class PatientController extends Controller<Patient> {
     super(patientServices);
   }
 
-  search = async (req: Request, res: Response) => {
-    const { dni, firstname, lastname } = req.query;
+  // 🔍 Nueva búsqueda unificada
+  getByNameLastName = async (req: Request, res: Response) => {
+    const { text } = req.query;
 
-    const criteria: any = {};
-
-    if (dni) criteria.dni = { $regex: dni, $options: "i" };
-    if (firstname) criteria.firstname = { $regex: firstname, $options: "i" };
-    if (lastname) criteria.lastname = { $regex: lastname, $options: "i" };
-
-    // Validación simple: si no se pasó ningún criterio
-    if (Object.keys(criteria).length === 0) {
-      return res.json400("You must provide at least one search parameter.");
+    if (!text || typeof text !== "string") {
+      return res.json400("You must provide the parameter 'text'.");
     }
 
-    const results = await patientServices.searchPatients(criteria);
-    res.json201(results, "patients found");
+    const results = await patientServices.getByNameLastName(text);
+
+    return res.json200(results, "patients found");
   };
 }
 

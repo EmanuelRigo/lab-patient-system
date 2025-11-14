@@ -17,7 +17,7 @@ const ActionCard: React.FC<ActionCardProps> = ({
   href,
 }) => {
   return (
-    <Link href={href} passHref>
+    <Link href={href} passHref className="w-full max-w-lg">
       <Card className="flex flex-col items-center justify-center p-6 bg-neutral-100 text-sky-900 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 hover:scale-105 cursor-pointer h-full w-full">
         <CardHeader className="p-0 mb-3 flex justify-center items-center flex-col w-full">
           {/* Contenedor del icono con el círculo celeste */}

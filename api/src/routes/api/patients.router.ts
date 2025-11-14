@@ -21,7 +21,7 @@ class PatientRouter extends CustomRouter {
     this.read(
       "/search",
       ["receptionist", "admin"],
-      asyncHandler(controller.search)
+      asyncHandler(controller.getByNameLastName)
     );
 
     this.read(

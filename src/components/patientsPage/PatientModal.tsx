@@ -129,13 +129,13 @@ export default function PatientModal({
           />
           <button
             onClick={handleSave}
-            className="text-green-600 hover:text-green-700"
+            className="text-green-600 hover:text-green-700 cursor-pointer"
           >
             <Check size={18} />
           </button>
           <button
             onClick={handleCancel}
-            className="text-red-600 hover:text-red-700"
+            className="text-red-600 hover:text-red-700 cursor-pointer"
           >
             <XCircle size={18} />
           </button>

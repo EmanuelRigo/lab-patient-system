@@ -36,6 +36,24 @@ export default class PatientDaoSQL {
     return rows;
   }
 
+  static async getByNameLastName(text: string) {
+    // Preparamos el texto para la búsqueda parcial
+    const search = `%${text}%`;
+
+    const [rows] = await MySQLPool.query<Patient[]>(
+      `
+      SELECT *
+      FROM Patient
+      WHERE firstname LIKE ?
+         OR secondname LIKE ?
+         OR lastname LIKE ?
+    `,
+      [search, search, search]
+    );
+
+    return rows;
+  }
+
   static async getById(id: number) {
     const [rows] = await MySQLPool.query(
       "SELECT * FROM Patient WHERE _id = ?",

@@ -41,7 +41,7 @@ const LinkPanel = () => {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full max-w-4xl px-6 pb-12 relative z-10">
+      <div className="flex justify-center  gap-6 w-full max-w-4xl relative z-10">
         {/* Patients */}
         {lastSegment === "patients" && (
           <>

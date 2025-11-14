@@ -1,23 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { DoctorsAppointment } from "../../../types/doctorsAppointment.types";
+import { DoctorAppointment } from "../../../types/doctorsAppointment.types";
 
 type Appointment = {
   _id: string;
   date: string;
-  status: "status_scheduled" | "status_completed" | "status_cancelled";
+  status: "scheduled" | "completed" | "cancelled";
 };
 
 type Props = {
-  appointment: DoctorsAppointment;
+  appointment: DoctorAppointment;
   onSave: (updated: Appointment) => void;
   onClose: () => void;
 };
 
 const EditAppointmentModal = ({ appointment, onSave, onClose }: Props) => {
   const [status, setStatus] = useState(appointment.status);
-  const [date, setDate] = useState(appointment.date.slice(0, 16)); // formato para input
+  const [date, setDate] = useState(
+    new Date(appointment.date).toISOString().slice(0, 16)
+  ); // formato para input
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,13 +41,13 @@ const EditAppointmentModal = ({ appointment, onSave, onClose }: Props) => {
             <select
               value={status}
               onChange={(e) =>
-                setStatus(e.target.value as Appointment["status"])
+                setStatus(e.target.value as DoctorAppointment["status"])
               }
               className="mt-1 w-full border rounded-md p-2"
             >
-              <option value="pendiente">Pendiente</option>
-              <option value="completado">Completado</option>
-              <option value="cancelado">Cancelado</option>
+              <option value="scheduled">Pendiente</option>
+              <option value="completed">Completado</option>
+              <option value="cancelled">Cancelado</option>
             </select>
           </div>
 

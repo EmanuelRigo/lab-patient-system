@@ -1,6 +1,5 @@
 import { Patient } from "../../../types/patient.types";
-
-import { PatientRepository } from "../repository/index.respository";
+import PatientRepository from "../repository/patient.repository";
 
 class PatientServices {
   async getAll(): Promise<Patient[] | null> {
@@ -46,6 +45,11 @@ class PatientServices {
 
   async searchPatients(criteria: Record<string, any>): Promise<Patient[]> {
     return await PatientRepository.search(criteria);
+  }
+
+  // 🔥 NUEVO MÉTODO
+  async getByNameLastName(text: string): Promise<Patient[]> {
+    return await PatientRepository.getByNameLastName(text);
   }
 }
 

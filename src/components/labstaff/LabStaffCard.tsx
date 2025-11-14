@@ -34,6 +34,11 @@ const LabStaffCard = ({ staff }: LabStaffCardProps) => {
   };
 
   const onUpdate = async (updatedFields: Partial<LabStaff>) => {
+    if (!staff._id) {
+      console.error("Error: ID del personal no encontrado.");
+      alert("Error: ID del personal no encontrado.");
+      return;
+    }
     try {
       await labStaffApi.update(staff._id, updatedFields);
       alert("Personal actualizado correctamente.");
@@ -64,7 +69,7 @@ const LabStaffCard = ({ staff }: LabStaffCardProps) => {
         </button>
 
         <button
-          onClick={() => onDelete(staff._id)}
+          onClick={() => staff._id && onDelete(staff._id)}
           className="inline-flex items-center gap-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-md"
         >
           <FaTrash />

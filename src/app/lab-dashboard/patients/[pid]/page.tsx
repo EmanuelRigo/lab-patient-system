@@ -7,7 +7,13 @@ const Page = async ({ params }: { params: Promise<{ pid: string }> }) => {
   if (!patient) {
     return <div className="text-red-500">Paciente no encontrado.</div>;
   }
-  return <PatientCard patient={patient}></PatientCard>;
+  return (
+    <PatientCard
+      patient={patient}
+      onEdit={() => console.log("Editar")}
+      onView={() => console.log("Ver")}
+    />
+  );
 };
 
 export default Page;

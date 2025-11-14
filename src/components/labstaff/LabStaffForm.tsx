@@ -20,7 +20,7 @@ const LabStaffForm = () => {
     password: "",
     email: "",
     phone: "",
-    role: "role_lab_technician",
+    role: "labTechnician",
   });
 
   const handleChange = (

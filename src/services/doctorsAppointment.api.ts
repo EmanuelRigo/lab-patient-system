@@ -1,7 +1,7 @@
-import { DoctorsAppointment } from "../../types/doctorsAppointment.types";
+import { DoctorAppointment } from "../../types/doctorsAppointment.types";
 import RestApi from "./restApi";
 
-class DoctorsAppointmentApi extends RestApi<DoctorsAppointment> {
+class DoctorsAppointmentApi extends RestApi<DoctorAppointment> {
   constructor() {
     super("doctorAppointment");
   }
