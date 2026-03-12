@@ -7,6 +7,8 @@ import errorHandler from "./middlewares/errorHandler.middleware";
 import indexRouter from "./routes/api/index.router";
 import MongoSingleton from "./utils/mongoDB.utils";
 import cookieParser from "cookie-parser";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./swagger/swagger.config";
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ const app = express();
 // app.get("/api/ping", (_req, res) => {
 //   res.send("pong 🏓");
 // });
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use(
   cors({
@@ -34,7 +38,7 @@ app.use(
     credentials: true, // Permitir cookies
     methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
     allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
-  })
+  }),
 );
 
 // app.use(cors());
