@@ -14,9 +14,9 @@ dotenv.config();
 
 const app = express();
 
-// app.get("/api/ping", (_req, res) => {
-//   res.send("pong 🏓");
-// });
+app.get("/api/ping", (_req, res) => {
+  res.send("pong 🏓");
+});
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
