@@ -12,7 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import patientApi from "@/services/patients.api";
+//import patientApi from "@/services/patients.api";
 
 import TalonForm from "../talon/TalonForm";
 

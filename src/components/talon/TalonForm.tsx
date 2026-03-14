@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { ClipboardList, DollarSign } from "lucide-react";
 import medicalStudyApi from "@/services/medicalStudies.api";
+import { MedicalStudy } from "../../../types/medicalStudy.types";
 
 interface Study {
   _id: string;
@@ -23,7 +24,7 @@ const TalonForm = () => {
         const response = await medicalStudyApi.getAll();
         const data = response;
         console.log("🚀 ~ fetchStudies ~ data:", data);
-        const formatted = data.map((study: any) => ({
+        const formatted = data.map((study: MedicalStudy) => ({
           _id: study._id,
           name: study.name,
           price: Math.floor(Number(study.price)),
@@ -44,8 +45,8 @@ const TalonForm = () => {
   const handleCheckboxChange = (id: string) => {
     setStudies((prev) =>
       prev.map((study) =>
-        study._id === id ? { ...study, selected: !study.selected } : study
-      )
+        study._id === id ? { ...study, selected: !study.selected } : study,
+      ),
     );
   };
 

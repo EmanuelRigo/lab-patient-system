@@ -18,19 +18,15 @@ class PatientApi extends RestApi<Patient> {
         headers: {
           "Content-Type": "application/json",
         },
-      }
+      },
     );
 
-    console.log(
-      "🚀 ~ MedicalStudyApi ~ getByName ~ encodeURIComponent(name):",
-      encodeURIComponent(name)
-    );
     if (!res.ok) {
-      throw new Error("❌ No se pudieron obtener los estudios por nombre.");
+      throw new Error("❌ No se pudieron obtener los pacientes por nombre.");
     }
 
     const data = await res.json();
-    return data.data as MedicalStudy;
+    return data.response as Patient[];
   }
 }
 
