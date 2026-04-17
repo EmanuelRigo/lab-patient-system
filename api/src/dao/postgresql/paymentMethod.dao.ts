@@ -1,9 +1,12 @@
 import { PostgresPool } from "../../utils/postgresqlDB.utils";
+import { toSQL, fromSQL } from "./mappers/paymentMethod.mapper";
+import PaymentMethodDTO from "../../dto/paymentMethod.dto";
 
 export default class PaymentMethodDaoPostgres {
-  static async create(data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+  static async create(data: Record<string, any> | PaymentMethodDTO) {
+    const sqlData = toSQL(data as PaymentMethodDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -17,7 +20,7 @@ export default class PaymentMethodDaoPostgres {
 
   static async getAll() {
     const { rows } = await PostgresPool.query("SELECT * FROM PaymentMethod");
-    return rows;
+    return rows.map(fromSQL);
   }
 
   static async getById(_id: string) {
@@ -25,7 +28,7 @@ export default class PaymentMethodDaoPostgres {
       "SELECT * FROM PaymentMethod WHERE _id = $1",
       [_id]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async getByName(name: string) {
@@ -33,7 +36,7 @@ export default class PaymentMethodDaoPostgres {
       "SELECT * FROM PaymentMethod WHERE name = $1",
       [name]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async deleteOne(_id: string) {
@@ -45,8 +48,9 @@ export default class PaymentMethodDaoPostgres {
   }
 
   static async update(_id: string, data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+    const sqlData = toSQL(data as PaymentMethodDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -54,6 +58,6 @@ export default class PaymentMethodDaoPostgres {
     const query = `UPDATE PaymentMethod SET ${setClause} WHERE _id = $${keys.length + 1} RETURNING *`;
 
     const { rows } = await PostgresPool.query(query, [...values, _id]);
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 }

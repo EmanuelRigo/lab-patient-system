@@ -1,9 +1,12 @@
 import { PostgresPool } from "../../utils/postgresqlDB.utils";
+import { toSQL, fromSQL } from "./mappers/talon.mapper";
+import TalonDTO from "../../dto/talon.dto";
 
 export default class TalonDaoPostgres {
-  static async create(data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+  static async create(data: Record<string, any> | TalonDTO) {
+    const sqlData = toSQL(data as TalonDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -33,7 +36,7 @@ export default class TalonDaoPostgres {
     const { rows } = await PostgresPool.query("SELECT * FROM Talon WHERE _id = $1", [
       _id,
     ]);
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async getByUsername(name: string) {
@@ -41,7 +44,7 @@ export default class TalonDaoPostgres {
       "SELECT * FROM Talon WHERE username = $1",
       [name]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async deleteOne(_id: number | string) {
@@ -52,8 +55,9 @@ export default class TalonDaoPostgres {
   }
 
   static async update(_id: number | string, data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+    const sqlData = toSQL(data as TalonDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -61,6 +65,6 @@ export default class TalonDaoPostgres {
     const query = `UPDATE Talon SET ${setClause} WHERE _id = $${keys.length + 1} RETURNING *`;
 
     const { rows } = await PostgresPool.query(query, [...values, _id]);
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 }

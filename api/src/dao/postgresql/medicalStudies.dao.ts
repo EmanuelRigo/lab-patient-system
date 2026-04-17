@@ -1,9 +1,12 @@
 import { PostgresPool } from "../../utils/postgresqlDB.utils";
+import { toSQL, fromSQL } from "./mappers/medicalStudy.mapper";
+import MedicalStudyDTO from "../../dto/medicalStudy.dto";
 
 export default class MedicalStudyDaoPostgres {
-  static async create(data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+  static async create(data: Record<string, any> | MedicalStudyDTO) {
+    const sqlData = toSQL(data as MedicalStudyDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -17,7 +20,7 @@ export default class MedicalStudyDaoPostgres {
 
   static async getAll() {
     const { rows } = await PostgresPool.query("SELECT * FROM MedicalStudy");
-    return rows;
+    return rows.map(fromSQL);
   }
 
   static async getById(_id: string) {
@@ -25,7 +28,7 @@ export default class MedicalStudyDaoPostgres {
       "SELECT * FROM MedicalStudy WHERE _id = $1",
       [_id]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async getByName(name: string) {
@@ -37,7 +40,7 @@ export default class MedicalStudyDaoPostgres {
     const values = words.map((word) => `%${word}%`);
 
     const { rows } = await PostgresPool.query(query, values);
-    return rows;
+    return rows.map(fromSQL);
   }
 
   static async deleteOne(_id: string) {
@@ -49,8 +52,9 @@ export default class MedicalStudyDaoPostgres {
   }
 
   static async update(_id: string, data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+    const sqlData = toSQL(data as MedicalStudyDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -63,7 +67,7 @@ export default class MedicalStudyDaoPostgres {
     ]);
 
     if (rows.length > 0) {
-      return rows[0]; 
+      return fromSQL(rows[0]); 
     }
 
     return null;

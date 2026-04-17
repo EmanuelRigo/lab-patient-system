@@ -1,4 +1,6 @@
 import { PostgresPool } from "../../utils/postgresqlDB.utils";
+import { toSQL, fromSQL } from "./mappers/doctorAppointment.mapper";
+import DoctorsAppointmentDTO from "../../dto/doctorsAppointment.dto";
 
 export interface DoctorAppointment {
   _id: string;
@@ -31,9 +33,10 @@ export interface DoctorAppointmentWithStudy {
 }
 
 export default class DoctorAppointmentDaoPostgres {
-  static async create(data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+  static async create(data: Record<string, any> | DoctorsAppointmentDTO) {
+    const sqlData = toSQL(data as DoctorsAppointmentDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -53,7 +56,7 @@ export default class DoctorAppointmentDaoPostgres {
 
   static async getAll() {
     const { rows } = await PostgresPool.query("SELECT * FROM DoctorAppointment");
-    return rows;
+    return rows.map(fromSQL);
   }
 
   static async getById(_id: string | number) {
@@ -61,7 +64,7 @@ export default class DoctorAppointmentDaoPostgres {
       "SELECT * FROM DoctorAppointment WHERE _id = $1",
       [_id]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async getByIdsWithPrice(
@@ -111,7 +114,7 @@ export default class DoctorAppointmentDaoPostgres {
       "SELECT * FROM DoctorAppointment WHERE username = $1",
       [name]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async deleteOne(_id: string | number) {
@@ -123,8 +126,9 @@ export default class DoctorAppointmentDaoPostgres {
   }
 
   static async update(_id: string, data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+    const sqlData = toSQL(data as DoctorsAppointmentDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -137,7 +141,7 @@ export default class DoctorAppointmentDaoPostgres {
     ]);
 
     if (rows.length > 0) {
-      return rows[0]; 
+      return fromSQL(rows[0]); 
     }
 
     return null;

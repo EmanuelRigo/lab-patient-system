@@ -1,4 +1,6 @@
 import { PostgresPool } from "../../utils/postgresqlDB.utils";
+import { toSQL, fromSQL } from "./mappers/labStaff.mapper";
+import LabStaffDTO from "../../dto/labStaff.dto";
 
 export interface LabStaff {
   _id: number | string;
@@ -16,9 +18,10 @@ export interface LabStaff {
 }
 
 export default class LabStaffDaoPostgres {
-  static async create(data: Partial<LabStaff>) {
-    const keys = Object.keys(data) as (keyof LabStaff)[];
-    const values = Object.values(data);
+  static async create(data: LabStaffDTO | Partial<LabStaff>) {
+    const sqlData = toSQL(data as LabStaffDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -28,32 +31,32 @@ export default class LabStaffDaoPostgres {
 
     try {
       const { rows } = await PostgresPool.query(query, values);
-      return rows[0];
+      return rows[0]; // Retorna {_id: ...}
     } catch (error) {
       console.error("Error al insertar LabStaff:", error);
       return null;
     }
   }
 
-  static async getAll(): Promise<LabStaff[]> {
+  static async getAll(): Promise<LabStaffDTO[]> {
     const { rows } = await PostgresPool.query("SELECT * FROM LabStaff");
-    return rows;
+    return rows.map(fromSQL);
   }
 
-  static async getById(_id: number | string): Promise<LabStaff | null> {
+  static async getById(_id: number | string): Promise<LabStaffDTO | null> {
     const { rows } = await PostgresPool.query(
       "SELECT * FROM LabStaff WHERE _id = $1",
       [_id]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
-  static async getByUsername(name: string): Promise<LabStaff | null> {
+  static async getByUsername(name: string): Promise<LabStaffDTO | null> {
     const { rows } = await PostgresPool.query(
       "SELECT * FROM LabStaff WHERE username = $1",
       [name]
     );
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async deleteOne(_id: number | string) {
@@ -65,8 +68,10 @@ export default class LabStaffDaoPostgres {
   }
 
   static async update(_id: string, data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+    // Es posible que el update envíe un payload parcial. Si es así, toSQL la filtra.
+    const sqlData = toSQL(data as LabStaffDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -79,7 +84,7 @@ export default class LabStaffDaoPostgres {
     ]);
 
     if (rows.length > 0) {
-      return rows[0]; 
+      return fromSQL(rows[0]); 
     }
 
     return null;

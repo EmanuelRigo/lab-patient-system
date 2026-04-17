@@ -1,9 +1,12 @@
 import { PostgresPool } from "../../utils/postgresqlDB.utils";
+import { toSQL, fromSQL } from "./mappers/result.mapper";
+import ResultDTO from "../../dto/result.dto";
 
 export default class ResultDaoPostgres {
-  static async create(data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+  static async create(data: Record<string, any> | ResultDTO) {
+    const sqlData = toSQL(data as ResultDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -17,7 +20,7 @@ export default class ResultDaoPostgres {
 
   static async getAll() {
     const { rows } = await PostgresPool.query("SELECT * FROM Result");
-    return rows;
+    return rows.map(fromSQL);
   }
 
   static async getAllPatientId(_id: string) {
@@ -25,6 +28,7 @@ export default class ResultDaoPostgres {
       "SELECT appointment_date, result_value, result_description, study_name FROM vw_patient_results WHERE patient_id = $1",
       [_id]
     );
+    // Para esta vista, si querés mapéalo directo, o confía en que frontend mapee si así estaba en MySQL.
     return rows;
   }
 
@@ -32,7 +36,7 @@ export default class ResultDaoPostgres {
     const { rows } = await PostgresPool.query("SELECT * FROM Result WHERE _id = $1", [
       _id,
     ]);
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 
   static async deleteOne(_id: string) {
@@ -43,8 +47,9 @@ export default class ResultDaoPostgres {
   }
 
   static async update(_id: string, data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+    const sqlData = toSQL(data as ResultDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -52,6 +57,6 @@ export default class ResultDaoPostgres {
     const query = `UPDATE Result SET ${setClause} WHERE _id = $${keys.length + 1} RETURNING *`;
 
     const { rows } = await PostgresPool.query(query, [...values, _id]);
-    return rows[0] || null;
+    return rows[0] ? fromSQL(rows[0]) : null;
   }
 }
