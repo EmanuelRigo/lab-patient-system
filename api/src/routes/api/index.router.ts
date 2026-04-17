@@ -35,7 +35,7 @@ class IndexRouter extends CustomRouter {
     this.use(
       "/doctorAppointment",
       ["public"],
-      asyncHandler(doctorsAppointmentRouter)
+      asyncHandler(doctorsAppointmentRouter),
     );
 
     this.use("/labStaff", ["public"], asyncHandler(labStaffRouter));

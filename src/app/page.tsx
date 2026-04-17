@@ -6,6 +6,7 @@ import { useLabSystemContext } from "@/context/LabContext";
 
 export default function DashboardButtons() {
   const { role } = useLabSystemContext();
+  console.log("🚀 ~ DashboardButtons ~ role:", role);
 
   return (
     <div className="h-full w-screen 2xl:w-full flex flex-col  items-center justify-center bg-green-900">

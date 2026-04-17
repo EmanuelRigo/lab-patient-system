@@ -43,10 +43,17 @@ export default class DoctorAppointmentDaoSQL {
     const placeholders = keys.map(() => "?").join(", ");
     const query = `INSERT INTO DoctorAppointment (${columns}) VALUES (${placeholders})`;
 
-    const [result] = await MySQLPool.query(query, values);
-    return result;
-  }
+    try {
+      const [result] = await MySQLPool.execute<ResultSetHeader>(query, values);
 
+      console.log("Nuevo _id insertado:", data._id);
+
+      return { _id: data._id, affectedRows: result.affectedRows };
+    } catch (error) {
+      console.error("Error al insertar D.A.:", error);
+      return null; // o lanzar el error si querés manejarlo arriba
+    }
+  }
   static async getAll() {
     const [rows] = await MySQLPool.query("SELECT * FROM DoctorAppointment");
     return rows;

@@ -11,7 +11,7 @@ interface Study {
   selected: boolean;
 }
 
-const TalonForm = () => {
+const TalonForm = ({ enabled = false }: { enabled?: boolean }) => {
   const [studies, setStudies] = useState<Study[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,6 +42,7 @@ const TalonForm = () => {
   }, []);
 
   const handleCheckboxChange = (id: string) => {
+    if (!enabled) return; // prevent changes when disabled
     setStudies((prev) =>
       prev.map((study) =>
         study._id === id ? { ...study, selected: !study.selected } : study
@@ -71,7 +72,11 @@ const TalonForm = () => {
       </div>
 
       {/* Lista de estudios */}
-      <div className="space-y-4">
+      <div
+        className={`space-y-4 ${
+          !enabled ? "opacity-60 pointer-events-none" : ""
+        }`}
+      >
         {studies.map((study) => (
           <div key={study._id} className="flex items-center justify-between">
             <label
@@ -84,6 +89,8 @@ const TalonForm = () => {
                 checked={study.selected}
                 onChange={() => handleCheckboxChange(study._id)}
                 className="hidden peer"
+                readOnly={!enabled}
+                disabled={!enabled}
               />
 
               <ClipboardList className="w-4 h-4 text-sky-600 mr-2" />
@@ -117,10 +124,10 @@ const TalonForm = () => {
       {/* Botón de Pago */}
       <button
         onClick={handlePay}
-        disabled={total === 0}
+        disabled={total === 0 || !enabled}
         className={`w-full py-3 rounded-lg text-white font-semibold text-lg shadow-md transition-colors duration-300
           ${
-            total === 0
+            total === 0 || !enabled
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-sky-900/80 hover:bg-sky-600"
           }`}

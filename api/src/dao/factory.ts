@@ -2,6 +2,7 @@ import MongoSingleton from "../utils/mongoDB.utils";
 import envsUtils from "../utils/envs.utils";
 // import DaoIndexMongo from "./mongo/index.dao";
 import { testMySQLConnection } from "../utils/mysqlDB.utils";
+import { testPostgresConnection } from "../utils/postgresqlDB.utils";
 
 import PatientDaoSQL from "./mysql/patient.dao";
 import LabStaffDaoSQL from "./mysql/labStaff.dao";
@@ -11,6 +12,16 @@ import TalonDaoSQL from "./mysql/talon.dao";
 import PaymentDaoSQL from "./mysql/payment.dao";
 import ResultDaoSQL from "./mysql/result.dao";
 import PaymentMethodDaoSQL from "./mysql/paymentMethod.dao"; // 👈 nuevo
+
+// --- POSTGRESQL DAOs ---
+import PatientDaoPostgres from "./postgresql/patient.dao";
+import LabStaffDaoPostgres from "./postgresql/labStaff.dao";
+import MedicalStudyDaoPostgres from "./postgresql/medicalStudies.dao";
+import DoctorAppointmentDaoPostgres from "./postgresql/doctorsAppointment.dao";
+import TalonDaoPostgres from "./postgresql/talon.dao";
+import PaymentDaoPostgres from "./postgresql/payment.dao";
+import ResultDaoPostgres from "./postgresql/result.dao";
+import PaymentMethodDaoPostgres from "./postgresql/paymentMethod.dao";
 
 import {
   DoctorsAppointmentDaoMongo,
@@ -42,6 +53,20 @@ daoMongo = {
 };
 
 switch (PERSISTENCE) {
+  case "POSTGRESQL":
+    testPostgresConnection();
+    dao = {
+      PatientDao: PatientDaoPostgres,
+      LabStaffDao: LabStaffDaoPostgres,
+      MedicalStudyDao: MedicalStudyDaoPostgres,
+      DoctorsAppointmentDao: DoctorAppointmentDaoPostgres,
+      TalonDao: TalonDaoPostgres,
+      PaymentDao: PaymentDaoPostgres,
+      ResultDao: ResultDaoPostgres,
+      PaymentMethodDao: PaymentMethodDaoPostgres,
+    };
+    break;
+
   case "MYSQL":
     testMySQLConnection();
     // Aquí después irán los DAOs que trabajen con MySQL

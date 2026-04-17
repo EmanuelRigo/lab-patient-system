@@ -172,6 +172,7 @@ passport.use(
         const userInfoToken = createUserInfoToken({
           username: user.username,
           role: user.role,
+          _id: user._id,
         });
 
         req.userInfoToken = userInfoToken;

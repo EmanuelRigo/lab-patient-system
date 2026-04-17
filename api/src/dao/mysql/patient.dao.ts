@@ -1,25 +1,13 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
-
-// Definimos la interfaz que representa una fila de la tabla Patient
-export interface Patient extends RowDataPacket {
-  _id: string;
-  firstname: string;
-  secondname?: string;
-  lastname: string;
-  birthDate: Date;
-  dni: number;
-  email?: string;
-  phone?: string;
-  address: string;
-  createdAt?: Date;
-  updatedAt?: Date;
-}
+import { toSQL, fromSQL } from "./mappers/patient.mapper";
+import PatientDTO from "../../dto/patient.dto";
 
 export default class PatientDaoSQL {
-  static async create(data: Record<string, any>) {
-    const keys = Object.keys(data);
-    const values = Object.values(data);
+  static async create(data: PatientDTO) {
+    const sqlData = toSQL(data);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
     if (keys.length === 0) return null;
 
@@ -33,14 +21,13 @@ export default class PatientDaoSQL {
 
   static async getAll() {
     const [rows] = await MySQLPool.query("SELECT * FROM Patient");
-    return rows;
+    return (rows as RowDataPacket[]).map(fromSQL);
   }
 
   static async getByNameLastName(text: string) {
-    // Preparamos el texto para la búsqueda parcial
     const search = `%${text}%`;
 
-    const [rows] = await MySQLPool.query<Patient[]>(
+    const [rows] = await MySQLPool.query<RowDataPacket[]>(
       `
       SELECT *
       FROM Patient
@@ -51,7 +38,7 @@ export default class PatientDaoSQL {
       [search, search, search]
     );
 
-    return rows;
+    return rows.map(fromSQL);
   }
 
   static async getById(id: number) {
@@ -59,7 +46,8 @@ export default class PatientDaoSQL {
       "SELECT * FROM Patient WHERE _id = ?",
       [id]
     );
-    return (rows as any[])[0] || null;
+    const row = (rows as RowDataPacket[])[0];
+    return row ? fromSQL(row) : null;
   }
 
   static async deleteOne(id: number) {
@@ -71,23 +59,22 @@ export default class PatientDaoSQL {
 
   static async update(
     _id: number,
-    data: Partial<Patient>
-  ): Promise<Partial<Patient> | null> {
-    const keys = Object.keys(data) as (keyof Patient)[];
-    const values = Object.values(data);
+    data: Partial<PatientDTO>
+  ): Promise<Partial<PatientDTO> | null> {
+    const sqlData = toSQL(data as PatientDTO);
+    const keys = Object.keys(sqlData);
+    const values = Object.values(sqlData);
 
-    if (keys.length === 0) return null;
+    if (keys.length === 0) return {};
 
-    // 1. Traemos los datos actuales antes de actualizar
-    const [currentRows] = await MySQLPool.query<Patient[]>(
+    const [currentRows] = await MySQLPool.query<RowDataPacket[]>(
       "SELECT * FROM Patient WHERE _id = ?",
       [_id]
     );
     const current = currentRows[0];
-    if (!current) return null; // no existe el registro
+    if (!current) return null;
 
-    // 2. Ejecutamos el UPDATE
-    const setClause = keys.map((key) => `${String(key)} = ?`).join(", ");
+    const setClause = keys.map((key) => `${key} = ?`).join(", ");
     const query = `UPDATE Patient SET ${setClause} WHERE _id = ?`;
 
     const [result] = await MySQLPool.query<ResultSetHeader>(query, [
@@ -98,18 +85,18 @@ export default class PatientDaoSQL {
     const { affectedRows, changedRows } = result;
 
     if (affectedRows === 0) {
-      return null; // no existía ningún registro con ese id
+      return null;
     }
 
     if (changedRows === 0) {
-      return {}; // existía, pero los datos eran idénticos
+      return {};
     }
 
-    // 3. Solo devolver los campos modificados
-    const changedData: Partial<Patient> = {};
-    for (const key of keys) {
-      if (current[key] !== data[key]) {
-        changedData[key] = data[key]!;
+    const currentDTO = fromSQL(current);
+    const changedData: Partial<PatientDTO> = {};
+    for (const key of Object.keys(data) as (keyof PatientDTO)[]) {
+      if (String(currentDTO[key]) !== String(data[key])) {
+        changedData[key] = data[key] as any;
       }
     }
 

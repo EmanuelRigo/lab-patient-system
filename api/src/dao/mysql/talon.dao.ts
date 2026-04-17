@@ -1,4 +1,5 @@
 import { MySQLPool } from "../../utils/mysqlDB.utils";
+import { ResultSetHeader } from "mysql2";
 
 export default class TalonDaoSQL {
   static async create(data: Record<string, any>) {
@@ -11,8 +12,16 @@ export default class TalonDaoSQL {
     const placeholders = keys.map(() => "?").join(", ");
     const query = `INSERT INTO Talon (${columns}) VALUES (${placeholders})`;
 
-    const [result] = await MySQLPool.query(query, values);
-    return result;
+    try {
+      const [result] = await MySQLPool.execute<ResultSetHeader>(query, values);
+
+      console.log("Nuevo _id insertado:", data._id);
+
+      return { _id: data._id, affectedRows: result.affectedRows };
+    } catch (error) {
+      console.error("Error al insertar Talon:", error);
+      return null; // o lanzar el error si querés manejarlo arriba
+    }
   }
 
   static async getAll() {

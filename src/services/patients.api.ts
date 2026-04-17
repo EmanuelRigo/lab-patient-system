@@ -9,7 +9,7 @@ class PatientApi extends RestApi<Patient> {
     super("patient");
   }
 
-  async getByName(name: string): Promise<Patient[]> {
+  async getByNameLastName(name: string): Promise<Patient[]> {
     const res = await fetch(
       `${BACKEND_URL}/api/patient/search?text=${encodeURIComponent(name)}`,
       {
@@ -21,16 +21,13 @@ class PatientApi extends RestApi<Patient> {
       }
     );
 
-    console.log(
-      "🚀 ~ MedicalStudyApi ~ getByName ~ encodeURIComponent(name):",
-      encodeURIComponent(name)
-    );
     if (!res.ok) {
-      throw new Error("❌ No se pudieron obtener los estudios por nombre.");
+      throw new Error("❌ Cannot get patients.");
     }
 
     const data = await res.json();
-    return data.data as MedicalStudy;
+    console.log("🚀 ~ PatientApi ~ getByNameLastName ~ data:", data.response);
+    return data.response ?? []; // ⬅ evita undefined
   }
 }
 

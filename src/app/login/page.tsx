@@ -14,7 +14,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setRole } = useLabSystemContext();
+  const { setRole, setUserLabData } = useLabSystemContext();
 
   function getCookie(name: string) {
     const cookies = document.cookie.split("; ");
@@ -41,7 +41,9 @@ export default function LoginPage() {
         const infoUserToken = getCookie("infoUserToken");
         if (infoUserToken) {
           const decoded = JSON.parse(atob(infoUserToken.split(".")[1]));
+          console.log("🚀 ~ handleLogin ~ decoded:", decoded);
           setRole(decoded.role);
+          setUserLabData(decoded);
         }
         setError("");
         router.push("/lab-dashboard/patients");

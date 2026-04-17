@@ -16,7 +16,11 @@ function createTokenUtil(data: JwtPayloadData): string {
   return token;
 }
 
-function createUserInfoToken(data: { username: string; role: string }) {
+function createUserInfoToken(data: {
+  username: string;
+  role: string;
+  _id: string;
+}) {
   return jwt.sign(data, SECRET_KEY_FRONTEND, { expiresIn: "30d" });
 }
 
