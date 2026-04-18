@@ -22,20 +22,11 @@ class PatientApi extends RestApi<Patient> {
     );
 
     if (!res.ok) {
-<<<<<<< HEAD
-      throw new Error("❌ Cannot get patients.");
-    }
-
-    const data = await res.json();
-    console.log("🚀 ~ PatientApi ~ getByNameLastName ~ data:", data.response);
-    return data.response ?? []; // ⬅ evita undefined
-=======
       throw new Error("❌ No se pudieron obtener los pacientes por nombre.");
     }
 
     const data = await res.json();
     return data.response as Patient[];
->>>>>>> 3cb1068fd6d0d58d43b06e26c70e8b1399565948
   }
 }
 

@@ -31,14 +31,12 @@ class PatientServices {
     const deletedPatient = await PatientRepository.deleteOne(id);
 
     if (!deletedPatient) {
-      throw new Error(
-        "El personal de laboratorio no fue encontrado o ya fue eliminado."
-      );
+      throw new Error("El paciente no fue encontrado o ya fue eliminado.");
     }
 
     return {
       success: true,
-      message: "Personal de laboratorio eliminado correctamente.",
+      message: "Paciente eliminado correctamente.",
       data: deletedPatient,
     };
   }
