@@ -5,11 +5,7 @@ import { Calendar, ClipboardList, User, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-<<<<<<< HEAD
 import AddTalonButton from "./AddTalonButton";
-=======
-//import patientApi from "@/services/patients.api";
->>>>>>> 3cb1068fd6d0d58d43b06e26c70e8b1399565948
 
 import patientApi from "@/services/patients.api";
 import doctorsAppointmentApi from "@/services/doctorsAppointment.api";
@@ -166,7 +162,7 @@ export default function TurnoForm() {
               console.error("Error creando turno:", err);
               setAppointmentCreated(false);
               alert(
-                "No se pudo crear el turno. Revisa los datos e intenta nuevamente."
+                "No se pudo crear el turno. Revisa los datos e intenta nuevamente.",
               );
             } finally {
               setCreatingAppointment(false);
