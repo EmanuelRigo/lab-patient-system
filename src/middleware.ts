@@ -10,9 +10,9 @@ export async function middleware(request: NextRequest) {
 
   const isPrivateRoute =
     pathname === "/" ||
-    pathname.startsWith("/list") ||
-    pathname.startsWith("/add-movie") ||
-    pathname.startsWith("/edit-movie");
+    pathname.startsWith("/lab-dashboard") ||
+    pathname.startsWith("/labstaff") ||
+    pathname.startsWith("/medical-studies");
 
   const isAuthRoute = pathname === "/login" || pathname === "/register";
 
@@ -37,7 +37,9 @@ export async function middleware(request: NextRequest) {
       }
 
       console.error("Invalid token:", error);
-      return NextResponse.redirect(new URL("/login", request.url));
+      const response = NextResponse.redirect(new URL("/login", request.url));
+      response.cookies.delete("onlineUser");
+      return response;
     }
   }
 
@@ -45,5 +47,10 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/list", "/add-movie/:path*", "/edit-movie/:path*"],
+  matcher: [
+    "/",
+    "/lab-dashboard/:path*",
+    "/labstaff/:path*",
+    "/medical-studies/:path*"
+  ],
 };

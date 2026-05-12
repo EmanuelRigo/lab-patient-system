@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import sessionApi from "@/services/session.api";
 
 interface RootLayoutProps {
@@ -9,6 +9,7 @@ interface RootLayoutProps {
 
 const OnlineStatus = ({ children }: RootLayoutProps) => {
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     const fetchOnlineStatus = async () => {
@@ -22,7 +23,10 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
             const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
             document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}; secure; samesite=strict`;
           }
-          router.push("/lab-dashboard/patients");
+          if (pathname !== "/login") {
+            router.push("/login");
+          }
+          return;
         }
 
         const data = await response.json();
@@ -34,17 +38,26 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
             data.response.isOnline
           );
           console.log("aqui");
-          router.push("/login");
+          if (pathname !== "/login") {
+            router.push("/login");
+          }
           return;
+        }
+
+        // If the user is online and is on the login page, redirect them to the dashboard
+        if (pathname === "/login") {
+           router.push("/lab-dashboard/patients");
         }
       } catch (error) {
         console.error("Error checking online status:", error);
-        router.push("/login");
+        if (pathname !== "/login") {
+          router.push("/login");
+        }
       }
     };
 
     fetchOnlineStatus();
-  }, [router]);
+  }, [router, pathname]);
 
   return <>{children}</>;
 };
