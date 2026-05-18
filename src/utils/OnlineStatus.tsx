@@ -14,7 +14,9 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
   useEffect(() => {
     const fetchOnlineStatus = async () => {
       try {
+        console.log("🚀 fetchOnlineStatus: checking session status...");
         const response = await sessionApi.checkOnlineStatus();
+        console.log("🚀 fetchOnlineStatus: response status", response.status);
 
         if (response.status !== 200) {
           const cookies = document.cookie.split("; ");
@@ -30,23 +32,27 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
         }
 
         const data = await response.json();
-        console.log("🚀 ~ fetchOnlineStatus ~ data:", data);
+        console.log("🚀 fetchOnlineStatus: response data", data);
 
-        if (data.response.isOnline !== 1) {
-          console.log(
-            "🚀 ~ fetchOnlineStatus ~ isOnline:",
-            data.response.isOnline
-          );
-          console.log("aqui");
+        const isOnline = Boolean(
+          data?.response && Object.keys(data.response).length > 0,
+        );
+        console.log(
+          "🚀 fetchOnlineStatus: isOnline",
+          isOnline,
+          "user",
+          data?.response,
+        );
+
+        if (!isOnline) {
           if (pathname !== "/login") {
             router.push("/login");
           }
           return;
         }
 
-        // If the user is online and is on the login page, redirect them to the dashboard
         if (pathname === "/login") {
-           router.push("/lab-dashboard/patients");
+          router.push("/lab-dashboard/patients");
         }
       } catch (error) {
         console.error("Error checking online status:", error);
