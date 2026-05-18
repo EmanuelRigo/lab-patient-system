@@ -20,7 +20,7 @@ class SessionRouter extends CustomRouter {
       "/register",
       ["public"],
       authMiddleware("register"),
-      asyncHandler(register)
+      asyncHandler(register),
     );
 
     //LOGIN
@@ -28,7 +28,7 @@ class SessionRouter extends CustomRouter {
       "/login",
       ["public"],
       authMiddleware("login"),
-      asyncHandler(login)
+      asyncHandler(login),
     );
 
     //SIGNOUT
@@ -36,7 +36,7 @@ class SessionRouter extends CustomRouter {
       "/signout",
       ["public"],
       authMiddleware("signout"),
-      asyncHandler(signout)
+      asyncHandler(signout),
     );
 
     //UPDATE
@@ -44,7 +44,7 @@ class SessionRouter extends CustomRouter {
       "/update/",
       ["public"],
       authMiddleware("update"),
-      asyncHandler(update)
+      asyncHandler(update),
     );
 
     //UPDATE-PASSWORD
@@ -52,7 +52,7 @@ class SessionRouter extends CustomRouter {
       "/update-password",
       ["public"],
       authMiddleware("updatePassword"),
-      asyncHandler(update)
+      asyncHandler(update),
     );
 
     //ONLINE
@@ -60,7 +60,7 @@ class SessionRouter extends CustomRouter {
       "/online",
       ["public"],
       authMiddleware("online"),
-      asyncHandler(onlineToken)
+      asyncHandler(onlineToken),
     );
 
     //DELETE
@@ -103,35 +103,41 @@ async function login(req: Request, res: Response) {
     const thirtyDays = 1000 * 60 * 60 * 24 * 30;
     const expirationDate = new Date(Date.now() + thirtyDays);
 
+    const inProduction = process.env.NODE_ENV === "production";
+
     const optsToken = {
       maxAge: thirtyDays,
       httpOnly: true,
-      secure: true,
-      sameSite: "strict" as const,
+      secure: inProduction,
+      sameSite: (inProduction ? "none" : "lax") as const,
       expires: expirationDate,
     };
 
     const optsOnlineToken = {
       maxAge: thirtyDays,
-      secure: true,
-      sameSite: "strict" as const,
+      secure: inProduction,
+      sameSite: (inProduction ? "none" : "lax") as const,
       expires: expirationDate,
     };
 
     const optsName = {
       maxAge: thirtyDays,
-      secure: true,
-      sameSite: "none" as const,
+      secure: inProduction,
+      sameSite: (inProduction ? "none" : "lax") as const,
       expires: expirationDate,
     };
 
     const optsInfoUserToken = {
       maxAge: thirtyDays,
-      httpOnly: false, // 🔓 accesible por frontend
-      secure: true,
-      sameSite: "lax" as const, // o "none" si usás diferentes dominios
+      httpOnly: false, // accessible by frontend
+      secure: inProduction,
+      sameSite: (inProduction ? "none" : "lax") as const,
       expires: expirationDate,
     };
+
+    console.log("🚀 login: setting cookies - inProduction:", inProduction);
+    console.log("🚀 login: optsToken:", optsToken);
+    console.log("🚀 login: optsInfoUserToken:", optsInfoUserToken);
 
     const message = "USER LOGGED IN";
     const response = "ok";
@@ -149,8 +155,18 @@ async function login(req: Request, res: Response) {
 }
 
 function signout(req: Request, res: Response) {
+  const inProduction = process.env.NODE_ENV === "production";
+  console.log(
+    "🚀 signout: clearing cookies, inProduction:",
+    inProduction,
+    "cookies:",
+    req.cookies,
+  );
   for (const cookie in req.cookies) {
-    res.clearCookie(cookie, { sameSite: "none", secure: true });
+    res.clearCookie(cookie, {
+      sameSite: inProduction ? "none" : "lax",
+      secure: inProduction,
+    });
   }
   return res
     .status(200)
@@ -181,8 +197,18 @@ async function onlineToken(req: Request, res: Response) {
 }
 
 async function deleteAccount(req: Request, res: Response) {
+  const inProduction = process.env.NODE_ENV === "production";
+  console.log(
+    "🚀 deleteAccount: clearing cookies, inProduction:",
+    inProduction,
+    "cookies:",
+    req.cookies,
+  );
   for (const cookie in req.cookies) {
-    res.clearCookie(cookie, { sameSite: "none", secure: true });
+    res.clearCookie(cookie, {
+      sameSite: inProduction ? "none" : "lax",
+      secure: inProduction,
+    });
   }
   return res.json200(req.user, "Account deleted");
 }

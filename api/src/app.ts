@@ -23,20 +23,37 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(
   cors({
     origin: (origin, callback) => {
-      const allowedOrigins = [
+      const defaultAllowed = [
         "http://localhost:3000",
         "https://lab-patient-system-4ays.vercel.app",
+        "https://lab-patient-system.vercel.app",
       ];
+
+      const envAllowed = process.env.ALLOWED_ORIGINS
+        ? process.env.ALLOWED_ORIGINS.split(",").map((s) => s.trim())
+        : [];
+
+      const allowedOrigins = Array.from(
+        new Set([...defaultAllowed, ...envAllowed]),
+      );
+
+      console.log(
+        "CORS check - origin:",
+        origin,
+        "allowedOrigins:",
+        allowedOrigins,
+      );
 
       // Permitir solicitudes sin origen (por ejemplo, herramientas como Postman)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
+        console.warn("CORS blocked origin:", origin);
         callback(new Error("No permitido por CORS"));
       }
     },
-    credentials: true, // Permitir cookies
-    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
+    credentials: true, // Permitir cookies (Access-Control-Allow-Credentials)
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Métodos permitidos
     allowedHeaders: ["Content-Type", "Authorization"], // Encabezados permitidos
   }),
 );
