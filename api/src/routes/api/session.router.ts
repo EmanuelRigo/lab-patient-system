@@ -109,21 +109,21 @@ async function login(req: Request, res: Response) {
       maxAge: thirtyDays,
       httpOnly: true,
       secure: inProduction,
-      sameSite: (inProduction ? "none" : "lax") as const,
+      sameSite: (inProduction ? "none" : "lax") as "none" | "lax",
       expires: expirationDate,
     };
 
     const optsOnlineToken = {
       maxAge: thirtyDays,
       secure: inProduction,
-      sameSite: (inProduction ? "none" : "lax") as const,
+      sameSite: (inProduction ? "none" : "lax") as "none" | "lax",
       expires: expirationDate,
     };
 
     const optsName = {
       maxAge: thirtyDays,
       secure: inProduction,
-      sameSite: (inProduction ? "none" : "lax") as const,
+      sameSite: (inProduction ? "none" : "lax") as "none" | "lax",
       expires: expirationDate,
     };
 
@@ -131,7 +131,7 @@ async function login(req: Request, res: Response) {
       maxAge: thirtyDays,
       httpOnly: false, // accessible by frontend
       secure: inProduction,
-      sameSite: (inProduction ? "none" : "lax") as const,
+      sameSite: (inProduction ? "none" : "lax") as "none" | "lax",
       expires: expirationDate,
     };
 
