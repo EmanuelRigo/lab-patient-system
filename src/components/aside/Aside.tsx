@@ -1,16 +1,27 @@
 "use client";
+
+import React, { useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import ButtonPanel from "@/components/homepage/ButtonPanel";
+import { Settings, UserCircle } from "lucide-react";
+
 import { useLabSystemContext } from "@/context/LabContext";
 import sessionApi from "@/services/session.api";
-import Link from "next/link";
-import { FaHome } from "react-icons/fa";
+
+import SidebarHeader from "./SidebarHeader";
+import SidebarNav from "./SidebarNav";
+import SidebarSection from "./SidebarSection";
+import SidebarItem from "./SidebarItem";
+import SidebarFooter from "./SidebarFooter";
+import SidebarCollapseButton from "./SidebarCollapseButton";
+import SidebarQuickActions from "./SidebarQuickActions";
 
 export default function Aside() {
   const { role, setRole } = useLabSystemContext();
   const router = useRouter();
   const pathname = usePathname();
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
+  /* ── Lógica de logout (sin modificar) ── */
   const handleLogout = async () => {
     try {
       const response = await sessionApi.logout();
@@ -25,58 +36,97 @@ export default function Aside() {
     }
   };
 
-  if (pathname === "/login" || pathname === "/") return null;
+  /* ── No renderizar en login ni home (comportamiento existente) ── */
+  if (pathname === "/login" || pathname === "/error") return null;
 
   return (
-    <div key={role} className="h-full flex flex-col justify-evenly aside-slide">
-      {role === "public" ? (
-        <p>Bienvenido, por favor inicie sesión</p>
-      ) : (
-        <>
-          <div>
-            <ButtonPanel role={role} />
+    <aside
+      className={`
+        relative flex flex-col h-full shrink-0
+        bg-gradient-to-b from-[#103E8C] via-[#1558B5] to-[#1A73D9]
+        border-r border-white/10
+        shadow-[2px_0_24px_rgba(15,23,42,0.12)]
+        transition-[width] duration-300 ease-in-out
+        aside-slide z-20
+        ${isCollapsed ? "w-[70px]" : "w-[230px]"}
+      `}
+    >
+      {/* ── Header: logo + collapse button ── */}
+      <div
+        className={`
+          flex items-center pt-3 pb-2 shrink-0
+          ${isCollapsed ? "flex-col gap-3 px-0" : "justify-between px-4"}
+        `}
+      >
+        <SidebarHeader isCollapsed={isCollapsed} />
+        <SidebarCollapseButton
+          isCollapsed={isCollapsed}
+          onToggle={() => setIsCollapsed((v) => !v)}
+        />
+      </div>
 
-            {/* 🔹 Rol + botón Home */}
-            <div className="text-center flex items-center justify-center gap-3 mt-6">
-              <span className="inline-flex items-center gap-2 px-4 py-2 bg-sky-100 text-sky-700 rounded-full text-sm font-medium shadow-sm border-2 border-sky-300">
-                <span className="w-2 h-2 rounded-full bg-sky-500 animate-pulse"></span>
-                Rol actual: <span className="capitalize">{role}</span>
-              </span>
+      {/* ── Separador ── */}
+      <div className="mx-3 border-t border-white/10 mb-2 shrink-0" />
 
-              {/* 🔹 Botón Home redondo */}
-              <Link
-                href="/"
-                className="flex items-center justify-center w-9 h-9 rounded-full bg-sky-700 hover:bg-sky-500 text-white shadow-md hover:shadow-lg transition-all duration-300 border-2 border-sky-300"
-                title="Ir al inicio"
-              >
-                <FaHome className="w-4 h-4" />
-              </Link>
-            </div>
-          </div>
+      {/* ── Área de navegación (scrollable) ── */}
+      <div
+        className={`
+          flex flex-col flex-1 gap-3 overflow-y-auto pb-2 scrollbar-hide
+          ${isCollapsed ? "px-2" : "px-3"}
+        `}
+      >
+        {role === "public" ? (
+          <p className="px-3 text-sm text-white/70">
+            Bienvenido, por favor inicie sesión.
+          </p>
+        ) : (
+          <>
+            {/* Navegación principal con lógica de roles */}
+            <SidebarNav role={role} isCollapsed={isCollapsed} />
 
-          {/* 🔹 Botón Logout */}
-          <button
-            onClick={handleLogout}
-            className="mt-8 w-full px-6 py-3 rounded-e-lg bg-sky-900/80 hover:bg-sky-600 text-white font-semibold text-base shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center gap-2"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1"
+            {/* Separador entre secciones */}
+            <div className="border-t border-white/10" />
+
+            {/* Sección Accesos Rápidos */}
+            <SidebarQuickActions role={role} isCollapsed={isCollapsed} />
+
+            {/* Separador entre secciones */}
+            <div className="border-t border-white/10" />
+
+            {/* Sección Configuración */}
+            <SidebarSection title="Configuración" isCollapsed={isCollapsed}>
+              <SidebarItem
+                icon={Settings}
+                label="Configuración"
+                href="/settings"
+                isActive={pathname === "/settings"}
+                isCollapsed={isCollapsed}
               />
-            </svg>
-            Cerrar sesión
-          </button>
+              <SidebarItem
+                icon={UserCircle}
+                label="Perfil"
+                href="/profile"
+                isActive={pathname === "/profile"}
+                isCollapsed={isCollapsed}
+              />
+            </SidebarSection>
+          </>
+        )}
+      </div>
+
+      {/* ── Footer: usuario + logout ── */}
+      {role !== "public" && (
+        <>
+          <div className="mx-3 border-t border-white/10 mb-2 shrink-0" />
+          <div className="shrink-0 pb-2">
+            <SidebarFooter
+              role={role}
+              onLogout={handleLogout}
+              isCollapsed={isCollapsed}
+            />
+          </div>
         </>
       )}
-    </div>
+    </aside>
   );
 }

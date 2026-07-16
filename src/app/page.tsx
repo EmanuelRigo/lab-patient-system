@@ -1,6 +1,7 @@
 "use client";
 import CardsPanel from "@/components/homepage/CardsPanel";
 import DaylyAppointments from "@/components/homepage/DaylyAppointments";
+import { StatsCards } from "@/components/dashboard/StatsCards";
 
 import { useLabSystemContext } from "@/context/LabContext";
 
@@ -18,9 +19,9 @@ export default function DashboardButtons() {
           }
         />
       )} */}
-      <div className="w-full h-screen 2xl:h-3/4 rounded-xl  bg-white p-4 flex gap-6 ">
+      <div className="w-full h-screen 2xl:h-3/4 rounded-xl  bg-white p-4 flex flex-col gap-6 ">
         {/* CardPanel */}
-        <div className="w-5/7 flex flex-col">
+        <div className="w-full flex flex-col">
           <h2 className="font-bold text-2xl  text-sky-900/80 mb-10 mt-2">
             ¡Bienvenido al sistema del laboratorio Mayra!
             {role}
@@ -31,10 +32,15 @@ export default function DashboardButtons() {
               laboratorio de manera eficiente.
             </p>
           </div>
-          <CardsPanel></CardsPanel>
-        </div>
 
-        <DaylyAppointments></DaylyAppointments>
+          {/* Métricas principales */}
+          <StatsCards />
+
+          <div className="mt-8 flex gap-6">
+            <CardsPanel></CardsPanel>
+            <DaylyAppointments></DaylyAppointments>
+          </div>
+        </div>
       </div>
     </div>
   );
