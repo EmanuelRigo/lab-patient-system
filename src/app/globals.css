@@ -46,17 +46,18 @@
   --color-text-muted: var(--text-muted);
 
   /* Paleta Primary */
-  --color-primary-50: #f2f8fc;
-  --color-primary-100: #e3f0f8;
-  --color-primary-200: #c6e0f1;
-  --color-primary-300: #99c7e5;
-  --color-primary-400: #63a7d6;
-  --color-primary-500: #3a7ca5;
-  --color-primary-600: #2f6b90;
-  --color-primary-700: #28597a;
-  --color-primary-800: #214a64;
-  --color-primary-900: #1b3e54;
-  --color-primary-950: #10283a;
+
+  --color-primary-50: #edf4fe;
+  --color-primary-100: #d4e5fd;
+  --color-primary-200: #b1cffc;
+  --color-primary-300: #7eaff8;
+  --color-primary-400: #4285f2;
+  --color-primary-500: #0056e0;
+  --color-primary-600: #0046bc;
+  --color-primary-700: #003799;
+  --color-primary-800: #002975;
+  --color-primary-900: #00205d;
+  --color-primary-950: #00113a;
 
   /* Paleta Secondary */
   --color-secondary-50: #f8fafc;

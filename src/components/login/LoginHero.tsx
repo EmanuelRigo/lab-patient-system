@@ -1,69 +1,61 @@
 import React from "react";
 import { FlaskConical, ShieldCheck } from "lucide-react";
 
-/**
- * Columna izquierda del Login (40% en desktop).
- *
- * Muestra:
- * - Imagen real del laboratorio (`/images/image4.jpg`)
- * - Overlay con el gradiente azul institucional
- * - Logo, nombre, subtítulo y mensaje de seguridad
- * - Curva SVG hacia la derecha (sutil, sin formas exageradas)
- *
- * En tablet se reduce; en mobile se oculta por completo.
- */
 export function LoginHero() {
   return (
     <aside
       aria-hidden="true"
-      className="
-        relative hidden md:flex md:w-[40%]
-        items-center justify-center overflow-hidden
-        bg-gradient-to-br from-[#103E8C] via-[#1558B5] to-[#1A73D9]
-      "
+      className="relative hidden overflow-hidden md:flex md:w-[40%] lg:w-[42%] xl:w-[38%]"
     >
-      {/* Imagen de fondo */}
+      {/* 1. Fondo base: Degradado con tu paleta azul marino vibrante */}
       <div
-        className="absolute inset-0 bg-[url('/images/image4.jpg')] bg-cover bg-center opacity-40"
+        className="absolute inset-0 bg-[linear-gradient(180deg,var(--color-primary-950)_0%,var(--color-primary-900)_20%,var(--color-primary-800)_45%,var(--color-primary-700)_70%,var(--color-primary-500)_100%)]"
         aria-hidden="true"
       />
 
-      {/* Overlay azul institucional */}
+      {/* 2. Imagen de fondo: Ahora encima del azul y mezclándose con él */}
       <div
-        className="absolute inset-0 bg-gradient-to-br from-[#103E8C]/85 via-[#1558B5]/80 to-[#1A73D9]/80 mix-blend-multiply"
+        className="absolute inset-0 bg-[url('/images/image4.jpg')] bg-cover bg-center opacity-[0.18] mix-blend-overlay"
         aria-hidden="true"
       />
+
+      {/* 3. Brillo radial superior izquierdo para dar volumen */}
+      <div
+        className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,0.12),transparent_50%)]"
+        aria-hidden="true"
+      />
+      <div className="absolute inset-0 bg-slate-950/10" aria-hidden="true" />
 
       {/* Contenido */}
-      <div className="relative z-10 flex h-full w-full flex-col justify-between p-10 lg:p-14 text-white">
-        {/* Logo + nombre */}
+      <div className="relative z-10 flex h-full w-full flex-col justify-between p-8 sm:p-10 lg:p-12 text-primary-50">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-white/15 backdrop-blur-sm ring-1 ring-white/20">
-            <FlaskConical className="h-5 w-5 text-white" />
+          <div className="flex h-12 w-12 items-center justify-center rounded-3xl bg-primary-50/10 ring-1 ring-primary-100/25 backdrop-blur-sm">
+            <FlaskConical className="h-6 w-6 text-primary-50" />
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="text-lg font-bold tracking-wide">LabSystem</span>
-            <span className="text-[11px] uppercase tracking-[0.2em] text-white/70">
+            <span className="text-lg font-semibold uppercase tracking-[0.28em] text-primary-50/95">
+              LabSystem
+            </span>
+            <span className="text-[11px] uppercase tracking-[0.3em] text-primary-50/70">
               Gestión de Laboratorio
             </span>
           </div>
         </div>
 
-        {/* Mensaje central inferior */}
-        <div className="flex flex-col gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/15 ring-1 ring-white/20">
-            <ShieldCheck className="h-5 w-5 text-white" />
+        <div className="flex flex-col gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-50/15 ring-1 ring-primary-100/30">
+            <ShieldCheck className="h-5 w-5 text-primary-50" />
           </div>
-          <p className="max-w-sm text-sm leading-relaxed text-white/80">
+          <p className="max-w-sm text-sm leading-7 text-primary-50/80">
             Sistema seguro y confiable para la gestión integral del laboratorio.
           </p>
         </div>
       </div>
 
-      {/* Curva elegante hacia la derecha (solo desktop ≥ lg) */}
+      {/* Curva SVG corregida sin bordes grises */}
       <svg
         aria-hidden="true"
-        className="absolute right-0 top-0 hidden h-full lg:block"
+        className="absolute right-[-1px] top-0 h-full w-24"
         viewBox="0 0 80 800"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

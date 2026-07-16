@@ -4,10 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useLabSystemContext } from "@/context/LabContext";
 import sessionApi from "@/services/session.api";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { User, Lock, LogIn } from "lucide-react";
+import {
+  LoginBackground,
+  LoginCard,
+  LoginFooter,
+  LoginHero,
+} from "@/components/login";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -68,71 +70,25 @@ export default function LoginPage() {
   };
 
   return (
-    <div
-      className="h-full w-full  relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
-      opacity-0 animate-fade-in"
-    >
-      {/* Encabezado */}
-      <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
-        <h2 className="font-bold text-2xl  text-sky-100/80 mb-10 mt-2">
-          Por favor, inicia sesión para continuar
-        </h2>
-      </div>
+    <div className="relative min-h-screen overflow-hidden bg-background text-text-primary w-full">
+      <LoginBackground />
 
-      {/* Contenedor principal */}
-      <div className="w-full flex justify-center">
-        <form
-          onSubmit={handleLogin}
-          className="w-4/6 bg-neutral-100 rounded-xl shadow-lg p-10 flex flex-col gap-8"
-        >
-          {/* Usuario */}
-          <div>
-            <Label className="flex items-center gap-2 text-gray-700 mb-2">
-              <User className="w-5 h-5 text-sky-600" />
-              Usuario
-            </Label>
-            <Input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Ingresa tu usuario..."
-              required
-              className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
+      <div className="relative z-10 flex min-h-screen w-full max-w-full overflow-hidden shadow-none">
+        <LoginHero />
+
+        <main className="flex flex-1 items-center justify-center px-6 py-10 sm:px-8 lg:px-12">
+          <div className="w-full max-w-[520px]">
+            <LoginCard
+              username={username}
+              password={password}
+              error={error}
+              onUsernameChange={(e) => setUsername(e.target.value)}
+              onPasswordChange={(e) => setPassword(e.target.value)}
+              onSubmit={handleLogin}
             />
+            <LoginFooter />
           </div>
-
-          {/* Contraseña */}
-          <div>
-            <Label className="flex items-center gap-2 text-gray-700 mb-2">
-              <Lock className="w-5 h-5 text-sky-600" />
-              Contraseña
-            </Label>
-            <Input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              required
-              className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-            />
-          </div>
-
-          {/* Botón */}
-          <Button
-            type="submit"
-            className="w-full py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-3 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
-          >
-            <LogIn className="w-6 h-6" />
-            Iniciar Sesión
-          </Button>
-
-          {/* Error */}
-          {error && (
-            <div className="text-red-600 text-sm font-medium text-center mt-2">
-              {error}
-            </div>
-          )}
-        </form>
+        </main>
       </div>
     </div>
   );

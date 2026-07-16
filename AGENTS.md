@@ -345,19 +345,145 @@ Nunca crear variantes innecesarias.
 
 # Colores
 
-Utilizar únicamente la paleta definida.
+## Filosofía
 
-Colores principales:
+La aplicación utiliza un Design System propio.
 
-- Primary
-- Secondary
-- Success
-- Warning
-- Danger
-- Info
-- Neutral
+La paleta oficial de Tailwind CSS NO debe modificarse ni sobrescribirse.
 
-No agregar nuevos colores sin necesidad.
+Los colores de Tailwind permanecen disponibles para casos excepcionales o librerías de terceros.
+
+Toda la identidad visual del proyecto debe construirse utilizando una paleta personalizada.
+
+---
+
+## Paletas personalizadas
+
+Se definen las siguientes familias de colores:
+
+- brand
+- neutral
+- success
+- warning
+- danger
+- info
+
+Ejemplos:
+
+brand-50
+brand-100
+...
+brand-950
+
+neutral-50
+...
+neutral-950
+
+success-50
+...
+success-950
+
+etc.
+
+Estas paletas viven en `globals.css` utilizando `@theme`.
+
+No crear nuevas familias de colores sin aprobación.
+
+---
+
+## Tokens semánticos
+
+Los componentes NO deben depender directamente de la paleta.
+
+Siempre utilizar tokens semánticos.
+
+Ejemplos:
+
+- background
+- surface
+- surface-muted
+- primary
+- secondary
+- text-primary
+- text-secondary
+- text-muted
+- border-default
+- border-strong
+- input
+- ring
+- card
+- popover
+- sidebar
+- sidebar-primary
+- sidebar-accent
+- sidebar-border
+
+Estos tokens apuntan internamente a la paleta `brand`, `neutral`, etc.
+
+---
+
+## Uso correcto
+
+Correcto
+
+```tsx
+<Button className="bg-primary text-primary-foreground" />
+
+<Card className="bg-surface border-border-default" />
+
+<p className="text-text-secondary" />
+```
+
+También es válido cuando realmente se necesita un color de marca:
+
+```tsx
+<div className="bg-brand-600" />
+```
+
+Por ejemplo:
+
+- Gradientes
+- Logo
+- Sidebar
+- Hero
+- Ilustraciones
+
+---
+
+## Uso incorrecto
+
+No utilizar colores de Tailwind directamente dentro de la aplicación.
+
+Incorrecto:
+
+```tsx
+bg - blue - 500;
+text - blue - 700;
+border - sky - 400;
+bg - indigo - 600;
+text - cyan - 500;
+```
+
+Tampoco utilizar valores hexadecimales dentro de componentes.
+
+Incorrecto:
+
+```tsx
+bg-[#237BE8]
+text-[#124CA4]
+```
+
+Toda referencia de color debe provenir del Design System.
+
+---
+
+## Objetivo
+
+Si en el futuro cambia la identidad visual del laboratorio, únicamente deberá modificarse la paleta `brand`.
+
+El resto de la aplicación deberá actualizarse automáticamente mediante los tokens semánticos.
+
+No debe ser necesario modificar componentes.
 
 ---
 

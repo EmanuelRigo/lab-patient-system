@@ -6,26 +6,14 @@ import { Eye, EyeOff, Lock } from "lucide-react";
 import { Input } from "@/components/ui/input";
 
 type PasswordInputProps = {
-  /** Valor controlado del input (sin lógica propia, solo visual). */
   value: string;
-  /** onChange controlado por el padre. */
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  /** Placeholder opcional. */
   placeholder?: string;
-  /** ID del input para asociar al Label. */
   id?: string;
-  /** Marca el input como requerido (mismo prop que el Input original). */
   required?: boolean;
-  /** Deshabilita el input. */
   disabled?: boolean;
 };
 
-/**
- * Input de contraseña con botón de mostrar/ocultar.
- *
- * No introduce lógica nueva: el estado de visibilidad es local
- * y el valor fluye hacia el padre vía `onChange`.
- */
 export function PasswordInput({
   value,
   onChange,
@@ -38,7 +26,6 @@ export function PasswordInput({
 
   return (
     <div className="relative">
-      {/* Ícono decorativo a la izquierda */}
       <Lock
         className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted"
         aria-hidden="true"
@@ -53,7 +40,7 @@ export function PasswordInput({
         required={required}
         disabled={disabled}
         autoComplete="current-password"
-        className="h-12 rounded-xl border-border bg-surface pl-10 pr-11 text-sm shadow-sm transition-colors hover:border-primary-300 focus-visible:ring-primary-500/30"
+        className="h-[52px] rounded-[1.25rem] border-border bg-surface pl-10 pr-14 text-sm shadow-sm transition duration-200 hover:border-primary-400 focus-visible:border-primary-500 focus-visible:ring-primary-200/30"
       />
 
       <button
@@ -62,7 +49,7 @@ export function PasswordInput({
         disabled={disabled}
         aria-label={isVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
         aria-pressed={isVisible}
-        className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-surface-muted hover:text-text-primary focus:outline-none focus:ring-2 focus:ring-primary-500/30 active:scale-95 disabled:pointer-events-none disabled:opacity-50"
+        className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl border border-border/70 bg-surface text-text-muted transition duration-200 hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500/30 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-50"
       >
         {isVisible ? (
           <EyeOff className="h-4 w-4" />

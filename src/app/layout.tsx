@@ -55,7 +55,7 @@ export default function RootLayout({
 
                 {/* Main */}
                 <main className="flex-1 overflow-y-auto bg-background ">
-                  <div className="mx-auto flex w-full max-w-[1800px] flex-col">
+                  <div className="mx-auto flex w-full max-w-full flex-col ">
                     {children}
                   </div>
                 </main>
