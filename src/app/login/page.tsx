@@ -69,6 +69,11 @@ export default function LoginPage() {
     }
   };
 
+  const fillCredentials = (usernameValue: string, passwordValue: string) => {
+    setUsername(usernameValue);
+    setPassword(passwordValue);
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-background text-text-primary w-full">
       <LoginBackground />
@@ -86,6 +91,46 @@ export default function LoginPage() {
               onPasswordChange={(e) => setPassword(e.target.value)}
               onSubmit={handleLogin}
             />
+            <div className="mt-6 rounded-2xl border border-border bg-background/80 p-4 text-sm text-text-secondary shadow-sm">
+              <p className="mb-3 font-semibold text-text-primary">
+                Autocompletado rápido
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  {
+                    label: "Admin",
+                    username: "emanueladmin",
+                    password: "hola1234",
+                  },
+                  {
+                    label: "Gestión",
+                    username: "gestionuser",
+                    password: "gestor1234",
+                  },
+                  {
+                    label: "Bioquímico",
+                    username: "bioquimico",
+                    password: "labbio123",
+                  },
+                  {
+                    label: "Recepción",
+                    username: "recepcion",
+                    password: "recep1234",
+                  },
+                ].map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() =>
+                      fillCredentials(preset.username, preset.password)
+                    }
+                    className="rounded-full border border-border px-3 py-2 text-xs font-semibold text-text-secondary transition hover:border-primary-500 hover:text-primary-700"
+                  >
+                    {preset.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             <LoginFooter />
           </div>
         </main>
