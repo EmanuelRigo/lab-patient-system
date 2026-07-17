@@ -198,11 +198,11 @@
   --radius: 0.625rem;
 
   /* Tokens de diseño semánticos (modo claro) */
-  --background: #f8fafc;
+  --background: #f6f6f6;
   --surface: #ffffff;
   --surface-muted: #f1f5f9;
   --foreground: #0f172a;
-  --text-primary: #0f172a;
+  --text-primary: #222222;
   --text-secondary: #475569;
   --text-muted: #64748b;
   --border-default: #e2e8f0;

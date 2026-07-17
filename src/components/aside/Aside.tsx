@@ -47,7 +47,7 @@ export default function Aside() {
         border-r border-white/10
         shadow-[2px_0_24px_rgba(15,23,42,0.12)]
         transition-[width] duration-300 ease-in-out
-        aside-slide z-20
+        aside-slide z-20 rounded-e-2xl
         ${isCollapsed ? "w-[70px]" : "w-[230px]"}
       `}
     >
