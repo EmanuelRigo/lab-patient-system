@@ -1,4 +1,5 @@
 import React from "react";
+import { DASHBOARD_PANEL_MIN_HEIGHT } from "@/constants/dashboard";
 // En tu entorno real:
 // import Link from "next/link";
 // import { Clock, User, Stethoscope } from "lucide-react";
@@ -39,62 +40,9 @@ const Link = ({
   </a>
 );
 
-// Mocks de íconos (si no tienes Lucide importado)
-const ClockIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="12" cy="12" r="10" />
-    <polyline points="12 6 12 12 16 14" />
-  </svg>
-);
-const UserIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-    <circle cx="12" cy="7" r="4" />
-  </svg>
-);
-const StethoscopeIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg
-    {...props}
-    xmlns="http://www.w3.org/2000/svg"
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M21 21L15 15" />
-    <path d="M10 20L4 14" />
-    <path d="M16 10L10 4" />
-    <path d="M16 10L19 7C20.5 5.5 22.5 4.5 24 6" />
-    <path d="M4 14L1 17C-0.5 18.5 0.5 20.5 2 22" />
-  </svg>
-);
 // --- FIN Mocks ---
+
+const MAX_VISIBLE_APPOINTMENTS = 3;
 
 // Datos de ejemplo Hardcodeados
 const MOCK_APPOINTMENTS: Appointment[] = [
@@ -188,29 +136,18 @@ const AppointmentItem: React.FC<{ appointment: Appointment }> = ({
   };
 
   return (
-    <div className="w-full flex justify-between items-center p-3 mb-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 border border-sky-50">
-      <div className="flex flex-col flex-grow">
-        {/* Hora */}
-        <div className="flex items-center text-sm font-semibold text-sky-700 mb-1">
-          <ClockIcon className="w-4 h-4 mr-2" />
-          {appointment.time}
-        </div>
-        {/* Paciente */}
-        <div className="flex items-center text-base text-gray-800 font-medium">
-          <UserIcon className="w-4 h-4 mr-2 text-gray-500" />
-          {appointment.patientName}
-        </div>
-        {/* Procedimiento */}
-        <div className="flex items-center text-xs text-gray-600 mt-0.5">
-          <StethoscopeIcon className="w-4 h-4 mr-2 text-gray-400" />
-          {appointment.procedure}
-        </div>
-      </div>
-
-      {/* Estado (Badge) */}
+    <div
+      className={`mb-2 flex w-full items-center justify-between gap-2 border-b border-border py-1.5 last:mb-0 last:border-b-0`}
+    >
+      <span className="shrink-0 text-xs font-semibold text-primary">
+        {appointment.time}
+      </span>
+      <span className="min-w-0 truncate text-xs text-text-primary">
+        {appointment.patientName}
+      </span>
       <span
-        className={`px-2 py-0.5 text-xs font-medium rounded-full ${getStatusClasses(
-          appointment.status
+        className={`shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-medium ${getStatusClasses(
+          appointment.status,
         )}`}
       >
         {appointment.status}
@@ -223,43 +160,44 @@ const AppointmentItem: React.FC<{ appointment: Appointment }> = ({
  * Componente principal para mostrar las citas del día.
  */
 const DailyAppointments: React.FC = () => {
-  const appointments = MOCK_APPOINTMENTS; // Usamos los datos hardcodeados
+  const visibleAppointments = MOCK_APPOINTMENTS.slice(
+    0,
+    MAX_VISIBLE_APPOINTMENTS,
+  );
 
   return (
-    <div className="w-2/7 h-full p-6 bg-white rounded-xl border border-sky-100 shadow-xl flex flex-col justify-between z-20">
-      {/* Sección Superior: Título y Descripción */}
-      <div className="h-full flex flex-col">
-        <h3 className="font-extrabold text-2xl text-gray-800 mb-2">
-          Citas de Hoy
-        </h3>
-        <p className="text-sm font-medium text-sky-600 pb-3 mb-4 border-b border-sky-200">
-          Vista rápida de las citas programadas para el día.
-        </p>
-        {/* Contenedor de la Lista de Citas */}
-        <div className="grow-2 overflow-y-auto pr-2 scrollbar-hidden">
-          {appointments.length > 0 ? (
-            appointments.map((appointment) => (
-              <AppointmentItem key={appointment.id} appointment={appointment} />
+    <div
+      className={`flex h-full w-full flex-col rounded-2xl border border-border bg-surface p-4 shadow-sm ${DASHBOARD_PANEL_MIN_HEIGHT}`}
+    >
+      <div className="flex min-h-0 flex-1 flex-col">
+        <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border pb-2">
+          <h3 className="text-base font-semibold text-text-primary">
+            Citas de Hoy
+          </h3>
+          <Link
+            className="text-xs font-medium text-primary transition-colors hover:text-primary-700"
+            href={"/lab-dashboard/doctors-appointment/appointment-list"}
+          >
+            Ver todas →
+          </Link>
+        </div>
+        <div className="mt-2 min-h-0 flex-1 overflow-y-auto scrollbar-hidden">
+          {visibleAppointments.length > 0 ? (
+            visibleAppointments.map((appointment, index) => (
+              <AppointmentItem
+                key={`${appointment.id}-${index}`}
+                appointment={appointment}
+              />
             ))
           ) : (
-            <div className="text-center p-4 bg-sky-50 rounded-lg">
-              <p className="text-gray-500 font-medium">
+            <div className="rounded-2xl bg-surface-muted p-4 text-center">
+              <p className="text-sm font-medium text-text-secondary">
                 No hay citas programadas para hoy.
               </p>
             </div>
           )}
-        </div>{" "}
-        <div className="mt-4 pt-3 border-t border-sky-100">
-          <Link
-            className="text-sm text-sky-700 hover:text-sky-900 font-medium transition-colors"
-            href={"/lab-dashboard/doctors-appointment/appointment-list"}
-          >
-            Ver todas las citas →
-          </Link>
         </div>
       </div>
-
-      {/* Sección Inferior: Enlace a la Lista Completa */}
     </div>
   );
 };

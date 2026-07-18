@@ -22,7 +22,7 @@ const TopbarActions = () => {
         size="icon-lg"
         aria-label="Acción rápida"
         title="Acción rápida"
-        className="rounded-xl shadow-sm"
+        className="rounded-lg shadow-sm "
       >
         <Plus className="w-5 h-5" />
       </Button>

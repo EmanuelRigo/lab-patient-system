@@ -59,27 +59,120 @@ export function StudiesChartCard({
   const variationLabel = variation > 0 ? `+${variation}%` : `${variation}%`;
   const variationPositive = variation >= 0;
 
+  const renderBody = () => {
+    if (loading) {
+      return (
+        <div className="min-h-0 flex-1 animate-pulse rounded-xl bg-surface-muted" />
+      );
+    }
+
+    if (error) {
+      return (
+        <div className="flex min-h-0 flex-1 items-center justify-center gap-2 text-text-secondary">
+          <Sparkles className="h-4 w-4" />
+          <p className="text-xs font-medium text-text-primary">{error}</p>
+        </div>
+      );
+    }
+
+    if (data.length === 0) {
+      return (
+        <div className="flex min-h-0 flex-1 items-center justify-center gap-2 text-text-secondary">
+          <Sparkles className="h-4 w-4" />
+          <p className="text-xs font-medium text-text-primary">
+            No hay estudios para mostrar.
+          </p>
+        </div>
+      );
+    }
+
+    return (
+      <ChartContainer className="min-h-0 flex-1">
+        <AreaChart
+          data={data}
+          margin={{ top: 4, right: 0, left: 0, bottom: 0 }}
+        >
+          <defs>
+            <linearGradient id="studiesGradient" x1="0" y1="0" x2="0" y2="1">
+              <stop
+                offset="5%"
+                stopColor="var(--color-primary)"
+                stopOpacity={0.35}
+              />
+              <stop
+                offset="95%"
+                stopColor="var(--color-primary)"
+                stopOpacity={0.06}
+              />
+            </linearGradient>
+          </defs>
+          <CartesianGrid
+            stroke="var(--color-border)"
+            strokeDasharray="3 3"
+            vertical={false}
+            opacity={0.15}
+          />
+          <XAxis
+            dataKey="date"
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: "var(--color-text-secondary)", fontSize: 10 }}
+          />
+          <ChartTooltip content={<ChartTooltipContent />} />
+          <Area
+            type="monotone"
+            dataKey="studies"
+            stroke="var(--color-primary)"
+            fill="url(#studiesGradient)"
+            fillOpacity={1}
+            strokeWidth={2}
+          />
+        </AreaChart>
+      </ChartContainer>
+    );
+  };
+
   return (
-    <Card className="w-full rounded-2xl border border-border bg-surface shadow-sm">
-      <CardContent className="p-6">
-        <div className="flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
-          <div>
-            <div className="text-2xl font-semibold text-text-primary">
+    <Card className="flex h-full w-full flex-col rounded-2xl border border-border bg-surface shadow-sm p-0 px-4">
+      <CardContent className="flex min-h-0 flex-1 flex-col gap-2 p-4 h-full">
+        <div className="flex shrink-0 flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1">
+            <h3 className="text-base font-semibold text-text-primary">
               {title}
-            </div>
-            <p className="mt-2 text-text-secondary">
-              Visualiza la tendencia de estudios y el comportamiento del
-              periodo.
-            </p>
+            </h3>
+            {!loading && !error && data.length > 0 && (
+              <div className="flex items-center gap-3 text-xs text-text-secondary">
+                <span>
+                  Total{" "}
+                  <span className="font-semibold text-text-primary">
+                    {total}
+                  </span>
+                </span>
+                <span className="inline-flex items-center gap-1">
+                  {variationPositive ? (
+                    <ArrowUpRight className="h-3 w-3 text-success" />
+                  ) : (
+                    <ArrowDownRight className="h-3 w-3 text-danger" />
+                  )}
+                  <span
+                    className={
+                      variationPositive ? "text-success" : "text-danger"
+                    }
+                  >
+                    {variationLabel}
+                  </span>
+                </span>
+              </div>
+            )}
           </div>
 
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <div className="flex shrink-0 items-center gap-2">
             <select
               value={period}
               onChange={(event) =>
                 onPeriodChange?.(event.target.value as "7d" | "30d" | "90d")
               }
-              className="min-w-[180px] rounded-2xl border border-border bg-surface px-4 py-2 text-sm text-text-primary outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
+              className="rounded-xl border border-border bg-surface px-3 py-1.5 text-xs text-text-primary outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20"
             >
               {periodOptions.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -91,7 +184,7 @@ export function StudiesChartCard({
               type="button"
               variant="default"
               size="sm"
-              className="rounded-2xl px-4 py-2"
+              className="h-8 rounded-xl px-3 text-xs"
               onClick={onViewReport}
             >
               Ver reporte
@@ -99,113 +192,7 @@ export function StudiesChartCard({
           </div>
         </div>
 
-        <div className="mt-6 min-h-[320px] rounded-3xl border border-border bg-background p-4 shadow-inner">
-          {loading ? (
-            <div className="flex h-full flex-col gap-4">
-              <div className="h-6 w-32 animate-pulse rounded-full bg-surface" />
-              <div className="h-full rounded-3xl bg-surface/70 p-4">
-                <div className="h-full w-full animate-pulse rounded-2xl bg-surface" />
-              </div>
-            </div>
-          ) : error ? (
-            <div className="flex h-full flex-col items-center justify-center gap-3 text-center text-text-secondary">
-              <Sparkles className="h-8 w-8 text-text-secondary" />
-              <p className="text-sm font-medium text-text-primary">{error}</p>
-            </div>
-          ) : data.length === 0 ? (
-            <div className="flex h-full flex-col items-center justify-center gap-3 text-center text-text-secondary">
-              <Sparkles className="h-8 w-8 text-text-secondary" />
-              <p className="text-sm font-medium text-text-primary">
-                No hay estudios para mostrar.
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              <ChartContainer className="rounded-3xl border border-border bg-background p-4">
-                <AreaChart
-                  data={data}
-                  margin={{ top: 18, right: 0, left: 0, bottom: 0 }}
-                >
-                  <defs>
-                    <linearGradient
-                      id="studiesGradient"
-                      x1="0"
-                      y1="0"
-                      x2="0"
-                      y2="1"
-                    >
-                      <stop
-                        offset="5%"
-                        stopColor="var(--color-brand-600)"
-                        stopOpacity={0.35}
-                      />
-                      <stop
-                        offset="95%"
-                        stopColor="var(--color-brand-600)"
-                        stopOpacity={0.06}
-                      />
-                    </linearGradient>
-                  </defs>
-
-                  <CartesianGrid
-                    stroke="var(--color-border)"
-                    strokeDasharray="3 3"
-                    vertical={false}
-                    opacity={0.15}
-                  />
-                  <XAxis
-                    dataKey="date"
-                    axisLine={false}
-                    tickLine={false}
-                    tick={{ fill: "var(--color-text-secondary)", fontSize: 12 }}
-                  />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Area
-                    type="monotone"
-                    dataKey="studies"
-                    stroke="var(--color-brand-600)"
-                    fill="url(#studiesGradient)"
-                    fillOpacity={1}
-                    strokeWidth={3}
-                  />
-                </AreaChart>
-              </ChartContainer>
-
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="rounded-2xl bg-surface p-4 shadow-sm">
-                  <p className="text-sm text-text-secondary">
-                    Cantidad total de estudios
-                  </p>
-                  <p className="mt-2 text-2xl font-semibold text-text-primary">
-                    {total}
-                  </p>
-                </div>
-                <div className="rounded-2xl bg-surface p-4 shadow-sm">
-                  <div className="flex items-center gap-2">
-                    <p className="text-sm text-text-secondary">Variación</p>
-                    <span className="inline-flex items-center rounded-full bg-surface px-2 py-1 text-xs font-semibold text-text-secondary">
-                      {variationPositive ? (
-                        <ArrowUpRight className="h-4 w-4 text-success" />
-                      ) : (
-                        <ArrowDownRight className="h-4 w-4 text-danger" />
-                      )}
-                      <span
-                        className={`ml-1 ${variationPositive ? "text-success" : "text-danger"}`}
-                      >
-                        {variationLabel}
-                      </span>
-                    </span>
-                  </div>
-                  <p className="mt-2 text-text-primary">
-                    {variationPositive
-                      ? "Respecto al periodo anterior"
-                      : "Reducción respecto al periodo anterior"}
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-        </div>
+        {renderBody()}
       </CardContent>
     </Card>
   );

@@ -336,10 +336,28 @@ Todas las Cards deben compartir:
 
 - mismo radio
 - mismo padding
-- misma sombra
 - mismo borde
+- mismo fondo
+- mismo espaciado interno
 
-Nunca crear variantes innecesarias.
+Las Cards NO deben utilizar sombras (`shadow-*`) como recurso visual principal.
+
+La separación entre componentes debe lograrse mediante:
+
+- bordes (`border`)
+- contraste de superficies (`surface`, `surface-muted`)
+- espaciado
+- jerarquía tipográfica
+
+Utilizar sombras únicamente cuando exista una razón funcional, por ejemplo:
+
+- Dialog
+- Popover
+- Dropdown
+- Tooltip
+- Menús flotantes
+
+Nunca utilizar sombras para decorar Cards, formularios, paneles o contenedores de contenido.
 
 ---
 
@@ -779,6 +797,38 @@ useCallback
 No optimizar prematuramente.
 
 ---
+
+# Elevación
+
+El sistema utiliza una interfaz de baja elevación (Low Elevation Design).
+
+Reglas:
+
+- Evitar `shadow-sm`, `shadow`, `shadow-md`, `shadow-lg` y similares.
+- Priorizar bordes suaves (`border`).
+- Utilizar diferentes superficies (`surface`, `surface-muted`, `background`) para crear jerarquía.
+- Utilizar espaciado para separar bloques.
+- Utilizar radios consistentes.
+
+Las sombras únicamente están permitidas en componentes flotantes, como:
+
+- Dialog
+- Popover
+- DropdownMenu
+- Tooltip
+- Command
+- ContextMenu
+
+No utilizar sombras en:
+
+- Cards
+- Dashboard
+- Sidebar
+- Topbar
+- Formularios
+- Tablas
+- Widgets
+- Contenedores
 
 # ========================
 

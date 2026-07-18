@@ -45,9 +45,8 @@ export default function Aside() {
         relative flex flex-col h-full shrink-0
         bg-gradient-to-b from-[#103E8C] via-[#1558B5] to-[#1A73D9]
         border-r border-white/10
-        shadow-[2px_0_24px_rgba(15,23,42,0.12)]
         transition-[width] duration-300 ease-in-out
-        aside-slide z-20 rounded-e-2xl
+        aside-slide z-20 rounded-e-xl
         ${isCollapsed ? "w-[70px]" : "w-[230px]"}
       `}
     >

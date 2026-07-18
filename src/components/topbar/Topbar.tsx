@@ -22,9 +22,9 @@ const Topbar = () => {
         sticky top-0 z-30
         flex items-center gap-6
         h-[72px] w-full
-        bg-surface
+       
         border-b border-border-default
-        shadow-sm
+        
         px-6 lg:px-8
         transition-shadow duration-200
       "
