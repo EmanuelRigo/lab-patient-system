@@ -1,10 +1,8 @@
 "use client";
-import CardsPanel from "@/components/homepage/CardsPanel";
 import DaylyAppointments from "@/components/homepage/DaylyAppointments";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { StudiesChartCard } from "@/components/dashboard/StudiesChartCard";
 
-import { DASHBOARD_PANEL_HEIGHT } from "@/constants/dashboard";
 import { useLabSystemContext } from "@/context/LabContext";
 import CurrentDateCard from "@/components/topbar/actions/CurrentDateCard";
 import { ResultsStatusCard } from "@/components/RecentResultCard/ResultsStatusCard";
@@ -12,6 +10,7 @@ import { TopStudiesCard } from "@/components/TopStudiesCard/TopStudiesCard";
 import { RecentResultsCard } from "@/components/ResultsStatusCard/RecentResultsCard";
 import { ResultStatus } from "../../types/ResultStatus";
 import { RecentResultItem } from "@/components/ResultsStatusCard/RecentResultsCard";
+import { QuickActions } from "@/components/dashboard/QuickActions";
 
 const studiesChartData = [
   { date: "01/05", studies: 22 },
@@ -110,12 +109,11 @@ const recentResults: RecentResultItem[] = [
 
 export default function DashboardButtons() {
   const { role } = useLabSystemContext();
-  console.log("🚀 ~ DashboardButtons ~ role:", role);
 
   return (
-    <div className="h-full w-full flex flex-col items-center justify-center ">
+    <div className="min-h-screen w-full flex flex-col items-center justify-start py-6">
       <div className="w-full max-w-[1560px] rounded-xl p-6">
-        <div className="flex flex-col gap-6">
+        <div className="flex flex-col gap-5">
           <div className="flex justify-between">
             <div>
               <h2 className="font-bold text-2xl text-text-primary">
@@ -131,9 +129,9 @@ export default function DashboardButtons() {
 
           <StatsCards />
 
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             {/* Row 1 */}
-            <div className="grid gap-6 xl:grid-cols-4">
+            <div className="grid gap-4 xl:grid-cols-4">
               <div className="xl:col-span-3">
                 <StudiesChartCard
                   data={studiesChartData}
@@ -149,7 +147,7 @@ export default function DashboardButtons() {
             </div>
 
             {/* Row 2 */}
-            <div className="grid gap-6 xl:grid-cols-3">
+            <div className="grid gap-4 xl:grid-cols-3">
               <ResultsStatusCard data={resultsStatus} />
 
               <TopStudiesCard
@@ -165,6 +163,7 @@ export default function DashboardButtons() {
           </div>
 
           {/* <CardsPanel /> */}
+          <QuickActions></QuickActions>
         </div>
       </div>
     </div>

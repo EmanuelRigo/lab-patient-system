@@ -522,6 +522,10 @@ Sistema de spacing:
 64
 ```
 
+## Dashboard
+
+En el dashboard, la separación entre componentes o bloques no debe usar valores de `padding`, `gap` o `margin` de `5` o superiores. Mantener el espaciado compacto utilizando valores menores para preservar la densidad de información.
+
 No usar valores arbitrarios.
 
 ---

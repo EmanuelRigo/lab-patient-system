@@ -22,14 +22,14 @@ export default function CurrentDateCard() {
         rounded-2xl
         border border-border
         bg-surface
-        px-4 py-0
+        px-4 py-3
         transition-all
         duration-200
       "
     >
       <div
         className="
-          flex  items-center justify-center
+          flex h-10 w-10 items-center justify-center
           rounded-lg
           bg-brand-50
           text-brand-600
