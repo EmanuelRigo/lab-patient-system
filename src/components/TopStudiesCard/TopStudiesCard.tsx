@@ -11,7 +11,6 @@ export interface TopStudy {
   name: string;
   quantity: number;
   percentage: number;
-  color?: string;
 }
 
 interface TopStudiesCardProps {
@@ -27,7 +26,7 @@ export function TopStudiesCard({
 }: TopStudiesCardProps) {
   return (
     <Card className="rounded-2xl border-border bg-surface">
-      <CardContent className="p-6">
+      <CardContent>
         <div className="flex h-full flex-col">
           <div className="mb-6 flex items-center justify-between">
             <div>
@@ -44,13 +43,13 @@ export function TopStudiesCard({
           </div>
 
           <div className="flex flex-1 flex-col gap-3">
-            {studies.map((study) => (
+            {studies.map((study, index) => (
               <StudyRow
                 key={study.id}
+                index={index + 1}
                 name={study.name}
                 quantity={study.quantity}
                 percentage={study.percentage}
-                color={study.color}
               />
             ))}
           </div>

@@ -55,28 +55,24 @@ const topStudies = [
     name: "Hemograma",
     quantity: 182,
     percentage: 28,
-    color: "var(--color-brand-500)",
   },
   {
     id: "2",
     name: "Glucosa",
     quantity: 145,
     percentage: 22,
-    color: "var(--color-success-500)",
   },
   {
     id: "3",
     name: "Perfil Lipídico",
     quantity: 101,
     percentage: 15,
-    color: "var(--color-warning-500)",
   },
   {
     id: "4",
     name: "TSH",
     quantity: 82,
     percentage: 12,
-    color: "var(--color-info-500)",
   },
 ];
 
@@ -111,7 +107,7 @@ export default function DashboardButtons() {
   const { role } = useLabSystemContext();
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-start py-6">
+    <div className="min-h-screen w-full flex flex-col items-center justify-start">
       <div className="w-full max-w-[1560px] rounded-xl p-6">
         <div className="flex flex-col gap-5">
           <div className="flex justify-between">

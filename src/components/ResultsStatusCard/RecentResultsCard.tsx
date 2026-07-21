@@ -28,7 +28,7 @@ export function RecentResultsCard({
 }: RecentResultsCardProps) {
   return (
     <Card className="rounded-2xl border-border bg-surface">
-      <CardContent className="flex h-full flex-col p-6">
+      <CardContent className="flex h-full flex-col">
         <div className="mb-6 flex items-center justify-between">
           <div>
             <h3 className="text-lg font-semibold text-text-primary">{title}</h3>

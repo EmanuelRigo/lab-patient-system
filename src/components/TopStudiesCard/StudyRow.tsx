@@ -3,25 +3,38 @@
 import { ChevronRight } from "lucide-react";
 
 export interface StudyRowProps {
+  index: number;
   name: string;
   quantity: number;
   percentage: number;
-  color?: string;
 }
 
 export function StudyRow({
+  index,
   name,
   quantity,
   percentage,
-  color = "var(--color-brand-500)",
 }: StudyRowProps) {
   return (
-    <div className="flex items-center justify-between rounded-2xl border border-border bg-surface-muted px-4 py-3 transition-colors hover:bg-background">
+    <div className="flex items-center justify-between rounded-2xl px-4 transition-colors">
       <div className="flex items-center gap-3">
         <span
-          className="h-3 w-3 rounded-full"
-          style={{ backgroundColor: color }}
-        />
+          className="
+            inline-flex
+            h-7
+            w-7
+            items-center
+            justify-center
+            rounded-full
+            bg-primary
+            p-2
+            text-xs
+            font-semibold
+            text-primary-foreground
+          "
+        >
+          {index}
+        </span>
 
         <div className="flex flex-col">
           <span className="text-sm font-medium text-text-primary">{name}</span>
