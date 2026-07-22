@@ -77,22 +77,30 @@ export function StatCard({
   const ResolvedIcon: LucideIcon = Icon ?? fallbackIconMap[color];
 
   return (
-    <div className="group flex flex-col gap-6 rounded-xl border border-border bg-surface p-5 shadow-sm transition duration-200 ease-out hover:-translate-y-0.5 hover:shadow-md">
-      <div className="flex gap-2">
+    <div className="group flex h-16 rounded-xl border border-border bg-surface p-3 transition duration-200 ease-out hover:-translate-y-0.5">
+      <div className="flex h-full w-full gap-2">
         {/* Icono */}
         <div
-          className={`flex h-full aspect-square items-center justify-center rounded-lg ${tokens.container}`}
+          className={`flex h-full aspect-square items-center justify-center rounded-md ${tokens.container}`}
           aria-hidden="true"
         >
-          <ResolvedIcon className={`h-6 w-6 ${tokens.icon}`} strokeWidth={2} />
+          <ResolvedIcon className={`h-4 w-4 ${tokens.icon}`} strokeWidth={2} />
         </div>
         {/* Contenido textual */}
-        <div className="flex flex-col">
-          <p className="text-sm font-medium text-text-secondary">{title}</p>
-          <p className="text-3xl font-bold text-text-primary">{value}</p>
+        <div className="flex min-w-0 flex-1 flex-col justify-between">
+          <p className="text-xs font-medium leading-none text-text-secondary">
+            {title}
+          </p>
+          <div className="flex justify-between">
+            <p className="text-base font-bold leading-none text-text-primary">
+              {value}
+            </p>
+            <p className="self-end text-right text-[10px] leading-none text-text-secondary">
+              {description}
+            </p>
+          </div>
         </div>
       </div>
-      <p className="text-sm text-text-secondary">{description}</p>
     </div>
   );
 }

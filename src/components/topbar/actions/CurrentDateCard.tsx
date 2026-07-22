@@ -18,24 +18,24 @@ export default function CurrentDateCard() {
   return (
     <div
       className="
-        flex items-center gap-4
+        flex items-center gap-2 2xl:gap-4
         rounded-2xl
         border border-border
         bg-surface
-        px-4 py-3
+        px-3 py-2 2xl:px-4 2xl:py-3
         transition-all
         duration-200
       "
     >
       <div
         className="
-          flex h-10 w-10 items-center justify-center
+          flex h-7 w-7 items-center justify-center 2xl:h-10 2xl:w-10
           rounded-lg
           bg-brand-50
           text-brand-600
         "
       >
-        <CalendarDays className="h-5 w-5" />
+        <CalendarDays className="h-4 w-4 2xl:h-5 2xl:w-5" />
       </div>
 
       <div className="flex flex-col">

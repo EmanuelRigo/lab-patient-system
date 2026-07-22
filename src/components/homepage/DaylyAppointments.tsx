@@ -1,5 +1,4 @@
 import React from "react";
-import { DASHBOARD_PANEL_MIN_HEIGHT } from "@/constants/dashboard";
 // En tu entorno real:
 // import Link from "next/link";
 // import { Clock, User, Stethoscope } from "lucide-react";
@@ -167,7 +166,7 @@ const DailyAppointments: React.FC = () => {
 
   return (
     <div
-      className={`flex h-full w-full flex-col rounded-2xl border border-border bg-surface p-4 shadow-sm ${DASHBOARD_PANEL_MIN_HEIGHT}`}
+      className="flex h-full w-full flex-col rounded-2xl border border-border bg-surface p-3 shadow-none"
     >
       <div className="flex min-h-0 flex-1 flex-col">
         <div className="flex shrink-0 items-center justify-between gap-2 border-b border-border pb-2">

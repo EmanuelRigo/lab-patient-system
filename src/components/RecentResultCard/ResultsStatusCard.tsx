@@ -22,19 +22,19 @@ export function ResultsStatusCard({
   const total = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <Card className="rounded-2xl border-border bg-surface ">
-      <CardContent className="">
+    <Card className="h-full rounded-2xl border-border bg-surface py-3 shadow-none">
+      <CardContent className="px-3">
         <div className="flex flex-col gap-2">
-          <h3 className="text-lg font-semibold text-text-primary">{title}</h3>
-          <div className="grid grid-cols-[140px_1fr] items-center gap-6">
-            <div className="relative size-36">
+          <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
+          <div className="grid grid-cols-[7.5rem_1fr] items-center gap-2">
+            <div className="relative size-30">
               <ResponsiveContainer width="100%" height="100%">
                 <PieChart>
                   <Pie
                     data={data}
                     dataKey="value"
-                    innerRadius={42}
-                    outerRadius={56}
+                    innerRadius={36}
+                    outerRadius={48}
                     paddingAngle={0}
                     stroke="var(--color-surface)"
                     strokeWidth={0}
@@ -47,7 +47,7 @@ export function ResultsStatusCard({
               </ResponsiveContainer>
 
               <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-2xl font-bold text-text-primary">
+                <span className="text-lg font-bold text-text-primary">
                   {total.toLocaleString()}
                 </span>
 

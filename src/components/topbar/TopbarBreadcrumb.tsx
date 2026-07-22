@@ -42,7 +42,7 @@ const TopbarBreadcrumb = () => {
   // Caso especial: home del dashboard → solo "Dashboard"
   if (segments.length <= 1) {
     return (
-      <div className="flex items-center gap-2 text-sm min-w-0">
+      <div className="flex min-w-0 items-center gap-2 text-xs 2xl:text-sm">
         <span className="font-semibold text-text-primary truncate">
           {segments[0] ? formatSegment(segments[0]) : "Dashboard"}
         </span>
@@ -53,18 +53,18 @@ const TopbarBreadcrumb = () => {
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center gap-2 text-sm min-w-0"
+      className="flex min-w-0 items-center gap-2 text-xs 2xl:text-sm"
     >
       {/* Icono home + raíz */}
       <div className="flex items-center gap-1.5 text-text-muted shrink-0">
-        <Home className="w-4 h-4" />
+        <Home className="h-3 w-3 2xl:h-4 2xl:w-4" />
         <span className="truncate">{formatSegment(segments[0])}</span>
       </div>
 
       {/* Segmentos intermedios */}
       {segments.slice(1, -1).map((seg) => (
         <React.Fragment key={seg}>
-          <ChevronRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
+          <ChevronRight className="h-3 w-3 shrink-0 text-text-muted 2xl:h-3.5 2xl:w-3.5" />
           <span className="text-text-muted truncate">
             {formatSegment(seg)}
           </span>
@@ -72,7 +72,7 @@ const TopbarBreadcrumb = () => {
       ))}
 
       {/* Último segmento (pantalla actual) */}
-      <ChevronRight className="w-3.5 h-3.5 text-text-muted shrink-0" />
+      <ChevronRight className="h-3 w-3 shrink-0 text-text-muted 2xl:h-3.5 2xl:w-3.5" />
       <span className="font-semibold text-text-primary truncate">
         {formatSegment(segments[segments.length - 1])}
       </span>

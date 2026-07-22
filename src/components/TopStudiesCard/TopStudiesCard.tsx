@@ -25,21 +25,27 @@ export function TopStudiesCard({
   onViewAll,
 }: TopStudiesCardProps) {
   return (
-    <Card className="rounded-2xl border-border bg-surface">
-      <CardContent>
+    <Card className="rounded-2xl border-border bg-surface py-1 shadow-none">
+      <CardContent className="px-3">
         <div className="flex h-full flex-col">
           <div className="mb-6 flex items-center justify-between">
-            <div>
-              <h3 className="text-lg font-semibold text-text-primary">
-                {title}
-              </h3>
+            <div className="flex items-center gap-2">
+              <BarChart3 className="h-5 w-5 text-brand-500" />
 
-              <p className="mt-1 text-sm text-text-secondary">
-                Ranking de los estudios con mayor demanda.
-              </p>
+              <div>
+                <h3 className="text-lg font-semibold leading-none text-text-primary">
+                  {title}
+                </h3>
+              </div>
             </div>
 
-            <BarChart3 className="h-5 w-5 text-brand-500" />
+            <Button
+              variant="outline"
+              className="h-7 rounded-xl px-3 text-xs"
+              onClick={onViewAll}
+            >
+              Ver todos
+            </Button>
           </div>
 
           <div className="flex flex-1 flex-col gap-3">
@@ -53,14 +59,6 @@ export function TopStudiesCard({
               />
             ))}
           </div>
-
-          <Button
-            variant="outline"
-            className="mt-6 w-full rounded-xl"
-            onClick={onViewAll}
-          >
-            Ver todos los estudios
-          </Button>
         </div>
       </CardContent>
     </Card>

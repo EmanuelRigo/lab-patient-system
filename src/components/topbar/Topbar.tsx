@@ -21,7 +21,7 @@ const Topbar = () => {
       className="
         sticky top-0 z-30
         flex items-center gap-6
-        h-[72px] w-full
+        h-12 2xl:h-[72px] w-full
        
         border-b border-border-default
         

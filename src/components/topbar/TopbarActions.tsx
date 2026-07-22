@@ -22,9 +22,9 @@ const TopbarActions = () => {
         size="icon-lg"
         aria-label="Acción rápida"
         title="Acción rápida"
-        className="rounded-lg shadow-sm "
+        className="h-8 w-8 rounded-lg 2xl:h-10 2xl:w-10"
       >
-        <Plus className="w-5 h-5" />
+        <Plus className="h-4 w-4 2xl:h-5 2xl:w-5" />
       </Button>
 
       {/* Notificaciones */}
@@ -33,7 +33,7 @@ const TopbarActions = () => {
       {/* Separador vertical sutil */}
       <div
         aria-hidden="true"
-        className="hidden md:block w-px h-6 bg-border-default mx-1"
+        className="mx-1 hidden h-5 w-px bg-border-default md:block 2xl:h-6"
       />
 
       {/* Usuario */}

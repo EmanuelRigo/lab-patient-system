@@ -133,8 +133,8 @@ export function StudiesChartCard({
   };
 
   return (
-    <Card className="flex h-full w-full flex-col rounded-2xl border border-border bg-surface shadow-sm p-0 px-4">
-      <CardContent className="flex min-h-0 flex-1 flex-col gap-2 p-4 h-full">
+    <Card className="flex h-full w-full flex-col rounded-2xl border border-border bg-surface p-0 px-3 shadow-none">
+      <CardContent className="flex h-full min-h-0 flex-1 flex-col gap-1 p-3">
         <div className="flex shrink-0 flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1">
             <h3 className="text-base font-semibold text-text-primary">

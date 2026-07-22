@@ -27,23 +27,30 @@ export function RecentResultsCard({
   onViewAll,
 }: RecentResultsCardProps) {
   return (
-    <Card className="rounded-2xl border-border bg-surface">
-      <CardContent className="flex h-full flex-col">
-        <div className="mb-6 flex items-center justify-between">
-          <div>
-            <h3 className="text-lg font-semibold text-text-primary">{title}</h3>
+    <Card className="h-full rounded-2xl border-border bg-surface py-2 shadow-none">
+      <CardContent className="flex h-full flex-col px-3">
+        <div className="mb-1 flex items-center justify-between border-b border-border pb-1">
+          <div className="min-w-0">
+            <h3 className="text-sm font-semibold leading-none text-text-primary">
+              {title}
+            </h3>
 
-            <p className="mt-1 text-sm text-text-secondary">
+            <p className="text-[10px] leading-none text-text-secondary">
               Últimos estudios procesados por el laboratorio.
             </p>
           </div>
 
-          <Button variant="ghost" size="sm" onClick={onViewAll}>
+          <Button
+            variant="ghost"
+            size="sm"
+            className="h-5 px-2 text-[10px] text-primary"
+            onClick={onViewAll}
+          >
             Ver todos
           </Button>
         </div>
 
-        <div className="flex flex-1 flex-col gap-3">
+        <div className="flex flex-1 flex-col gap-0.5">
           {results.length === 0 ? (
             <div className="flex flex-1 items-center justify-center rounded-2xl border border-dashed border-border text-sm text-text-secondary">
               No hay resultados recientes.

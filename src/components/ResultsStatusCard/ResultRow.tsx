@@ -20,27 +20,34 @@ export function ResultRow({
   color = "var(--color-info-500)",
 }: ResultRowProps) {
   return (
-    <div className="flex items-center justify-between transition-colors">
-      <div className="flex items-center gap-3">
-        <FileText className="h-4 w-4" style={{ color }} />
+    <div className="flex h-5 items-center justify-between rounded-md px-1 transition-colors hover:bg-surface-muted">
+      <div className="flex min-w-0 items-center gap-2">
+        <FileText
+          className="h-4 w-4 shrink-0 rounded bg-surface-muted p-0.5"
+          style={{ color }}
+        />
 
-        <div className="flex flex-col">
-          <span className="text-sm font-medium text-text-primary">
+        <div className="flex min-w-0 flex-col">
+          <span className="truncate text-xs font-medium leading-none text-text-primary">
             {patient}
           </span>
 
-          <span className="text-xs text-text-secondary">{study}</span>
+          <span className="truncate text-[10px] leading-none text-text-secondary">
+            {study}
+          </span>
         </div>
       </div>
 
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2">
         <div className="text-right">
-          <p className="text-xs font-medium text-text-primary">{status}</p>
+          <p className="rounded-full border border-border px-1 text-[9px] font-medium leading-none text-text-primary">
+            {status}
+          </p>
 
-          <p className="text-xs text-text-secondary">{date}</p>
+          <p className="text-[10px] leading-none text-text-secondary">{date}</p>
         </div>
 
-        <ChevronRight className="h-4 w-4 text-text-muted" />
+        <ChevronRight className="h-3 w-3 text-text-muted" />
       </div>
     </div>
   );

@@ -19,21 +19,27 @@ export function QuickActionButton({
       variant="outline"
       onClick={onClick}
       className="
-        h-14
-        justify-start
-        gap-3
-        rounded-2xl
-        border-border
-        bg-surface
-        px-5
+      border-none
+      bg-transparent
+        h-6
+        min-w-0
+        justify-center
+        gap-1.5
+        rounded-lg
+        px-2
+        text-[10px]
         text-text-primary
-        hover:bg-surface-muted
-        hover:border-brand-300
+        shadow-none
+        transition-colors
+        hover:border-primary
+        hover:bg-primary-500/20
+        active:bg-surface-muted
+        hover:cursor-pointer
       "
     >
-      <Icon size={20} className="text-brand-600" />
+      <Icon size={13} className="shrink-0 text-primary" />
 
-      <span className="font-medium">{label}</span>
+      <span className="truncate font-medium">{label}</span>
     </Button>
   );
 }

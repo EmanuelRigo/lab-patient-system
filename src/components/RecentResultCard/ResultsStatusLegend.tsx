@@ -15,30 +15,32 @@ export function ResultsStatusLegend({ items }: ResultsStatusLegendProps) {
   const total = items.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-0.5">
       {items.map((item) => {
         const percentage =
           total === 0 ? 0 : ((item.value / total) * 100).toFixed(1);
 
         return (
           <div key={item.id} className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2">
               <span
-                className="h-3 w-3 rounded-full"
+                className="h-2 w-2 rounded-full"
                 style={{
                   backgroundColor: item.color,
                 }}
               />
 
-              <span className="text-sm text-text-primary">{item.label}</span>
+              <span className="text-[10px] text-text-primary">{item.label}</span>
             </div>
 
-            <div className="text-right">
-              <p className="font-semibold text-text-primary">
+            <div className="flex items-baseline gap-1 text-right">
+              <p className="text-[10px] font-semibold leading-none text-text-primary">
                 {item.value.toLocaleString()}
               </p>
 
-              <p className="text-xs text-text-secondary">{percentage}%</p>
+              <p className="border-l border-border pl-1 text-[10px] leading-none text-text-secondary">
+                {percentage}%
+              </p>
             </div>
           </div>
         );

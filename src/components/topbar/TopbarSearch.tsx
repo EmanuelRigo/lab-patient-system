@@ -12,14 +12,14 @@ const TopbarSearch = () => {
       <div className="relative">
         <Search
           aria-hidden="true"
-          className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted"
+          className="pointer-events-none absolute left-3 top-1/2 h-3 w-3 -translate-y-1/2 text-text-muted 2xl:h-4 2xl:w-4"
         />
         <input
           id="topbar-search"
           type="search"
           placeholder="Buscar pacientes, estudios, resultados..."
           className="
-            flex w-full h-10 rounded-xl
+            flex h-8 w-full rounded-xl 2xl:h-10
             border border-border-default bg-surface
             pl-10 pr-4 text-sm
             text-text-primary placeholder:text-text-muted

@@ -47,7 +47,7 @@ const TopbarUser = () => {
           type="button"
           aria-label="Menú de usuario"
           className={cn(
-            "flex items-center gap-2 pl-1 pr-2 h-10 rounded-full",
+            "flex h-8 items-center gap-2 rounded-full pl-1 pr-2 2xl:h-10",
             "border border-transparent",
             "hover:bg-surface-muted hover:border-border-default",
             "transition-all duration-200",
@@ -59,7 +59,7 @@ const TopbarUser = () => {
           <span
             aria-hidden="true"
             className="
-              flex items-center justify-center w-8 h-8 rounded-full
+              flex h-7 w-7 items-center justify-center rounded-full 2xl:h-8 2xl:w-8
               bg-primary-500 text-white text-xs font-semibold
               shrink-0 select-none
             "
@@ -69,17 +69,17 @@ const TopbarUser = () => {
 
           {/* Nombre + rol (se ocultan en pantallas chicas) */}
           <span className="hidden lg:flex flex-col items-start min-w-0 leading-tight">
-            <span className="text-sm font-semibold text-text-primary truncate max-w-[160px]">
+            <span className="max-w-[160px] truncate text-xs font-semibold text-text-primary 2xl:text-sm">
               {fullName}
             </span>
-            <span className="text-[11px] text-text-muted truncate max-w-[160px]">
+            <span className="max-w-[160px] truncate text-[10px] text-text-muted 2xl:text-[11px]">
               {roleLabel}
             </span>
           </span>
 
           <ChevronDown
             aria-hidden="true"
-            className="w-4 h-4 text-text-muted shrink-0"
+            className="h-3 w-3 shrink-0 text-text-muted 2xl:h-4 2xl:w-4"
           />
         </button>
       </DropdownMenuTrigger>

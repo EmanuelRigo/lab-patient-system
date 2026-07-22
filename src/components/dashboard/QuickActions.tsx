@@ -64,13 +64,9 @@ export function QuickActions({
   ];
 
   return (
-    <Card className="rounded-2xl border-border bg-surface">
-      <CardContent className="flex flex-col gap-4 px-6 ">
-        <h3 className="text-lg font-semibold text-text-primary">
-          Acciones rápidas
-        </h3>
-
-        <div className="grid grid-cols-2 gap-4 lg:grid-cols-3 xl:grid-cols-6">
+    <Card className="h-full rounded-xl border-border bg-surface py-0 shadow-none">
+      <CardContent className="flex h-full items-center px-3">
+        <div className="grid w-full grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-6">
           {actions.map((action) => (
             <QuickActionButton
               key={action.label}

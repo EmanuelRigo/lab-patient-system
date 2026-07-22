@@ -29,9 +29,9 @@ const TopbarNotifications = ({ count = 3 }: TopbarNotificationsProps) => {
         size="icon-lg"
         aria-label="Notificaciones"
         title="Notificaciones"
-        className="rounded-xl"
+        className="h-8 w-8 rounded-xl 2xl:h-10 2xl:w-10"
       >
-        <Bell className="w-5 h-5" />
+        <Bell className="h-4 w-4 2xl:h-5 2xl:w-5" />
       </Button>
 
       {showBadge && (
