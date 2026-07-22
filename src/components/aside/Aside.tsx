@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Settings, UserCircle } from "lucide-react";
 
 import { useLabSystemContext } from "@/context/LabContext";
@@ -12,16 +12,12 @@ import SidebarNav from "./SidebarNav";
 import SidebarSection from "./SidebarSection";
 import SidebarItem from "./SidebarItem";
 import SidebarFooter from "./SidebarFooter";
-import SidebarCollapseButton from "./SidebarCollapseButton";
-import SidebarQuickActions from "./SidebarQuickActions";
 
 export default function Aside() {
   const { role, setRole } = useLabSystemContext();
   const router = useRouter();
-  const pathname = usePathname();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
-  /* ── Lógica de logout (sin modificar) ── */
   const handleLogout = async () => {
     try {
       const response = await sessionApi.logout();
@@ -36,85 +32,57 @@ export default function Aside() {
     }
   };
 
-  /* ── No renderizar en login ni home (comportamiento existente) ── */
-  if (pathname === "/login" || pathname === "/error") return null;
-
   return (
-    <aside
-      className={`
-        relative flex flex-col h-full shrink-0
-        bg-gradient-to-b from-[#103E8C] via-[#1558B5] to-[#1A73D9]
-        border-r border-white/10
-        transition-[width] duration-300 ease-in-out
-        aside-slide z-20 rounded-e-xl
-        ${isCollapsed ? "w-[70px]" : "w-[230px]"}
-      `}
-    >
-      {/* ── Header: logo + collapse button ── */}
+    <aside className="p-2">
       <div
         className={`
-          flex items-center pt-3 pb-2 shrink-0
-          ${isCollapsed ? "flex-col gap-3 px-0" : "justify-between px-4"}
+          relative flex flex-col h-full shrink-0
+          bg-gradient-to-b from-[#103E8C] via-[#1558B5] to-[#1A73D9]
+          border-r border-white/10
+          transition-[width] duration-300 ease-in-out
+          z-20 rounded-md
+          ${isCollapsed ? "w-[56px]" : "w-[200px]"}
         `}
       >
-        <SidebarHeader isCollapsed={isCollapsed} />
-        <SidebarCollapseButton
-          isCollapsed={isCollapsed}
-          onToggle={() => setIsCollapsed((v) => !v)}
-        />
-      </div>
+        {/* ── Header: logo ── */}
+        <div className="flex items-center px-3 pt-3 pb-2 shrink-0">
+          <SidebarHeader isCollapsed={isCollapsed} />
+        </div>
 
-      {/* ── Separador ── */}
-      <div className="mx-3 border-t border-white/10 mb-2 shrink-0" />
+        {/* ── Separador ── */}
+        <div className="mx-3 border-t border-white/10 mb-2 shrink-0" />
 
-      {/* ── Área de navegación (scrollable) ── */}
-      <div
-        className={`
-          flex flex-col flex-1 gap-3 overflow-y-auto pb-2 scrollbar-hide
-          ${isCollapsed ? "px-2" : "px-3"}
-        `}
-      >
-        {role === "public" ? (
-          <p className="px-3 text-sm text-white/70">
-            Bienvenido, por favor inicie sesión.
-          </p>
-        ) : (
-          <>
-            {/* Navegación principal con lógica de roles */}
-            <SidebarNav role={role} isCollapsed={isCollapsed} />
+        {/* ── Área de navegación (scrollable) ── */}
+        <div
+          className={`
+            flex flex-col flex-1 gap-3 overflow-y-auto pb-2 scrollbar-hide
+            ${isCollapsed ? "px-2" : "px-3"}
+          `}
+        >
+          {/* Navegación principal con lógica de roles */}
+          <SidebarNav role={role} isCollapsed={isCollapsed} onToggle={() => setIsCollapsed((v) => !v)} />
 
-            {/* Separador entre secciones */}
-            <div className="border-t border-white/10" />
+          {/* Separador entre secciones */}
+          <div className="border-t border-white/10" />
 
-            {/* Sección Accesos Rápidos */}
-            <SidebarQuickActions role={role} isCollapsed={isCollapsed} />
+          {/* Sección Configuración */}
+          <SidebarSection title="Configuración" isCollapsed={isCollapsed}>
+            <SidebarItem
+              icon={Settings}
+              label="Configuración"
+              href="/settings"
+              isCollapsed={isCollapsed}
+            />
+            <SidebarItem
+              icon={UserCircle}
+              label="Perfil"
+              href="/profile"
+              isCollapsed={isCollapsed}
+            />
+          </SidebarSection>
+        </div>
 
-            {/* Separador entre secciones */}
-            <div className="border-t border-white/10" />
-
-            {/* Sección Configuración */}
-            <SidebarSection title="Configuración" isCollapsed={isCollapsed}>
-              <SidebarItem
-                icon={Settings}
-                label="Configuración"
-                href="/settings"
-                isActive={pathname === "/settings"}
-                isCollapsed={isCollapsed}
-              />
-              <SidebarItem
-                icon={UserCircle}
-                label="Perfil"
-                href="/profile"
-                isActive={pathname === "/profile"}
-                isCollapsed={isCollapsed}
-              />
-            </SidebarSection>
-          </>
-        )}
-      </div>
-
-      {/* ── Footer: usuario + logout ── */}
-      {role !== "public" && (
+        {/* ── Footer: usuario + logout ── */}
         <>
           <div className="mx-3 border-t border-white/10 mb-2 shrink-0" />
           <div className="shrink-0 pb-2">
@@ -125,7 +93,7 @@ export default function Aside() {
             />
           </div>
         </>
-      )}
+      </div>
     </aside>
   );
 }

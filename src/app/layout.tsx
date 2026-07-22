@@ -3,7 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 
-import Aside from "@/components/aside/Aside";
+import AsideWrapper from "@/components/aside/AsideWrapper";
 import Topbar from "@/components/topbar";
 
 import LabSystemProvider from "@/context/LabContext";
@@ -51,7 +51,7 @@ export default function RootLayout({
               />
 
               {/* Sidebar */}
-              <Aside />
+              <AsideWrapper />
 
               {/* Content */}
               <div className="flex min-w-0 flex-1 flex-col">

@@ -1,12 +1,14 @@
+"use client";
+
 import React from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { LucideIcon } from "lucide-react";
 
 type SidebarItemProps = {
   icon: LucideIcon;
   label: string;
   href: string;
-  isActive: boolean;
   isCollapsed: boolean;
 };
 
@@ -14,9 +16,11 @@ const SidebarItem = ({
   icon: Icon,
   label,
   href,
-  isActive,
   isCollapsed,
 }: SidebarItemProps) => {
+  const pathname = usePathname();
+  const isActive = pathname === href;
+
   return (
     <Link
       href={href}
