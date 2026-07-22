@@ -10,6 +10,7 @@ import LabSystemProvider from "@/context/LabContext";
 import OnlineStatus from "@/utils/OnlineStatus";
 
 import { Toast } from "@/components/atomics/Toast";
+import UnderConstructionBadge from "@/components/atomics/UnderConstructionBadge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -55,6 +56,8 @@ export default function RootLayout({
 
               {/* Content */}
               <div className="flex min-w-0 flex-1 flex-col">
+                {/* <UnderConstructionBadge /> */}
+
                 {/* Topbar */}
                 <Topbar />
 

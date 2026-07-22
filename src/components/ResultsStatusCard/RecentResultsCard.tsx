@@ -27,22 +27,15 @@ export function RecentResultsCard({
   onViewAll,
 }: RecentResultsCardProps) {
   return (
-    <Card className="h-full rounded-2xl border-border bg-surface py-2 shadow-none">
-      <CardContent className="flex h-full flex-col px-3">
-        <div className="mb-1 flex items-center justify-between border-b border-border pb-1">
-          <div className="min-w-0">
-            <h3 className="text-sm font-semibold leading-none text-text-primary">
-              {title}
-            </h3>
-
-            <p className="text-[10px] leading-none text-text-secondary">
-              Últimos estudios procesados por el laboratorio.
-            </p>
-          </div>
-
+    <Card className="h-full rounded-xl border-border bg-surface py-2 shadow-none">
+      <CardContent className="flex h-full flex-col px-4">
+        {/* Header */}
+        <div className="mb-2 flex items-center justify-between border-b border-border pb-2">
+          <h3 className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
+            {title}
+          </h3>
           <Button
             variant="ghost"
-            size="sm"
             className="h-5 px-2 text-[10px] text-primary"
             onClick={onViewAll}
           >
@@ -50,9 +43,10 @@ export function RecentResultsCard({
           </Button>
         </div>
 
+        {/* Rows */}
         <div className="flex flex-1 flex-col gap-0.5">
           {results.length === 0 ? (
-            <div className="flex flex-1 items-center justify-center rounded-2xl border border-dashed border-border text-sm text-text-secondary">
+            <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed border-border text-xs text-text-muted">
               No hay resultados recientes.
             </div>
           ) : (

@@ -22,41 +22,45 @@ export function ResultsStatusCard({
   const total = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <Card className="h-full rounded-2xl border-border bg-surface py-3 shadow-none">
-      <CardContent className="px-3">
-        <div className="flex flex-col gap-2">
-          <h3 className="text-sm font-semibold text-text-primary">{title}</h3>
-          <div className="grid grid-cols-[7.5rem_1fr] items-center gap-2">
-            <div className="relative size-30">
-              <ResponsiveContainer width="100%" height="100%">
-                <PieChart>
-                  <Pie
-                    data={data}
-                    dataKey="value"
-                    innerRadius={36}
-                    outerRadius={48}
-                    paddingAngle={0}
-                    stroke="var(--color-surface)"
-                    strokeWidth={0}
-                  >
-                    {data.map((entry) => (
-                      <Cell key={entry.id} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
+    <Card className="h-full rounded-xl border-border bg-surface py-2 shadow-none">
+      <CardContent className="flex h-full flex-col px-4">
+        {/* Header */}
+        <div className="mb-2 border-b border-border pb-2">
+          <h3 className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
+            {title}
+          </h3>
+        </div>
 
-              <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-                <span className="text-lg font-bold text-text-primary">
-                  {total.toLocaleString()}
-                </span>
+        {/* Content */}
+        <div className="grid flex-1 grid-cols-[7rem_1fr] items-center gap-2">
+          <div className="relative size-28">
+            <ResponsiveContainer width="100%" height="100%">
+              <PieChart>
+                <Pie
+                  data={data}
+                  dataKey="value"
+                  innerRadius={34}
+                  outerRadius={46}
+                  paddingAngle={0}
+                  stroke="var(--color-surface)"
+                  strokeWidth={0}
+                >
+                  {data.map((entry) => (
+                    <Cell key={entry.id} fill={entry.color} />
+                  ))}
+                </Pie>
+              </PieChart>
+            </ResponsiveContainer>
 
-                <span className="text-[10px] text-text-secondary">Total</span>
-              </div>
+            <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
+              <span className="text-base font-bold leading-none text-text-primary">
+                {total.toLocaleString()}
+              </span>
+              <span className="text-[10px] text-text-muted">Total</span>
             </div>
-
-            <ResultsStatusLegend items={data} />
           </div>
+
+          <ResultsStatusLegend items={data} />
         </div>
       </CardContent>
     </Card>
