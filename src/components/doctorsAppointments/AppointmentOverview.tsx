@@ -2,37 +2,25 @@
 import React, { useState } from "react";
 import {
   Search,
-  Calendar,
   Stethoscope,
   CheckCircle,
   User,
   Clock,
   Plus,
+  X,
+  CalendarDays,
   ClipboardList,
 } from "lucide-react";
 
-// --- Componentes Mock para simular ShadCN/UI ---
-const Input = ({
-  className = "",
-  ...props
-}: React.InputHTMLAttributes<HTMLInputElement>) => (
-  <input {...props} className={`p-2 border rounded-lg ${className}`} />
-);
-
-const Label = ({
-  className = "",
-  ...props
-}: React.LabelHTMLAttributes<HTMLLabelElement>) => (
-  <label {...props} className={`text-gray-700 font-medium ${className}`} />
-);
-
-const Button = ({
-  className = "",
-  ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
-  <button {...props} className={`text-white rounded-lg p-2 ${className}`} />
-);
-// -----------------------------------------------
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 // --- DATOS HARDCODEADOS DE CITAS ---
 type Appointment = {
@@ -87,143 +75,189 @@ const hardcodedAppointments: Appointment[] = [
   },
 ];
 
+// --- Mapeo de estado -> estilos de badge (Design System) ---
+const statusBadgeStyles: Record<string, string> = {
+  Programada: "bg-info-100 text-info-700",
+  Completada: "bg-success-100 text-success-700",
+  Pendiente: "bg-warning-100 text-warning-700",
+  Cancelada: "bg-danger-100 text-danger-700",
+  Badllamada: "bg-danger-100 text-danger-700",
+};
+
 export default function AppointmentOverview() {
   const [patientSearch, setPatientSearch] = useState("");
   const [selectedStudy, setSelectedStudy] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
 
+  const handleClearFilters = () => {
+    setPatientSearch("");
+    setSelectedStudy("");
+    setSelectedDate("");
+    setSelectedStatus("");
+  };
+
+  const getStatusBadge = (status: string) =>
+    statusBadgeStyles[status] ?? "bg-surface-muted text-text-secondary";
+
   return (
-    <div className="w-full bg-neutral-100 rounded-xl shadow-lg p-8 flex gap-8 items-start">
-      {/* Columna de Filtros */}
-      <div className="flex flex-col gap-6 w-full max-w-sm border-r pr-6 border-gray-200">
-        <h2 className="text-xl font-bold text-sky-800 border-b pb-2">
-          Filtros de Citas
-        </h2>
-
-        {/* 1. Paciente */}
-        <div>
-          <Label className="flex items-center gap-2 text-gray-700 mb-2">
-            <User className="w-4 h-4 text-sky-600" />
-            Paciente
-          </Label>
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <Input
-              type="text"
-              placeholder="Buscar paciente..."
-              className="w-full rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500 pl-10 bg-white"
-              value={patientSearch}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setPatientSearch(e.target.value)
-              }
-            />
+    <div className="w-full bg-surface rounded-2xl border border-border p-6 flex flex-col gap-6">
+      {/* Header */}
+      <div className="flex items-start justify-between gap-4 flex-wrap">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-surface-muted">
+              <ClipboardList className="w-5 h-5 text-primary" />
+            </div>
+            <h1 className="text-2xl font-semibold text-text-primary">
+              Citas Médicas
+            </h1>
           </div>
+          <p className="text-sm text-text-secondary">
+            Busca, filtra y gestiona las citas del laboratorio
+          </p>
         </div>
-
-        {/* 2. Estudio */}
-        <div>
-          <Label className="flex items-center gap-2 text-gray-700 mb-2">
-            <Stethoscope className="w-4 h-4 text-sky-600" />
-            Estudio médico
-          </Label>
-          <select
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
-            value={selectedStudy}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setSelectedStudy(e.target.value)
-            }
-          >
-            <option value="">Todos los estudios</option>
-            <option value="Radiografía">Radiografía</option>
-            <option value="Mamografía">Mamografía</option>
-            <option value="Ecografía">Ecografía</option>
-            <option value="Andiografía Toráxica">Andiografía Toráxica</option>
-          </select>
-        </div>
-
-        {/* 3. Fecha y Hora */}
-        <div>
-          <Label className="flex items-center gap-2 text-gray-700 mb-2">
-            <Calendar className="w-4 h-4 text-sky-600" />
-            Fecha y hora
-          </Label>
-          <Input
-            type="datetime-local"
-            className="w-full rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500 bg-white"
-            value={selectedDate}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setSelectedDate(e.target.value)
-            }
-          />
-        </div>
-
-        {/* 4. Estado */}
-        <div>
-          <Label className="flex items-center gap-2 text-gray-700 mb-2">
-            <CheckCircle className="w-4 h-4 text-sky-600" />
-            Estado
-          </Label>
-          <select
-            className="w-full border rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500 bg-white"
-            value={selectedStatus}
-            onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-              setSelectedStatus(e.target.value)
-            }
-          >
-            <option value="">Todos los estados</option>
-            <option value="Programada">Programada</option>
-            <option value="Completada">Completada</option>
-            <option value="Badllamada">Badllamada</option>
-            <option value="Cancelada">Cancelada</option>
-          </select>
-        </div>
-
-        {/* Botón */}
-        <Button className="w-full py-3 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-2 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg mt-4">
-          <ClipboardList className="w-6 h-6" />
-          Buscar Citas
+        <Button className="bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-4 rounded-xl">
+          <Plus className="w-4 h-4" />
+          Nueva cita
         </Button>
       </div>
 
-      {/* Columna Derecha */}
-      <div className="flex flex-col gap-4 flex-grow">
-        <h2 className="text-xl font-bold text-sky-800 mb-2 border-b pb-2">
-          Resultados de Citas
-        </h2>
+      {/* Buscador principal (ancho completo) */}
+      <div className="relative w-full">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none" />
+        <Input
+          type="text"
+          placeholder="Buscar paciente..."
+          className="h-11 w-full pl-10 pr-4 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-muted"
+          value={patientSearch}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setPatientSearch(e.target.value)
+          }
+        />
+      </div>
 
-        <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
+      {/* Filtros rápidos en fila horizontal */}
+      <div className="flex flex-col gap-3">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-medium text-text-secondary">
+            Filtros rápidos
+          </h2>
+        </div>
+        <div className="flex flex-wrap items-center gap-3">
+          {/* Estudio */}
+          <div className="relative">
+            <Stethoscope className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none z-10" />
+            <Select value={selectedStudy} onValueChange={setSelectedStudy}>
+              <SelectTrigger className="h-11 min-w-[200px] pl-10 rounded-xl border-border bg-surface text-text-primary">
+                <SelectValue placeholder="Todos los estudios" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Radiografía">Radiografía</SelectItem>
+                <SelectItem value="Mamografía">Mamografía</SelectItem>
+                <SelectItem value="Ecografía">Ecografía</SelectItem>
+                <SelectItem value="Andiografía Toráxica">
+                  Andiografía Toráxica
+                </SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Estado */}
+          <div className="relative">
+            <CheckCircle className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none z-10" />
+            <Select value={selectedStatus} onValueChange={setSelectedStatus}>
+              <SelectTrigger className="h-11 min-w-[180px] pl-10 rounded-xl border-border bg-surface text-text-primary">
+                <SelectValue placeholder="Todos los estados" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="Programada">Programada</SelectItem>
+                <SelectItem value="Completada">Completada</SelectItem>
+                <SelectItem value="Badllamada">Badllamada</SelectItem>
+                <SelectItem value="Cancelada">Cancelada</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Fecha */}
+          <div className="relative">
+            <CalendarDays className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted pointer-events-none z-10" />
+            <Input
+              type="datetime-local"
+              className="h-11 min-w-[200px] pl-10 rounded-xl border-border bg-surface text-text-primary"
+              value={selectedDate}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setSelectedDate(e.target.value)
+              }
+            />
+          </div>
+
+          {/* Limpiar filtros */}
+          <Button
+            variant="outline"
+            onClick={handleClearFilters}
+            className="h-11 px-4 rounded-xl border-border bg-surface text-text-secondary hover:bg-surface-muted hover:text-text-primary"
+          >
+            <X className="w-4 h-4" />
+            Limpiar
+          </Button>
+        </div>
+      </div>
+
+      {/* Lista de resultados */}
+      <div className="flex flex-col gap-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-sm font-medium text-text-secondary">
+            Lista de citas
+          </h2>
+          <span className="text-xs text-text-muted">
+            {hardcodedAppointments.length} resultados
+          </span>
+        </div>
+
+        <div className="flex flex-col gap-3 max-h-[28rem] overflow-y-auto pr-1">
           {hardcodedAppointments.map((appointment) => (
             <div
               key={appointment.id}
-              className="bg-white p-4 rounded-lg shadow-md border-l-4 border-sky-500 flex items-center justify-between transition-shadow hover:shadow-lg"
+              className="group flex items-center justify-between gap-4 rounded-xl border border-border bg-surface p-4 transition-colors hover:bg-surface-muted"
             >
-              <div className="flex items-center gap-4">
-                <User className="w-6 h-6 text-sky-700" />
-                <div>
-                  <p className="font-semibold text-gray-800">
+              <div className="flex items-center gap-4 min-w-0 flex-1">
+                {/* Avatar / Icono */}
+                <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-surface-muted shrink-0">
+                  <User className="w-5 h-5 text-text-secondary" />
+                </div>
+
+                {/* Info */}
+                <div className="flex flex-col min-w-0">
+                  <span className="text-sm font-semibold text-text-primary truncate">
                     {appointment.patientName}
-                  </p>
-                  <p className="text-sm text-gray-600 flex items-center gap-1">
-                    <Clock className="w-3 h-3" /> {appointment.time}
-                  </p>
-                  <p className="text-sm text-gray-600 font-medium mt-1">
+                  </span>
+                  <span className="text-sm text-text-secondary truncate">
                     {appointment.study}
-                  </p>
+                  </span>
+                  <span className="flex items-center gap-1 text-xs text-text-muted mt-1">
+                    <Clock className="w-3 h-3" />
+                    {appointment.time}
+                  </span>
                 </div>
               </div>
-              <div className="flex items-center gap-3">
+
+              {/* Estado + Acción */}
+              <div className="flex items-center gap-3 shrink-0">
                 <span
-                  className={`px-3 py-1 rounded-full text-xs font-medium ${appointment.statusColor}`}
+                  className={`px-3 py-1 rounded-full text-xs font-medium ${getStatusBadge(
+                    appointment.status
+                  )}`}
                 >
                   {appointment.status}
                 </span>
-                <button
-                  title="Agregar al Turno Actual"
-                  className="bg-sky-500 text-white rounded-full p-2 hover:bg-sky-600 transition-colors shadow-sm"
+                <Button
+                  size="sm"
+                  className="h-9 px-3 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
                 >
                   <Plus className="w-4 h-4" />
-                </button>
+                  Agregar
+                </Button>
               </div>
             </div>
           ))}

@@ -6,10 +6,19 @@ import ErrorModal from "../atomics/ErrorModal";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useRouter } from "next/navigation";
 import { useLabSystemContext } from "@/context/LabContext";
 import {
   User,
+  UserRoundPlus,
   Calendar,
   Phone,
   MapPin,
@@ -101,204 +110,251 @@ const PatientForm = () => {
     }
   };
 
+  const handleCancel = () => {
+    router.push("/lab-dashboard/patients");
+  };
+
   return (
-    <>
-      {/* <Toast
-        message="Paciente agregado con éxito"
-        color="green"
-        visible={showToast}
-      /> */}
-      <div
-        className=" h-full relative flex flex-col items-center justify-center mx-auto overflow-hidden rounded-4xl
-  opacity-0  animate-fade-in"
-      >
-        <div className="w-full flex flex-col items-center pt-10 mb-8 z-10">
-          {/* Título */}
-          <h1 className="text-2xl 2xl:text-4xl font-bold text-sky-100/70 absolute top-16  2xl:top-40">
-            Agregar Nuevo Paciente
-          </h1>
+    <div className="w-full flex flex-col gap-6">
+      {/* Header */}
+      <div className="flex items-start gap-4">
+        <div className="flex items-center justify-center w-12 h-12 rounded-2xl bg-surface border border-border shrink-0">
+          <UserRoundPlus className="w-6 h-6 text-primary" />
         </div>
-        <form
-          onSubmit={handleSubmit}
-          className="w-full max-w-3xl mx-auto bg-neutral-100 rounded-xl shadow-lg p-8 flex flex-col gap-6"
-        >
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
-            {/* Columna 1 */}
-            <div className=" space-y-4 2xl:space-y-6">
-              <div>
-                <Label
-                  htmlFor="firstname"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <User className="w-4 h-4 text-sky-600" />
-                  Nombre
-                </Label>
-                <Input
-                  id="firstname"
-                  name="firstname"
-                  value={form.firstname}
-                  onChange={handleChange}
-                  placeholder="Ingresa el nombre"
-                  required
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
+        <div className="flex flex-col gap-1">
+          <h1 className="text-2xl font-semibold text-text-primary">
+            Nuevo paciente
+          </h1>
+          <p className="text-sm text-text-secondary">
+            Complete la información para registrar un nuevo paciente en el
+            sistema.
+          </p>
+        </div>
+      </div>
+
+      <form onSubmit={handleSubmit}>
+        <Card className="bg-surface border border-border rounded-2xl gap-4 py-0">
+          <CardHeader className="px-6 pt-6 pb-2">
+            <CardTitle className="text-lg font-semibold text-text-primary">
+              Información del paciente
+            </CardTitle>
+            <CardDescription className="text-text-secondary">
+              Datos personales y de contacto del nuevo registro.
+            </CardDescription>
+          </CardHeader>
+
+          <CardContent className="px-6 pb-6">
+            <div className="flex flex-col gap-6">
+              {/* Información personal */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2 pb-2 border-b border-border">
+                  <User className="w-4 h-4 text-primary" />
+                  <h3 className="text-sm font-semibold text-text-primary">
+                    Información personal
+                  </h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <Label
+                      htmlFor="firstname"
+                      className="text-text-primary"
+                    >
+                      <User className="w-4 h-4 text-primary" />
+                      Nombre
+                    </Label>
+                    <Input
+                      id="firstname"
+                      name="firstname"
+                      value={form.firstname}
+                      onChange={handleChange}
+                      placeholder="Ingresa el nombre"
+                      required
+                      autoComplete="given-name"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label
+                      htmlFor="lastname"
+                      className="text-text-primary"
+                    >
+                      <User className="w-4 h-4 text-primary" />
+                      Apellido
+                    </Label>
+                    <Input
+                      id="lastname"
+                      name="lastname"
+                      value={form.lastname}
+                      onChange={handleChange}
+                      placeholder="Ingresa el apellido"
+                      required
+                      autoComplete="family-name"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label
+                      htmlFor="secondname"
+                      className="text-text-primary"
+                    >
+                      <User className="w-4 h-4 text-primary" />
+                      Segundo nombre (opcional)
+                    </Label>
+                    <Input
+                      id="secondname"
+                      name="secondname"
+                      value={form.secondname}
+                      onChange={handleChange}
+                      placeholder="Ingresa el segundo nombre"
+                      autoComplete="additional-name"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="dni" className="text-text-primary">
+                      <Fingerprint className="w-4 h-4 text-primary" />
+                      DNI
+                    </Label>
+                    <Input
+                      id="dni"
+                      name="dni"
+                      type="number"
+                      value={form.dni}
+                      onChange={handleChange}
+                      placeholder="Ingresa el DNI"
+                      required
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <Label htmlFor="secondname" className="text-gray-700 mb-2">
-                  <User className="w-4 h-4 text-sky-600" />
-                  Segundo Nombre (opcional)
-                </Label>
-                <Input
-                  id="secondname"
-                  name="secondname"
-                  value={form.secondname}
-                  onChange={handleChange}
-                  placeholder="Ingresa el segundo nombre"
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
+              {/* Información del paciente (fecha) */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2 pb-2 border-b border-border">
+                  <Calendar className="w-4 h-4 text-primary" />
+                  <h3 className="text-sm font-semibold text-text-primary">
+                    Información del paciente
+                  </h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <Label
+                      htmlFor="birthDate"
+                      className="text-text-primary"
+                    >
+                      <Calendar className="w-4 h-4 text-primary" />
+                      Fecha de nacimiento
+                    </Label>
+                    <Input
+                      id="birthDate"
+                      name="birthDate"
+                      type="date"
+                      value={form.birthDate.toISOString().split("T")[0]}
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setForm((prev) => ({
+                          ...prev,
+                          birthDate: new Date(e.target.value),
+                        }))
+                      }
+                      required
+                      autoComplete="bday"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+                </div>
               </div>
 
-              <div>
-                <Label
-                  htmlFor="lastname"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <User className="w-4 h-4 text-sky-600" />
-                  Apellido
-                </Label>
-                <Input
-                  id="lastname"
-                  name="lastname"
-                  value={form.lastname}
-                  onChange={handleChange}
-                  placeholder="Ingresa el apellido"
-                  required
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
-              </div>
+              {/* Información de contacto */}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center gap-2 pb-2 border-b border-border">
+                  <Phone className="w-4 h-4 text-primary" />
+                  <h3 className="text-sm font-semibold text-text-primary">
+                    Información de contacto
+                  </h3>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="phone" className="text-text-primary">
+                      <Phone className="w-4 h-4 text-primary" />
+                      Teléfono
+                    </Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      value={form.phone}
+                      onChange={handleChange}
+                      placeholder="Ingresa el teléfono"
+                      required
+                      autoComplete="tel"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
 
-              <div>
-                <Label
-                  htmlFor="phone"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <Phone className="w-4 h-4 text-sky-600" />
-                  Teléfono
-                </Label>
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  value={form.phone}
-                  onChange={handleChange}
-                  placeholder="Ingresa el teléfono"
-                  required
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
+                  <div className="flex flex-col gap-2">
+                    <Label htmlFor="email" className="text-text-primary">
+                      <Mail className="w-4 h-4 text-primary" />
+                      Correo electrónico (opcional)
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      placeholder="correo@ejemplo.com"
+                      autoComplete="email"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-2 md:col-span-2">
+                    <Label htmlFor="address" className="text-text-primary">
+                      <MapPin className="w-4 h-4 text-primary" />
+                      Dirección
+                    </Label>
+                    <Input
+                      id="address"
+                      name="address"
+                      value={form.address}
+                      onChange={handleChange}
+                      placeholder="Ingresa la dirección completa"
+                      required
+                      autoComplete="street-address"
+                      className="h-11 rounded-xl border-border bg-surface text-text-primary placeholder:text-text-secondary focus-visible:border-primary focus-visible:ring-primary/20"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
+          </CardContent>
 
-            {/* Columna 2 */}
-            <div className="space-y-4 2xl:space-y-6">
-              <div>
-                <Label
-                  htmlFor="birthDate"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <Calendar className="w-4 h-4 text-sky-600" />
-                  Fecha de nacimiento
-                </Label>
-                <Input
-                  id="birthDate"
-                  name="birthDate"
-                  type="date"
-                  value={form.birthDate.toISOString().split("T")[0]}
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setForm((prev) => ({
-                      ...prev,
-                      birthDate: new Date(e.target.value),
-                    }))
-                  }
-                  required
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="dni"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <Fingerprint className="w-4 h-4 text-sky-600" />
-                  DNI
-                </Label>
-                <Input
-                  id="dni"
-                  name="dni"
-                  type="number"
-                  value={form.dni}
-                  onChange={handleChange}
-                  placeholder="Ingresa el DNI"
-                  required
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="email"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <Mail className="w-4 h-4 text-sky-600" />
-                  Correo electrónico (opcional)
-                </Label>
-                <Input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={form.email}
-                  onChange={handleChange}
-                  placeholder="correo@ejemplo.com"
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
-              </div>
-
-              <div>
-                <Label
-                  htmlFor="address"
-                  className="flex items-center gap-2 text-gray-700 mb-2"
-                >
-                  <MapPin className="w-4 h-4 text-sky-600" />
-                  Dirección
-                </Label>
-                <Input
-                  id="address"
-                  name="address"
-                  value={form.address}
-                  onChange={handleChange}
-                  placeholder="Ingresa la dirección completa"
-                  required
-                  className="rounded-lg border-gray-300 focus:border-sky-500 focus:ring-sky-500"
-                />
-              </div>
-            </div>
-          </div>
-
-          {/* Botón */}
-          <div className="flex justify-center">
+          <CardFooter className="px-6 py-4 border-t border-border flex items-center justify-end gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleCancel}
+              className="h-11 px-4 rounded-xl border-border bg-surface text-text-secondary hover:bg-surface-muted hover:text-text-primary"
+            >
+              Cancelar
+            </Button>
             <Button
               type="submit"
-              className="w-full md:w-1/2 py-7 rounded-lg bg-sky-900/80 hover:bg-sky-600 cursor-pointer text-white flex items-center justify-center gap-6 text-lg font-semibold transition-all duration-300 shadow-md hover:shadow-lg"
+              className="h-11 px-4 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              <PlusCircle className="w-10 h-10" />
-              Agregar Paciente
+              <PlusCircle className="w-4 h-4" />
+              Guardar paciente
             </Button>
-          </div>
-        </form>
-      </div>{" "}
+          </CardFooter>
+        </Card>
+      </form>
+
       {error && <ErrorModal message={error} onClose={() => setError(null)} />}
-    </>
+    </div>
   );
 };
 
