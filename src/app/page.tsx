@@ -112,18 +112,20 @@ export default function DashboardButtons() {
   return (
     <div className="h-full w-full">
       <div className="mx-auto w-full max-w-[1560px] p-4 h-full">
-        <div className="grid h-full grid-cols-5 grid-rows-[3rem_4rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_10rem_0_2.5rem] gap-2 2xl:grid-rows-[4rem_4rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_10rem_0_2.5rem]">
+        <div className="grid h-full grid-cols-5 grid-rows-[3rem_3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem] gap-2 2xl:grid-rows-[4rem_3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem]">
           {/* 1 - Header */}
-          <section className="col-span-5 h-12 2xl:h-16">
+          <section className="col-span-5">
             <div className="flex h-full items-center justify-between">
-              <div>
-                <h2 className="text-lg font-bold text-text-primary 2xl:text-2xl">
-                  ¡Bienvenido al sistema del laboratorio Mayra!
-                </h2>
-
-                <p className="mt-1 text-xs leading-none text-text-secondary 2xl:mt-2 2xl:text-base 2xl:leading-normal">
-                  Aquí puedes gestionar pacientes, estudios médicos y personal
-                  del laboratorio de manera eficiente.
+              <div className="flex flex-col justify-center">
+                <div className="flex items-center gap-2">
+                  <span className="h-2 w-2 rounded-full bg-success-500" />
+                  <h2 className="text-base font-bold text-text-primary 2xl:text-xl">
+                    ¡Bienvenido al sistema del laboratorio Mayra!
+                  </h2>
+                </div>
+                <p className="mt-0.5 text-xs text-text-secondary 2xl:text-sm">
+                  Gestión integral de pacientes, estudios de laboratorio y
+                  personal.
                 </p>
               </div>
 
@@ -132,7 +134,7 @@ export default function DashboardButtons() {
           </section>
 
           {/* 2 - Stats */}
-          <section className="col-span-5 h-16 row-start-2">
+          <section className="col-span-5 h-12 row-start-2">
             <StatsCards />
           </section>
 
@@ -147,23 +149,23 @@ export default function DashboardButtons() {
           </section>
 
           {/* 5 - Panel lateral */}
-          <section className="row-span-3 col-start-5 row-start-3 flex h-full min-h-0 flex-col">
+          <section className="col-start-5 row-span-3 row-start-3 flex h-full min-h-0 flex-col">
             <DaylyAppointments />
           </section>
 
-          {/* 4 - Acciones rápidas */}
-          <section className="col-span-5 mt-2 h-10 row-start-8">
-            <QuickActions />
-          </section>
-
           {/* 6 - Resumen de resultados */}
-          <section className="col-span-5 h-40 row-span-2 row-start-6 grid grid-cols-3 gap-2">
+          <section className="col-span-5 row-start-6 grid h-[8.5rem] min-h-0 grid-cols-3 gap-2">
             <ResultsStatusCard data={resultsStatus} />
             <TopStudiesCard
               studies={topStudies}
               onViewAll={() => console.log("Ver todos")}
             />
             <RecentResultsCard results={recentResults} />
+          </section>
+
+          {/* 4 - Acciones rápidas */}
+          <section className="col-span-5 row-start-7 h-10 min-h-0">
+            <QuickActions />
           </section>
         </div>
       </div>

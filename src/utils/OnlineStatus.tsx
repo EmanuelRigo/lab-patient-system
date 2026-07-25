@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import sessionApi from "@/services/session.api";
 
@@ -10,21 +10,22 @@ interface RootLayoutProps {
 const OnlineStatus = ({ children }: RootLayoutProps) => {
   const router = useRouter();
   const pathname = usePathname();
+  const hasCheckedOnMount = useRef(false);
+
+  console.log("🌐 [OnlineStatus] Rendered | Pathname:", pathname);
 
   useEffect(() => {
+    // Evita volver a ejecutar el chequeo en cada cambio de ruta interna
+    if (hasCheckedOnMount.current) return;
+    hasCheckedOnMount.current = true;
+
     const fetchOnlineStatus = async () => {
       try {
-        console.log("🚀 fetchOnlineStatus: checking session status...");
+        console.log("🚀 OnlineStatus: checking session status on mount...");
         const response = await sessionApi.checkOnlineStatus();
-        console.log("🚀 fetchOnlineStatus: response status", response.status);
 
         if (response.status !== 200) {
-          const cookies = document.cookie.split("; ");
-          for (const cookie of cookies) {
-            const eqPos = cookie.indexOf("=");
-            const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-            document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}; secure; samesite=strict`;
-          }
+          clearAuthCookies();
           if (pathname !== "/login") {
             router.push("/login");
           }
@@ -32,16 +33,9 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
         }
 
         const data = await response.json();
-        console.log("🚀 fetchOnlineStatus: response data", data);
 
         const isOnline = Boolean(
           data?.response && Object.keys(data.response).length > 0,
-        );
-        console.log(
-          "🚀 fetchOnlineStatus: isOnline",
-          isOnline,
-          "user",
-          data?.response,
         );
 
         if (!isOnline) {
@@ -63,9 +57,21 @@ const OnlineStatus = ({ children }: RootLayoutProps) => {
     };
 
     fetchOnlineStatus();
-  }, [router, pathname]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router]);
 
   return <>{children}</>;
 };
 
+function clearAuthCookies() {
+  const cookies = document.cookie.split("; ");
+  for (const cookie of cookies) {
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=${window.location.hostname}; secure; samesite=strict`;
+  }
+}
+
 export default OnlineStatus;
+

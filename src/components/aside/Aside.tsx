@@ -18,6 +18,8 @@ export default function Aside() {
   const router = useRouter();
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  console.log("🧩 [Aside] Rendered | Role:", role, "| IsCollapsed:", isCollapsed);
+
   const handleLogout = async () => {
     try {
       const response = await sessionApi.logout();

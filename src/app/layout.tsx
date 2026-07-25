@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 
 import "./globals.css";
 
@@ -10,21 +10,22 @@ import LabSystemProvider from "@/context/LabContext";
 import OnlineStatus from "@/utils/OnlineStatus";
 
 import { Toast } from "@/components/atomics/Toast";
-import UnderConstructionBadge from "@/components/atomics/UnderConstructionBadge";
 
-const geistSans = Geist({
+const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "Lab Patient System",
-  description: "Laboratory Management System",
+  description: "Sistema de gestión de laboratorio clínico y pacientes",
 };
 
 export default function RootLayout({
@@ -32,19 +33,17 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  console.log("🎨 [RootLayout] Rendered");
+
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+    <html
+      lang="es"
+      className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}
+    >
+      <body className="font-sans antialiased bg-background text-foreground">
         <LabSystemProvider>
           <OnlineStatus>
-            <div
-              className="flex h-dvh w-full overflow-hidden
-            bg-background
-             
-             "
-            >
+            <div className="flex h-dvh w-full overflow-hidden bg-background">
               <Toast
                 message="Paciente agregado con éxito!"
                 color="green"
@@ -56,13 +55,11 @@ export default function RootLayout({
 
               {/* Content */}
               <div className="flex min-w-0 flex-1 flex-col">
-                {/* <UnderConstructionBadge /> */}
-
                 {/* Topbar */}
                 <Topbar />
 
                 {/* Main */}
-                <main className="flex-1 overflow-y-auto ">
+                <main className="flex-1 overflow-y-auto">
                   <div className="mx-auto flex w-full max-w-full flex-col h-full">
                     {children}
                   </div>

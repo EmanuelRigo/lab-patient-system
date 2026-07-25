@@ -27,24 +27,29 @@ import type { StatCardColor, StatCardProps } from "./types";
 const colorTokens: Record<StatCardColor, { container: string; icon: string }> =
   {
     primary: {
-      container: "bg-primary-600",
-      icon: "text-white",
+      container:
+        "bg-primary-50 text-primary-600 border border-primary-200/60 dark:bg-primary-950/60 dark:text-primary-400 dark:border-primary-800/50",
+      icon: "text-primary-600 dark:text-primary-400",
     },
     success: {
-      container: "bg-success-600",
-      icon: "text-white",
+      container:
+        "bg-success-50 text-success-600 border border-success-200/60 dark:bg-success-950/60 dark:text-success-400 dark:border-success-800/50",
+      icon: "text-success-600 dark:text-success-400",
     },
     warning: {
-      container: "bg-warning-600",
-      icon: "text-white",
+      container:
+        "bg-warning-50 text-warning-600 border border-warning-200/60 dark:bg-warning-950/60 dark:text-warning-400 dark:border-warning-800/50",
+      icon: "text-warning-600 dark:text-warning-400",
     },
     danger: {
-      container: "bg-danger-600",
-      icon: "text-white",
+      container:
+        "bg-danger-50 text-danger-600 border border-danger-200/60 dark:bg-danger-950/60 dark:text-danger-400 dark:border-danger-800/50",
+      icon: "text-danger-600 dark:text-danger-400",
     },
     info: {
-      container: "bg-info-600",
-      icon: "text-white",
+      container:
+        "bg-info-50 text-info-600 border border-info-200/60 dark:bg-info-950/60 dark:text-info-400 dark:border-info-800/50",
+      icon: "text-info-600 dark:text-info-400",
     },
   };
 
@@ -77,30 +82,33 @@ export function StatCard({
   const ResolvedIcon: LucideIcon = Icon ?? fallbackIconMap[color];
 
   return (
-    <div className="group flex h-16 rounded-xl border border-border bg-surface p-3 transition duration-200 ease-out hover:-translate-y-0.5">
-      <div className="flex h-full w-full gap-2">
-        {/* Icono */}
+    <div className="group flex h-12 items-center rounded-lg border border-border bg-surface px-2.5 py-1.5 transition duration-150 ease-out hover:border-border-strong hover:bg-surface-muted/40">
+      <div className="flex w-full items-center gap-2.5">
+        {/* Icono estilizado */}
         <div
-          className={`flex h-full aspect-square items-center justify-center rounded-md ${tokens.container}`}
+          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition-transform duration-150 group-hover:scale-105 ${tokens.container}`}
           aria-hidden="true"
         >
           <ResolvedIcon className={`h-4 w-4 ${tokens.icon}`} strokeWidth={2} />
         </div>
         {/* Contenido textual */}
-        <div className="flex min-w-0 flex-1 flex-col justify-between">
-          <p className="text-xs font-medium leading-none text-text-secondary">
+        <div className="flex min-w-0 flex-1 flex-col justify-center gap-0.5">
+          <p className="truncate text-[11px] font-medium leading-none text-text-secondary">
             {title}
           </p>
-          <div className="flex justify-between">
-            <p className="text-base font-bold leading-none text-text-primary">
+          <div className="flex items-baseline justify-between gap-1">
+            <p className="text-sm font-bold leading-none text-text-primary">
               {value}
             </p>
-            <p className="self-end text-right text-[10px] leading-none text-text-secondary">
-              {description}
-            </p>
+            {description && (
+              <p className="truncate text-[10px] leading-none text-text-muted">
+                {description}
+              </p>
+            )}
           </div>
         </div>
       </div>
     </div>
   );
 }
+

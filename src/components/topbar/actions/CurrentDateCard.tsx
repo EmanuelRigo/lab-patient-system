@@ -16,34 +16,18 @@ export default function CurrentDateCard() {
     format(now, "EEEE", { locale: es }).slice(1);
 
   return (
-    <div
-      className="
-        flex items-center gap-2 2xl:gap-4
-        rounded-2xl
-        border border-border
-        bg-surface
-        px-3 py-2 2xl:px-4 2xl:py-3
-        transition-all
-        duration-200
-      "
-    >
-      <div
-        className="
-          flex h-7 w-7 items-center justify-center 2xl:h-10 2xl:w-10
-          rounded-lg
-          bg-brand-50
-          text-brand-600
-        "
-      >
-        <CalendarDays className="h-4 w-4 2xl:h-5 2xl:w-5" />
+    <div className="flex items-center gap-2.5 rounded-lg border border-border bg-surface px-2 py-1.5 transition-all duration-150 hover:border-border-strong 2xl:px-3.5 2xl:py-2">
+      <div className="flex h-7 w-7 items-center justify-center rounded-md border border-primary-200/50 bg-primary-50 text-primary-600 dark:border-primary-800/40 dark:bg-primary-950/60 dark:text-primary-400 2xl:h-8 2xl:w-8">
+        <CalendarDays className="h-4 w-4 2xl:h-4.5 2xl:w-4.5" />
       </div>
 
-      <div className="flex flex-col">
-        <span className="text-xs text-text-secondary">
+      <div className="flex flex-col leading-none">
+        <span className="text-xs font-semibold text-text-primary">
+          {weekDay}
+        </span>
+        <span className="mt-0.5 text-[11px] text-text-secondary">
           {day} de {month}, {year}
         </span>
-
-        <span className="text-xs text-text-secondary">{weekDay}</span>
       </div>
     </div>
   );

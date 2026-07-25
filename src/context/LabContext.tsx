@@ -50,11 +50,28 @@ type UserInfoToken = {
   exp: number;
 };
 
+const getInitialRole = (): Role => {
+  if (typeof window !== "undefined") {
+    const cookies = document.cookie.split("; ");
+    const cookie = cookies.find((c) => c.startsWith("infoUserToken="));
+    if (cookie) {
+      try {
+        const token = cookie.split("=")[1];
+        const decoded = jwtDecode<UserInfoToken>(token);
+        return decoded.role;
+      } catch (e) {
+        console.error("Error decoding token on init:", e);
+      }
+    }
+  }
+  return "admin";
+};
+
 const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [medicalStudyList, setMedicalStudyList] = useState<MedicalStudy[]>([]);
   const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
-  const [role, setRole] = useState<Role>("public");
-  const [isRoleReady, setIsRoleReady] = useState(false);
+  const [role, setRole] = useState<Role>(getInitialRole);
+  const [isRoleReady, setIsRoleReady] = useState(true);
   const [showToast, setShowToast] = useState(false);
   const [mesaggeToast, setMessageToast] = useState("");
 
@@ -75,15 +92,13 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
       try {
         const decoded = jwtDecode<UserInfoToken>(infoUserToken);
         setRole(decoded.role);
-        setIsRoleReady(true);
       } catch (error) {
         console.error("❌ Error decoding infoUserToken:", error);
-        setIsRoleReady(true); // incluso si falla, marcamos como listo
       }
-    } else {
-      setIsRoleReady(true); // no hay token, pero ya podemos renderizar
     }
+    setIsRoleReady(true);
   }, []);
+
 
   const value: LabSystemContextProps = {
     medicalStudyList,

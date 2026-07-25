@@ -11,9 +11,9 @@ export interface StudyRowProps {
 
 export function StudyRow({ index, name, quantity, percentage }: StudyRowProps) {
   return (
-    <div className="group flex h-7 items-center justify-between rounded-lg px-2 transition-colors hover:bg-surface-muted">
-      <div className="flex items-center gap-2">
-        <span className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-primary text-[9px] font-semibold text-primary-foreground">
+    <div className="group flex h-6 items-center justify-between rounded-md px-1.5 transition-colors hover:bg-surface-muted">
+      <div className="flex items-center gap-1.5">
+        <span className="inline-flex h-3.5 w-3.5 shrink-0 items-center justify-center rounded-full bg-primary text-[9px] font-semibold text-primary-foreground">
           {index}
         </span>
         <span className="text-xs font-medium leading-none text-text-primary">
@@ -21,7 +21,7 @@ export function StudyRow({ index, name, quantity, percentage }: StudyRowProps) {
         </span>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1.5">
         <span className="text-[10px] font-semibold leading-none text-text-secondary">
           {quantity.toLocaleString()}
         </span>
@@ -30,3 +30,4 @@ export function StudyRow({ index, name, quantity, percentage }: StudyRowProps) {
     </div>
   );
 }
+

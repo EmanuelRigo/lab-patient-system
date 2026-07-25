@@ -22,25 +22,25 @@ export function ResultsStatusCard({
   const total = data.reduce((acc, item) => acc + item.value, 0);
 
   return (
-    <Card className="h-full rounded-xl border-border bg-surface py-2 shadow-none">
-      <CardContent className="flex h-full flex-col px-4">
+    <Card className="h-full rounded-lg border-border bg-surface py-1.5 shadow-none min-h-0 overflow-hidden">
+      <CardContent className="flex h-full flex-col px-3">
         {/* Header */}
-        <div className="mb-2 border-b border-border pb-2">
-          <h3 className="text-xs font-semibold uppercase tracking-widest text-text-secondary">
+        <div className="mb-1 border-b border-border pb-1">
+          <h3 className="text-[10px] font-bold uppercase tracking-wider text-text-secondary">
             {title}
           </h3>
         </div>
 
         {/* Content */}
-        <div className="grid flex-1 grid-cols-[7rem_1fr] items-center gap-2">
-          <div className="relative size-28">
+        <div className="grid flex-1 grid-cols-[5.5rem_1fr] items-center gap-2">
+          <div className="relative size-22">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
                 <Pie
                   data={data}
                   dataKey="value"
-                  innerRadius={34}
-                  outerRadius={46}
+                  innerRadius={26}
+                  outerRadius={36}
                   paddingAngle={0}
                   stroke="var(--color-surface)"
                   strokeWidth={0}
@@ -53,10 +53,10 @@ export function ResultsStatusCard({
             </ResponsiveContainer>
 
             <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center">
-              <span className="text-base font-bold leading-none text-text-primary">
+              <span className="text-sm font-bold leading-none text-text-primary">
                 {total.toLocaleString()}
               </span>
-              <span className="text-[10px] text-text-muted">Total</span>
+              <span className="text-[9px] leading-none text-text-muted mt-0.5">Total</span>
             </div>
           </div>
 
@@ -66,3 +66,4 @@ export function ResultsStatusCard({
     </Card>
   );
 }
+
