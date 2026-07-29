@@ -33,8 +33,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  console.log("🎨 [RootLayout] Rendered");
-
   return (
     <html
       lang="es"
@@ -42,31 +40,31 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased bg-background text-foreground">
         <LabSystemProvider>
-          <OnlineStatus>
-            <div className="flex h-dvh w-full overflow-hidden bg-background">
-              <Toast
-                message="Paciente agregado con éxito!"
-                color="green"
-                visible={false}
-              />
+          <OnlineStatus />
 
-              {/* Sidebar */}
-              <AsideWrapper />
+          <div className="flex h-dvh w-full overflow-hidden bg-background">
+            <Toast
+              message="Paciente agregado con éxito!"
+              color="green"
+              visible={false}
+            />
 
-              {/* Content */}
-              <div className="flex min-w-0 flex-1 flex-col">
-                {/* Topbar */}
-                <Topbar />
+            {/* Sidebar */}
+            <AsideWrapper />
 
-                {/* Main */}
-                <main className="flex-1 overflow-y-auto">
-                  <div className="mx-auto flex w-full max-w-full flex-col h-full">
-                    {children}
-                  </div>
-                </main>
-              </div>
+            {/* Content */}
+            <div className="flex min-w-0 flex-1 flex-col">
+              {/* Topbar */}
+              <Topbar />
+
+              {/* Main */}
+              <main className="flex-1 overflow-y-auto">
+                <div className="mx-auto flex h-full w-full max-w-full flex-col">
+                  {children}
+                </div>
+              </main>
             </div>
-          </OnlineStatus>
+          </div>
         </LabSystemProvider>
       </body>
     </html>

@@ -211,8 +211,8 @@ const GetPatients = () => {
   };
 
   return (
-    <div className="h-full w-full overflow-y-auto p-4 2xl:p-6">
-      <div className="mx-auto flex w-full max-w-[1560px] flex-col gap-4 animate-fade-in opacity-0">
+    <div className="flex h-full w-full flex-col gap-4 p-4 2xl:p-6">
+      <div className="mx-auto flex w-full max-w-[1560px] flex-1 flex-col gap-4 animate-fade-in opacity-0 min-h-0">
         {/* Header */}
         <header className="flex flex-col gap-1">
           <h1 className="text-xl font-bold text-text-primary 2xl:text-2xl">
@@ -224,9 +224,9 @@ const GetPatients = () => {
         </header>
 
         {/* Card contenedor */}
-        <section className="rounded-2xl border border-border bg-surface shadow-none">
+        <section className="flex min-h-0 flex-1 flex-col rounded-2xl border border-border bg-surface shadow-none overflow-hidden">
           {/* Fila 1: buscador + acciones */}
-          <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center">
+          <div className="flex flex-col gap-3 border-b border-border p-4 sm:flex-row sm:items-center shrink-0">
             {/* Buscador grande */}
             <div className="relative w-full sm:w-1/2 sm:max-w-[520px]">
               <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-text-muted" />
@@ -266,7 +266,7 @@ const GetPatients = () => {
           </div>
 
           {/* Fila 2: chips de filtros rápidos */}
-          <div className="flex flex-wrap items-center gap-2 border-b border-border bg-surface-muted/40 px-4 py-3">
+          <div className="flex flex-wrap items-center gap-2 border-b border-border bg-surface-muted/40 px-4 py-3 shrink-0">
             {STATUS_OPTIONS.map((opt) => {
               const isActive = statusFilter === opt.value;
               return (
@@ -289,9 +289,9 @@ const GetPatients = () => {
           </div>
 
           {/* Tabla */}
-          <div className="p-0">
+          <div className="flex-1 min-h-0 overflow-y-auto">
             <Table>
-              <TableHeader className="bg-surface-muted">
+              <TableHeader className="bg-surface-muted sticky top-0 z-10">
                 <TableRow>
                   <SortableHead k="name">Paciente</SortableHead>
                   <SortableHead k="dni">DNI</SortableHead>
