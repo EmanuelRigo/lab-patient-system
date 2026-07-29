@@ -2,9 +2,9 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
+import { Activity } from "lucide-react";
 import TopbarBreadcrumb from "./TopbarBreadcrumb";
-import TopbarSearch from "./TopbarSearch";
-import TopbarActions from "./TopbarActions";
+import CurrentDateCard from "./actions/CurrentDateCard";
 
 const HIDDEN_ROUTES = ["/login"];
 
@@ -20,12 +20,11 @@ const Topbar = () => {
       role="banner"
       className="
         sticky top-0 z-30
-        flex items-center gap-6
+        flex items-center gap-4
         h-12 2xl:h-[72px] w-full
-       
         border-b border-border-default
-        
-        px-6 lg:px-8
+        bg-surface/80 backdrop-blur-sm
+        px-4 lg:px-6
         transition-shadow duration-200
       "
     >
@@ -34,11 +33,53 @@ const Topbar = () => {
         <TopbarBreadcrumb />
       </div>
 
-      {/* Centro: búsqueda global */}
-      <TopbarSearch />
+      {/* Centro flexible: empuja la zona derecha hacia el final */}
+      <div className="flex-1" />
 
-      {/* Derecha: acciones + notificaciones + usuario */}
-      <TopbarActions />
+      {/* Derecha: estado en vivo del sistema */}
+      <div className="flex items-center gap-2 min-w-0">
+        <span
+          aria-hidden="true"
+          className="relative flex h-2 w-2 shrink-0"
+        >
+          {/* Anillo pulsante (estado "vivo") */}
+          <span
+            className="
+              absolute inline-flex h-full w-full
+              rounded-full bg-success-500
+              opacity-60
+              animate-ping
+            "
+          />
+          {/* Núcleo del punto */}
+          <span className="relative inline-flex h-2 w-2 rounded-full bg-success-500" />
+        </span>
+
+        <span
+          className="
+            hidden sm:inline-flex items-center gap-1.5
+            text-[11px] font-medium uppercase tracking-wider
+            text-text-muted 2xl:text-xs
+          "
+        >
+          <Activity
+            aria-hidden="true"
+            className="h-3 w-3 2xl:h-3.5 2xl:w-3.5"
+          />
+          <span className="truncate">
+            Lab. Mayra · Operativo
+          </span>
+        </span>
+      </div>
+
+      {/* Separador vertical sutil entre estado y fecha */}
+      <div
+        aria-hidden="true"
+        className="h-5 w-px bg-border-default 2xl:h-6"
+      />
+
+      {/* Fecha actual (mismo chip del header del dashboard) */}
+      <CurrentDateCard />
     </header>
   );
 };

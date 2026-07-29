@@ -5,9 +5,6 @@ import { StatsCards } from "@/components/dashboard/StatsCards";
 import { StudiesChartCard } from "@/components/dashboard/StudiesChartCard";
 import { QuickActions } from "@/components/dashboard/QuickActions";
 
-import { useLabSystemContext } from "@/context/LabContext";
-import CurrentDateCard from "@/components/topbar/actions/CurrentDateCard";
-
 import { ResultsStatusCard } from "@/components/RecentResultCard/ResultsStatusCard";
 import { TopStudiesCard } from "@/components/TopStudiesCard/TopStudiesCard";
 import {
@@ -107,39 +104,17 @@ const recentResults: RecentResultItem[] = [
 ];
 
 export default function DashboardButtons() {
-  const { role } = useLabSystemContext();
-
   return (
     <div className="h-full w-full">
       <div className="mx-auto w-full max-w-[1560px] p-4 h-full">
-        <div className="grid h-full grid-cols-5 grid-rows-[3rem_3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem] gap-2 2xl:grid-rows-[4rem_3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem]">
-          {/* 1 - Header */}
-          <section className="col-span-5">
-            <div className="flex h-full items-center justify-between">
-              <div className="flex flex-col justify-center">
-                <div className="flex items-center gap-2">
-                  <span className="h-2 w-2 rounded-full bg-success-500" />
-                  <h2 className="text-base font-bold text-text-primary 2xl:text-xl">
-                    ¡Bienvenido al sistema del laboratorio Mayra!
-                  </h2>
-                </div>
-                <p className="mt-0.5 text-xs text-text-secondary 2xl:text-sm">
-                  Gestión integral de pacientes, estudios de laboratorio y
-                  personal.
-                </p>
-              </div>
-
-              <CurrentDateCard />
-            </div>
-          </section>
-
-          {/* 2 - Stats */}
-          <section className="col-span-5 h-12 row-start-2">
+        <div className="grid h-full grid-cols-5 grid-rows-[3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem] gap-2 2xl:grid-rows-[4rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem]">
+          {/* 1 - Stats */}
+          <section className="col-span-5 h-12">
             <StatsCards />
           </section>
 
-          {/* 3 - Contenido principal */}
-          <section className="col-span-4 row-span-3 row-start-3 flex h-full min-h-0 flex-col">
+          {/* 2 - Contenido principal */}
+          <section className="col-span-4 row-span-3 row-start-2 flex h-full min-h-0 flex-col">
             <StudiesChartCard
               data={studiesChartData}
               period="7d"
@@ -148,13 +123,13 @@ export default function DashboardButtons() {
             />
           </section>
 
-          {/* 5 - Panel lateral */}
-          <section className="col-start-5 row-span-3 row-start-3 flex h-full min-h-0 flex-col">
+          {/* 4 - Panel lateral */}
+          <section className="col-start-5 row-span-3 row-start-2 flex h-full min-h-0 flex-col">
             <DaylyAppointments />
           </section>
 
-          {/* 6 - Resumen de resultados */}
-          <section className="col-span-5 row-start-6 grid h-[8.5rem] min-h-0 grid-cols-3 gap-2">
+          {/* 5 - Resumen de resultados */}
+          <section className="col-span-5 row-start-5 grid h-[8.5rem] min-h-0 grid-cols-3 gap-2">
             <ResultsStatusCard data={resultsStatus} />
             <TopStudiesCard
               studies={topStudies}
@@ -163,8 +138,8 @@ export default function DashboardButtons() {
             <RecentResultsCard results={recentResults} />
           </section>
 
-          {/* 4 - Acciones rápidas */}
-          <section className="col-span-5 row-start-7 h-10 min-h-0">
+          {/* 3 - Acciones rápidas */}
+          <section className="col-span-5 row-start-6 h-10 min-h-0">
             <QuickActions />
           </section>
         </div>
