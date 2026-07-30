@@ -82,11 +82,11 @@ export function StatCard({
   const ResolvedIcon: LucideIcon = Icon ?? fallbackIconMap[color];
 
   return (
-    <div className="group flex h-12 items-center rounded-lg border border-border bg-surface px-2.5 py-1.5 transition duration-150 ease-out hover:border-border-strong hover:bg-surface-muted/40">
+    <div className="group flex h-full items-center rounded-lg border border-border bg-surface px-2.5 py-1.5 transition duration-150 ease-out hover:border-border-strong hover:bg-surface-muted/40">
       <div className="flex w-full items-center gap-2.5">
         {/* Icono estilizado */}
         <div
-          className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-md transition-transform duration-150 group-hover:scale-105 ${tokens.container}`}
+          className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-md transition-transform duration-150 group-hover:scale-105 ${tokens.container}`}
           aria-hidden="true"
         >
           <ResolvedIcon className={`h-4 w-4 ${tokens.icon}`} strokeWidth={2} />
@@ -111,4 +111,3 @@ export function StatCard({
     </div>
   );
 }
-

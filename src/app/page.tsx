@@ -109,7 +109,7 @@ export default function DashboardButtons() {
       <div className="mx-auto w-full max-w-[1560px] p-4 h-full">
         <div className="grid h-full grid-cols-5 grid-rows-[3rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem] gap-2 2xl:grid-rows-[4rem_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_8.5rem_2.5rem]">
           {/* 1 - Stats */}
-          <section className="col-span-5 h-12">
+          <section className="col-span-5 h-full ">
             <StatsCards />
           </section>
 

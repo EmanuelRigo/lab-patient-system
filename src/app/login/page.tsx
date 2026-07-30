@@ -106,19 +106,19 @@ export default function LoginPage() {
                         password: "hola1234",
                       },
                       {
-                        label: "Gestión",
-                        username: "gestionuser",
-                        password: "gestor1234",
+                        label: "Tecnico",
+                        username: "emanueltech",
+                        password: "hola1234",
                       },
                       {
                         label: "Bioquímico",
-                        username: "bioquimico",
-                        password: "labbio123",
+                        username: "emanuelbio",
+                        password: "hola1234",
                       },
                       {
                         label: "Recepción",
-                        username: "recepcion",
-                        password: "recep1234",
+                        username: "emanuelrecep",
+                        password: "hola1234",
                       },
                     ].map((preset) => (
                       <button
@@ -164,19 +164,19 @@ export default function LoginPage() {
                           password: "hola1234",
                         },
                         {
-                          label: "Gestión",
-                          username: "gestionuser",
-                          password: "gestor1234",
+                          label: "Tecnico",
+                          username: "emanueltech",
+                          password: "hola1234",
                         },
                         {
                           label: "Bioquímico",
-                          username: "bioquimico",
-                          password: "labbio123",
+                          username: "emanuelbio",
+                          password: "hola1234",
                         },
                         {
                           label: "Recepción",
-                          username: "recepcion",
-                          password: "recep1234",
+                          username: "emanuelrecep",
+                          password: "hola1234",
                         },
                       ].map((preset) => (
                         <button

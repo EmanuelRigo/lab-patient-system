@@ -47,7 +47,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     icon: Calendar,
     label: "Citas",
-    href: "/lab-dashboard/doctors-appointment",
+    href: "/lab-dashboard/doctors-appointment/appointment-list",
     roles: ["admin", "receptionist", "labTechnician"],
   },
   {
