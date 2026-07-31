@@ -35,7 +35,7 @@ export interface StudiesChartCardProps {
   error?: string;
 }
 
-type Period = StudiesChartCardProps["period"];
+type Period = NonNullable<StudiesChartCardProps["period"]>;
 
 const periodOptions: Array<{ value: Period; label: string }> = [
   { value: "7d", label: "7d" },
