@@ -17,6 +17,7 @@ function createTokenUtil(data: JwtPayloadData): string {
 }
 
 function createUserInfoToken(data: {
+  name: string;
   username: string;
   role: string;
   _id: string;

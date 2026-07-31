@@ -99,6 +99,7 @@ async function login(req: Request, res: Response) {
     const onlineUser = req.onlineUser as string;
     const name = req.user.username as string;
     const userInfoToken = req.userInfoToken as string;
+    console.log("🚀 ~ login ~ userInfoToken:", userInfoToken);
 
     const thirtyDays = 1000 * 60 * 60 * 24 * 30;
     const expirationDate = new Date(Date.now() + thirtyDays);

@@ -33,7 +33,7 @@ export const useLabSystemContext = () => {
   const contextValue = useContext(labSystemContext);
   if (!contextValue) {
     throw new Error(
-      "useLabSystemContext debe usarse dentro de LabSystemProvider"
+      "useLabSystemContext debe usarse dentro de LabSystemProvider",
     );
   }
   return contextValue;
@@ -91,6 +91,7 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     if (infoUserToken) {
       try {
         const decoded = jwtDecode<UserInfoToken>(infoUserToken);
+        console.log("🚀 ~ LabSystemProvider ~ decoded:", decoded);
         setRole(decoded.role);
       } catch (error) {
         console.error("❌ Error decoding infoUserToken:", error);
@@ -98,7 +99,6 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     }
     setIsRoleReady(true);
   }, []);
-
 
   const value: LabSystemContextProps = {
     medicalStudyList,

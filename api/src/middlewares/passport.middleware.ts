@@ -92,8 +92,8 @@ passport.use(
       } catch (err) {
         return done(err);
       }
-    }
-  )
+    },
+  ),
 );
 
 //--LOGIN
@@ -170,6 +170,7 @@ passport.use(
         req.onlineUser = onlineUser;
 
         const userInfoToken = createUserInfoToken({
+          name: user.firstname,
           username: user.username,
           role: user.role,
           _id: user._id,
@@ -182,8 +183,8 @@ passport.use(
         console.error("Error durante el proceso de autenticación:", error);
         return done(error);
       }
-    }
-  )
+    },
+  ),
 );
 
 //--SIGNOUT
@@ -206,8 +207,8 @@ passport.use(
         };
         return done(null, false, info);
       }
-    }
-  )
+    },
+  ),
 );
 
 //--UPDATE
@@ -244,8 +245,8 @@ passport.use(
           statusCode: 500,
         });
       }
-    }
-  )
+    },
+  ),
 );
 
 //--UPDATE PASSWORD
@@ -296,8 +297,8 @@ passport.use(
           statusCode: 500,
         });
       }
-    }
-  )
+    },
+  ),
 );
 
 //--DELETE ACCOUNT
@@ -421,8 +422,8 @@ passport.use(
         };
         return done(null, false, info);
       }
-    }
-  )
+    },
+  ),
 );
 
 export default passport;
