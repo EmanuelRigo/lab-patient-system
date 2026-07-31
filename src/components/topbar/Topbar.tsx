@@ -5,11 +5,13 @@ import { usePathname } from "next/navigation";
 import { Activity } from "lucide-react";
 import TopbarBreadcrumb from "./TopbarBreadcrumb";
 import CurrentDateCard from "./actions/CurrentDateCard";
+import { useLabSystemContext } from "@/context/LabContext";
 
 const HIDDEN_ROUTES = ["/login"];
 
 const Topbar = () => {
   const pathname = usePathname();
+  const { userInfoToken } = useLabSystemContext();
 
   // Se oculta únicamente en /login. El resto de las rutas
   // (incluida la home pública) muestran el Topbar.
@@ -55,21 +57,40 @@ const Topbar = () => {
           <span className="relative inline-flex h-2 w-2 rounded-full bg-success-500" />
         </span>
 
-        <span
+        <div
           className="
-            hidden sm:inline-flex items-center gap-1.5
-            text-[11px] font-medium uppercase tracking-wider
-            text-text-muted 2xl:text-xs
+            hidden sm:flex flex-col items-end justify-center leading-tight
+            min-w-0
           "
         >
-          <Activity
-            aria-hidden="true"
-            className="h-3 w-3 2xl:h-3.5 2xl:w-3.5"
-          />
-          <span className="truncate">
-            Lab. Mayra · Operativo
+          <span
+            className="
+              inline-flex items-center gap-1.5
+              text-[11px] font-medium uppercase tracking-wider
+              text-text-muted 2xl:text-xs
+            "
+          >
+            <Activity
+              aria-hidden="true"
+              className="h-3 w-3 2xl:h-3.5 2xl:w-3.5"
+            />
+            <span className="truncate max-w-[180px]">
+              Lab. {userInfoToken?.name ?? "Mayra"} · Operativo
+            </span>
           </span>
-        </span>
+          {userInfoToken?._id && (
+            <span
+              className="
+                hidden md:block
+                text-[9px] font-normal normal-case tracking-normal
+                text-text-muted/70 2xl:text-[10px]
+                truncate max-w-[180px]
+              "
+            >
+              id: {userInfoToken._id}
+            </span>
+          )}
+        </div>
       </div>
 
       {/* Separador vertical sutil entre estado y fecha */}

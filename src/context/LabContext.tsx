@@ -23,6 +23,8 @@ interface LabSystemContextProps {
   showToast: boolean;
   setMessageToast: React.Dispatch<React.SetStateAction<string>>;
   mesaggeToast?: string;
+  userInfoToken: UserInfoToken | null;
+  setUserInfoToken: React.Dispatch<React.SetStateAction<UserInfoToken | null>>;
 }
 
 export const labSystemContext = createContext<
@@ -44,8 +46,10 @@ interface LabSystemProviderProps {
 }
 
 type UserInfoToken = {
+  name: string;
   username: string;
   role: Role;
+  _id: string;
   iat: number;
   exp: number;
 };
@@ -74,10 +78,17 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [isRoleReady, setIsRoleReady] = useState(true);
   const [showToast, setShowToast] = useState(false);
   const [mesaggeToast, setMessageToast] = useState("");
+  const [userInfoToken, setUserInfoToken] = useState<UserInfoToken | null>(
+    null,
+  );
 
   useEffect(() => {
     console.log("🔄 Role ha cambiado:", role);
   }, [role]);
+
+  useEffect(() => {
+    console.log("✅ userInfoToken (post-render, valor real):", userInfoToken);
+  }, [userInfoToken]);
 
   useEffect(() => {
     const getCookie = (name: string) => {
@@ -91,8 +102,13 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     if (infoUserToken) {
       try {
         const decoded = jwtDecode<UserInfoToken>(infoUserToken);
-        console.log("🚀 ~ LabSystemProvider ~ decoded:", decoded);
+        console.log("📦 decoded (objeto calculado):", decoded);
+        console.log(
+          "⏱️ userInfoToken del closure (todavía null, React aún no actualizó):",
+          userInfoToken,
+        );
         setRole(decoded.role);
+        setUserInfoToken(decoded);
       } catch (error) {
         console.error("❌ Error decoding infoUserToken:", error);
       }
@@ -112,6 +128,8 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     setShowToast,
     mesaggeToast,
     setMessageToast,
+    userInfoToken,
+    setUserInfoToken,
   };
 
   return (
