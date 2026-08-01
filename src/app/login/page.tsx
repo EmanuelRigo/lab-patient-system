@@ -37,20 +37,10 @@ export default function LoginPage() {
     try {
       const credentials = { username, password };
       const response = await sessionApi.login(credentials);
-      console.log(
-        "🚀 handleLogin: login response status",
-        response.status,
-        "ok",
-        response.ok,
-      );
-
       if (response.ok) {
-        console.log("Inicio de sesión exitoso");
-        console.log("🚀 handleLogin: cookies after login", document.cookie);
         const infoUserToken = getCookie("infoUserToken");
         if (infoUserToken) {
           const decoded = JSON.parse(atob(infoUserToken.split(".")[1]));
-          console.log("🚀 ~ handleLogin ~ decoded:", decoded);
           setRole(decoded.role);
           setUserLabData(decoded);
         }

@@ -61,7 +61,11 @@ const getInitialRole = (): Role => {
     if (cookie) {
       try {
         const token = cookie.split("=")[1];
+        console.log("Token desde el cookie:", token);
+
         const decoded = jwtDecode<UserInfoToken>(token);
+        console.log("🚀 ~ getInitialRole ~ decoded:", decoded);
+        console.log("🚀 ~ getInitialRole ~ decoded:", decoded);
         return decoded.role;
       } catch (e) {
         console.error("Error decoding token on init:", e);

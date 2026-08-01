@@ -17,6 +17,7 @@ const Topbar = () => {
   // (incluida la home pública) muestran el Topbar.
   if (HIDDEN_ROUTES.includes(pathname)) return null;
 
+  console.log("🚀 ~ Topbar ~ userInfoToken:", userInfoToken);
   return (
     <header
       role="banner"
@@ -72,8 +73,7 @@ const Topbar = () => {
               className="h-3 w-3 2xl:h-3.5 2xl:w-3.5"
             />
             <span className="truncate max-w-[180px]">
-              {userInfoToken?.role}. {userInfoToken?.name ?? "Mayra"} ·
-              Operativo
+              {userInfoToken?.role}. {userInfoToken?.name}
             </span>
           </span>
           {userInfoToken?._id && (
