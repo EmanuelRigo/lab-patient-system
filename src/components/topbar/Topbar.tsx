@@ -40,10 +40,7 @@ const Topbar = () => {
 
       {/* Derecha: estado en vivo del sistema */}
       <div className="flex items-center gap-2 min-w-0">
-        <span
-          aria-hidden="true"
-          className="relative flex h-2 w-2 shrink-0"
-        >
+        <span aria-hidden="true" className="relative flex h-2 w-2 shrink-0">
           {/* Anillo pulsante (estado "vivo") */}
           <span
             className="
@@ -75,7 +72,8 @@ const Topbar = () => {
               className="h-3 w-3 2xl:h-3.5 2xl:w-3.5"
             />
             <span className="truncate max-w-[180px]">
-              Lab. {userInfoToken?.name ?? "Mayra"} · Operativo
+              {userInfoToken?.role}. {userInfoToken?.name ?? "Mayra"} ·
+              Operativo
             </span>
           </span>
           {userInfoToken?._id && (
@@ -94,10 +92,7 @@ const Topbar = () => {
       </div>
 
       {/* Separador vertical sutil entre estado y fecha */}
-      <div
-        aria-hidden="true"
-        className="h-5 w-px bg-border-default 2xl:h-6"
-      />
+      <div aria-hidden="true" className="h-5 w-px bg-border-default 2xl:h-6" />
 
       {/* Fecha actual (mismo chip del header del dashboard) */}
       <CurrentDateCard />
