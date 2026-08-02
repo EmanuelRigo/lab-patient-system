@@ -7,15 +7,12 @@ import React, {
   useEffect,
 } from "react";
 import { MedicalStudy } from "../../types/medicalStudy.types";
-import { LabStaff } from "../../types/labStaff.types";
 import { Role } from "../../types/frontend.types";
 import { jwtDecode } from "jwt-decode";
 
 interface LabSystemContextProps {
   medicalStudyList: MedicalStudy[];
   setMedicalStudyList: React.Dispatch<React.SetStateAction<MedicalStudy[]>>;
-  userLabData: LabStaff | null;
-  setUserLabData: React.Dispatch<React.SetStateAction<LabStaff | null>>;
   role: Role;
   setRole: React.Dispatch<React.SetStateAction<Role>>;
   isRoleReady: boolean;
@@ -45,45 +42,42 @@ interface LabSystemProviderProps {
   children: ReactNode;
 }
 
-type UserInfoToken = {
+export type UserInfoToken = {
   name: string;
   username: string;
   role: Role;
   _id: string;
+  firstname: string;
+  lastname: string;
   iat: number;
   exp: number;
 };
 
-const getInitialRole = (): Role => {
-  if (typeof window !== "undefined") {
-    const cookies = document.cookie.split("; ");
-    const cookie = cookies.find((c) => c.startsWith("infoUserToken="));
-    if (cookie) {
-      try {
-        const token = cookie.split("=")[1];
-        console.log("Token desde el cookie:", token);
-
-        const decoded = jwtDecode<UserInfoToken>(token);
-        console.log("🚀 ~ getInitialRole ~ decoded:", decoded);
-        console.log("🚀 ~ getInitialRole ~ decoded:", decoded);
-        return decoded.role;
-      } catch (e) {
-        console.error("Error decoding token on init:", e);
-      }
-    }
+export const decodeInfoUserTokenCookie = (
+  fallback: UserInfoToken | null = null,
+): UserInfoToken | null => {
+  if (typeof window === "undefined") return fallback;
+  const cookies = document.cookie.split("; ");
+  const cookie = cookies.find((c) => c.startsWith("infoUserToken="));
+  if (!cookie) return fallback;
+  try {
+    const decoded = jwtDecode<UserInfoToken>(cookie.split("=")[1]);
+    return { ...decoded, firstname: decoded.name, lastname: "" };
+  } catch (e) {
+    console.error("Error decoding infoUserToken cookie:", e);
+    return fallback;
   }
-  return "admin";
 };
 
 const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
   const [medicalStudyList, setMedicalStudyList] = useState<MedicalStudy[]>([]);
-  const [userLabData, setUserLabData] = useState<LabStaff | null>(null);
-  const [role, setRole] = useState<Role>(getInitialRole);
+  const initial = decodeInfoUserTokenCookie();
+  const [role, setRole] = useState<Role>(initial?.role ?? "admin");
   const [isRoleReady, setIsRoleReady] = useState(true);
   const [showToast, setShowToast] = useState(false);
   const [mesaggeToast, setMessageToast] = useState("");
   const [userInfoToken, setUserInfoToken] = useState<UserInfoToken | null>(
-    null,
+    initial,
   );
 
   useEffect(() => {
@@ -94,37 +88,9 @@ const LabSystemProvider = ({ children }: LabSystemProviderProps) => {
     console.log("✅ userInfoToken (post-render, valor real):", userInfoToken);
   }, [userInfoToken]);
 
-  useEffect(() => {
-    const getCookie = (name: string) => {
-      const cookies = document.cookie.split("; ");
-      const cookie = cookies.find((c) => c.startsWith(`${name}=`));
-      return cookie?.split("=")[1];
-    };
-
-    const infoUserToken = getCookie("infoUserToken");
-
-    if (infoUserToken) {
-      try {
-        const decoded = jwtDecode<UserInfoToken>(infoUserToken);
-        console.log("📦 decoded (objeto calculado):", decoded);
-        console.log(
-          "⏱️ userInfoToken del closure (todavía null, React aún no actualizó):",
-          userInfoToken,
-        );
-        setRole(decoded.role);
-        setUserInfoToken(decoded);
-      } catch (error) {
-        console.error("❌ Error decoding infoUserToken:", error);
-      }
-    }
-    setIsRoleReady(true);
-  }, []);
-
   const value: LabSystemContextProps = {
     medicalStudyList,
     setMedicalStudyList,
-    userLabData,
-    setUserLabData,
     role,
     setRole,
     isRoleReady,

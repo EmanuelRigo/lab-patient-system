@@ -13,6 +13,7 @@ import { Patient } from "../../../types/patient.types";
 import TalonForm from "../talon/TalonForm";
 
 import { useEffect, useState, useReducer, useLayoutEffect } from "react";
+import { decodeInfoUserTokenCookie } from "@/context/LabContext";
 import { useLabSystemContext } from "@/context/LabContext";
 
 /* ----------------------------------------------
@@ -25,13 +26,6 @@ const initialState = {
   date: "",
   reason: "",
 };
-
-function getCookie(name: string) {
-  const cookie = document.cookie
-    .split("; ")
-    .find((c) => c.startsWith(name + "="));
-  return cookie?.split("=")[1];
-}
 
 function turnoReducer(state: any, action: any) {
   switch (action.type) {
@@ -56,7 +50,7 @@ export default function TurnoForm() {
   const [creatingAppointment, setCreatingAppointment] = useState(false);
   const [appointmentCreated, setAppointmentCreated] = useState(false);
 
-  const { userLabData, setUserLabData } = useLabSystemContext();
+  const { userInfoToken, setUserInfoToken } = useLabSystemContext();
 
   const [patientText, setPatientText] = useState("");
   const [results, setResults] = useState<Patient[]>([]);
@@ -66,11 +60,10 @@ export default function TurnoForm() {
       👤 Load User on Mount
   ------------------------------------------------*/
   useLayoutEffect(() => {
-    const token = getCookie("infoUserToken");
-    if (!token) return;
+    const decoded = decodeInfoUserTokenCookie();
+    if (!decoded) return;
 
-    const decoded = JSON.parse(atob(token.split(".")[1]));
-    setUserLabData(decoded);
+    setUserInfoToken(decoded);
 
     dispatch({
       type: "SET_FIELD",
@@ -131,7 +124,7 @@ export default function TurnoForm() {
       <div className="w-full flex justify-center mt-4">
         <AddTalonButton
           onSuccess={setTalonId}
-          receptionistId={userLabData?._id}
+          receptionistId={userInfoToken?._id}
         />
       </div>
 

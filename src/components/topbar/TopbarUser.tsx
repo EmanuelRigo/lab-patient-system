@@ -29,15 +29,15 @@ const ROLE_LABELS: Record<string, string> = {
 };
 
 const TopbarUser = () => {
-  const { userLabData, role } = useLabSystemContext();
+  const { userInfoToken, role } = useLabSystemContext();
 
   // No renderizar si no hay sesión (igual que el Sidebar)
-  if (role === "public" || !userLabData) return null;
+  if (role === "public" || !userInfoToken) return null;
 
   const fullName =
-    `${userLabData.firstname ?? ""} ${userLabData.lastname ?? ""}`.trim() ||
+    `${userInfoToken.firstname ?? ""} ${userInfoToken.lastname ?? ""}`.trim() ||
     "Usuario";
-  const initials = getInitials(userLabData.firstname, userLabData.lastname);
+  const initials = getInitials(userInfoToken.firstname, userInfoToken.lastname);
   const roleLabel = ROLE_LABELS[role] ?? role;
 
   return (

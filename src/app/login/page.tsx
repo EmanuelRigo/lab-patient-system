@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useLabSystemContext } from "@/context/LabContext";
+import { useLabSystemContext, decodeInfoUserTokenCookie } from "@/context/LabContext";
 import sessionApi from "@/services/session.api";
 import {
   LoginBackground,
@@ -16,7 +16,7 @@ export default function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { setRole, setUserLabData } = useLabSystemContext();
+  const { setRole, setUserInfoToken } = useLabSystemContext();
 
   function getCookie(name: string) {
     const cookies = document.cookie.split("; ");
@@ -38,11 +38,10 @@ export default function LoginPage() {
       const credentials = { username, password };
       const response = await sessionApi.login(credentials);
       if (response.ok) {
-        const infoUserToken = getCookie("infoUserToken");
-        if (infoUserToken) {
-          const decoded = JSON.parse(atob(infoUserToken.split(".")[1]));
+        const decoded = decodeInfoUserTokenCookie();
+        if (decoded) {
           setRole(decoded.role);
-          setUserLabData(decoded);
+          setUserInfoToken(decoded);
         }
         setError("");
         router.push("/lab-dashboard/patients");
